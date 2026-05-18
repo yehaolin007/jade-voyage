@@ -7,9 +7,36 @@
     <link rel="icon" href="data:," />
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js"></script>
     <script>
-      window.CMS_MANUAL_INIT = false;
+      // Manual OAuth bridge — intercept the Worker's postMessage and persist
+      // the token to localStorage in the exact shape Decap CMS expects, then
+      // reload so Decap rehydrates its session.
+      //
+      // Why: Decap CMS 3.6.x's built-in NetlifyAuthenticator listener does
+      // not always pick up our Worker's success message on Cloudflare Pages,
+      // even when the origin and payload format match. Bypassing it with a
+      // direct localStorage write is reliable.
+      (function () {
+        var WORKER_ORIGIN = 'https://jade-voyage-oauth.072688hl.workers.dev';
+        var PREFIX = 'authorization:github:success:';
+        window.addEventListener('message', function (e) {
+          if (e.origin !== WORKER_ORIGIN) return;
+          if (typeof e.data !== 'string' || e.data.indexOf(PREFIX) !== 0) return;
+          try {
+            var info = JSON.parse(e.data.slice(PREFIX.length));
+            if (!info || !info.token) return;
+            localStorage.setItem(
+              'netlify-cms-user',
+              JSON.stringify({ token: info.token, backendName: 'github' })
+            );
+            // small delay so the auth popup has a chance to close itself
+            setTimeout(function () { window.location.reload(); }, 150);
+          } catch (err) {
+            console.error('[Jade Voyage auth bridge] parse failed:', err);
+          }
+        });
+      })();
     </script>
+    <script src="https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js"></script>
   </body>
 </html>
