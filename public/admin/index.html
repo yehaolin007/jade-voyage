@@ -12,10 +12,11 @@
       // the token to localStorage in the exact shape Decap CMS expects, then
       // reload so Decap rehydrates its session.
       //
-      // Why: Decap CMS 3.6.x's built-in NetlifyAuthenticator listener does
-      // not always pick up our Worker's success message on Cloudflare Pages,
-      // even when the origin and payload format match. Bypassing it with a
-      // direct localStorage write is reliable.
+      // The localStorage key is `decap-cms-user` in Decap CMS 3.x (was
+      // `netlify-cms-user` in the older netlify-cms 2.x). We write both for
+      // safety. Decap CMS 3.6.x's NetlifyAuthenticator listener does not
+      // always pick up our Worker's success message under this deployment,
+      // so we bypass it with a direct localStorage write + reload.
       (function () {
         var WORKER_ORIGIN = 'https://jade-voyage-oauth.072688hl.workers.dev';
         var PREFIX = 'authorization:github:success:';
@@ -25,10 +26,9 @@
           try {
             var info = JSON.parse(e.data.slice(PREFIX.length));
             if (!info || !info.token) return;
-            localStorage.setItem(
-              'netlify-cms-user',
-              JSON.stringify({ token: info.token, backendName: 'github' })
-            );
+            var user = JSON.stringify({ token: info.token, backendName: 'github' });
+            localStorage.setItem('decap-cms-user', user);
+            localStorage.setItem('netlify-cms-user', user);
             // small delay so the auth popup has a chance to close itself
             setTimeout(function () { window.location.reload(); }, 150);
           } catch (err) {
