@@ -1,12 +1,15 @@
 # Decap CMS configuration for Jade Voyage
-# Auth backend is git-gateway when deployed (configure Identity on Cloudflare/Netlify);
-# for local development run `npx decap-server` and use ?local_backend=true on /admin/.
+# Production auth uses the GitHub OAuth proxy Worker in ../oauth-worker/.
+# For local dev, set local_backend: true below and run `npx decap-server`.
 
 backend:
-  name: git-gateway
+  name: github
+  repo: yehaolin007/jade-voyage
   branch: main
+  base_url: https://jade-voyage-oauth.072688hl.workers.dev
+  auth_endpoint: /auth
 
-local_backend: true
+# local_backend: true
 
 media_folder: "public/assets"
 public_folder: "/assets"
