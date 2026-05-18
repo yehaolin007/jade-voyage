@@ -1,0 +1,16 @@
+{
+  "name": "jade-voyage-oauth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret:id": "wrangler secret put GITHUB_CLIENT_ID",
+    "secret:secret": "wrangler secret put GITHUB_CLIENT_SECRET",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}

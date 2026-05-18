@@ -1,0 +1,8 @@
+name = "jade-voyage-oauth"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+workers_dev = true
+
+# Secrets are NOT defined here — set them with:
+#   npx wrangler secret put GITHUB_CLIENT_ID
+#   npx wrangler secret put GITHUB_CLIENT_SECRET
