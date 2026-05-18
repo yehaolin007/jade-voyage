@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import FloatChat from '../components/FloatChat.astro';
+import PageHero from '../components/PageHero.astro';
+import WhyItems from '../components/WhyItems.astro';
+
+const team = [
+  {
+    name: 'Lin Yuwen',
+    role: 'Founder & Chief Concierge',
+    bio: 'Fifteen years between hospital administration in Shanghai and bespoke travel design in Hangzhou. Lin started Jade Voyage after her own family\'s search for English-language medical care turned into a study of every accredited centre in eastern China.',
+    img: '/assets/story-concierge-lounge.png',
+  },
+  {
+    name: 'Dr. Chen Mei',
+    role: 'Medical Director',
+    bio: 'Internal medicine specialist with twenty years at a JCI-accredited tertiary hospital. Dr. Chen oversees every hospital partnership and reviews each guest\'s diagnostic plan before arrival.',
+    img: '/assets/clinic-executive-checkup.png',
+  },
+  {
+    name: 'Master Wu Tianqing',
+    role: 'TCM & Wellness Curator',
+    bio: 'CNATCM-licensed practitioner trained at the Zhejiang Academy of TCM. Designs every wellness retreat — from herbal compounding to morning Tai Chi rhythms — and personally meets guests on Wellness routes.',
+    img: '/assets/sichuan-hot-spring.png',
+  },
+  {
+    name: 'Sarah Whitmore',
+    role: 'European Liaison',
+    bio: 'Former luxury travel editor based in London. Sarah is the first voice many guests hear — speaking English, German and French, with a gift for translating wishes into concrete day-by-day plans.',
+    img: '/assets/private-custom-planning.png',
+  },
+];
+
+const principles = [
+  { num: '01', h: 'Slowness is luxury.', p: 'We never overschedule. White space on the itinerary is intentional — it is where the journey actually happens.' },
+  { num: '02', h: 'Credentials, not claims.', p: 'Every hospital, clinic and practitioner we work with holds national or international accreditation we can show you on request.' },
+  { num: '03', h: 'A single phone number.', p: 'One concierge from inquiry to return flight. No call-centre, no relayed messages, no surprises.' },
+  { num: '04', h: 'Honesty about outcomes.', p: 'We share results plainly. We will not promise cures — only credentialed care and verifiable practitioners.' },
+];
+---
+
+<Layout title="About — Jade Voyage" description="A small, bilingual team of medical, wellness and travel curators with fifteen years of careful relationships across China.">
+  <Nav />
+
+  <PageHero
+    eyebrow="About Jade Voyage"
+    title="A small team. Fifteen years of careful relationships."
+    subtitle="Jade Voyage is held by a tight group of medical, wellness and travel curators based in Hangzhou, Shanghai and Chengdu. We design and accompany every itinerary ourselves."
+    bgImage="/assets/story-concierge-lounge.png"
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
+  />
+
+  <section class="about-story">
+    <div class="container story-grid">
+      <div>
+        <span class="micro">— Our Story</span>
+        <h2>It started with a single phone call.</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="story-copy">
+        <p>
+          In 2011 our founder, Lin Yuwen, took a call from a family friend visiting Hangzhou —
+          they needed a cardiac screening with English-language reporting and a quiet place
+          to recover. What should have been straightforward took three weeks of phone calls,
+          translations and apologies.
+        </p>
+        <p>
+          That experience became Jade Voyage. We are now a team of fourteen — physicians,
+          TCM practitioners, cultural curators and a small group of bilingual concierges —
+          and our singular promise has not changed: a guest should arrive carrying nothing
+          but their suitcase. Every detail is held.
+        </p>
+        <p>
+          We remain deliberately small. We accept no more than thirty bookings a month,
+          turn away high volume corporate referrals, and re-verify every hospital and
+          clinic partnership annually. Our reputation is the only thing we cannot replace.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-principles">
+    <div class="container">
+      <div class="section-head">
+        <span class="micro">— Four Principles</span>
+        <h2>What we will, and will not, do.</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="principles-grid">
+        {principles.map((p) => (
+          <div class="principle">
+            <div class="p-num">{p.num}</div>
+            <h4>{p.h}</h4>
+            <p>{p.p}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="about-team">
+    <div class="container">
+      <div class="section-head">
+        <span class="micro">— Our Team</span>
+        <h2>The people who actually answer your messages.</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="team-grid">
+        {team.map((m) => (
+          <article class="team-card">
+            <div class="team-img"><img src={m.img} alt={m.name} loading="lazy" /></div>
+            <div class="team-body">
+              <h4>{m.name}</h4>
+              <div class="team-role">{m.role}</div>
+              <p>{m.bio}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WhyItems />
+
+  <Footer />
+  <FloatChat />
+</Layout>
+
+<style>
+  .about-story { padding: 96px 0; background: var(--canvas); }
+  .story-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
+  .about-story .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .about-story h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 44px;
+    color: var(--ink);
+    line-height: 1.05;
+  }
+  .underline { width: 40px; height: 1px; background: var(--jade); margin-top: 20px; }
+  .story-copy p {
+    color: var(--ink-soft);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    font-weight: 300;
+  }
+  .story-copy p:first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    color: var(--seal);
+    float: left;
+    line-height: 1;
+    margin-right: 8px;
+    margin-top: 4px;
+  }
+
+  .about-principles { padding: 96px 0; background: var(--rice); }
+  .principles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .principle {
+    background: var(--canvas);
+    padding: 32px;
+    border-radius: 14px;
+    border: 1px solid var(--hairline);
+  }
+  .p-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--seal);
+    margin-bottom: 14px;
+  }
+  .principle h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .principle p { color: var(--ink-soft); line-height: 1.6; font-size: 15px; }
+
+  .about-team { padding: 96px 0; background: var(--canvas); }
+  .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .team-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding: 24px;
+    background: var(--rice);
+    border-radius: 14px;
+    align-items: start;
+  }
+  .team-img { width: 100%; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 10px; }
+  .team-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.92); }
+  .team-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .team-role {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--jade-deep);
+    margin-bottom: 12px;
+  }
+  .team-card p { color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
+
+  .section-head {
+    margin-bottom: 56px;
+    max-width: 720px;
+  }
+  .section-head .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  @media (max-width: 960px) {
+    .story-grid { grid-template-columns: 1fr; gap: 32px; }
+    .principles-grid, .team-grid { grid-template-columns: 1fr; }
+    .team-card { grid-template-columns: 120px 1fr; }
+  }
+</style>

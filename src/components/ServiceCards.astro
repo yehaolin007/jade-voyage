@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('services'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const rendered = await Promise.all(
+  entries.map(async (e) => {
+    const { Content } = await e.render();
+    return { ...e, Content };
+  })
+);
+---
+
+<section id="services">
+  <div class="container">
+    <div class="section-head">
+      <span class="micro">— Our Three Pillars</span>
+      <h2>A complete journey, not just a destination.</h2>
+      <p class="deck">Every Jade Voyage itinerary weaves three threads — medical precision, traditional restoration, and the slow rhythm of Chinese landscape.</p>
+      <div class="underline"></div>
+    </div>
+
+    <div class="services-grid">
+      {rendered.map((s) => (
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={s.data.iconSvg} />
+          </div>
+          <h3>{s.data.title}</h3>
+          <div class="cn-sub">{s.data.cnTitle}</div>
+          <div class="service-body"><s.Content /></div>
+          <a href="#" class="arrow-link">{s.data.cta} →</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-body :global(p) { color: var(--ink-soft); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+</style>

@@ -1,0 +1,265 @@
+---
+import { site, offices } from '../data/site';
+
+const wa = site.whatsapp;
+const waDigits = wa.replace(/[^0-9]/g, '');
+---
+
+<div class="fc-root" data-open="false">
+  <button class="float-chat" aria-label="Open contact options" aria-expanded="false">
+    <span class="ping"></span>
+    <span class="fc-label">Chat with a Concierge</span>
+  </button>
+
+  <div class="fc-panel" role="dialog" aria-label="Contact options" hidden>
+    <div class="fc-head">
+      <div>
+        <div class="fc-title">Speak with us</div>
+        <div class="fc-sub">A real concierge replies — usually within 4 hours.</div>
+      </div>
+      <button class="fc-close" aria-label="Close contact panel">×</button>
+    </div>
+
+    <div class="fc-body">
+      <a class="fc-row" href={`https://wa.me/${waDigits}`} target="_blank" rel="noopener">
+        <span class="fc-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M3 21l1.7-5A8 8 0 1 1 8 20.3L3 21z" />
+            <path d="M8.5 9c.5 1.5 2 3 3.5 3.5l1.5-1 2 1c-.3 1.5-1.8 2.3-3 2-3-1-5.3-3.4-6-6 0-1.2.5-2.7 2-3l1 2-1 1.5z" />
+          </svg>
+        </span>
+        <span class="fc-content">
+          <span class="fc-l">WhatsApp</span>
+          <span class="fc-v">{wa}</span>
+        </span>
+        <button class="fc-copy" data-copy={wa} aria-label="Copy WhatsApp number">Copy</button>
+      </a>
+
+      <a class="fc-row" href={`mailto:${site.email}`}>
+        <span class="fc-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="M3 7l9 6 9-6" />
+          </svg>
+        </span>
+        <span class="fc-content">
+          <span class="fc-l">Email</span>
+          <span class="fc-v">{site.email}</span>
+        </span>
+        <button class="fc-copy" data-copy={site.email} aria-label="Copy email">Copy</button>
+      </a>
+
+      <div class="fc-divider">
+        <span>Or visit our offices</span>
+      </div>
+
+      <ul class="fc-offices">
+        {offices.map((o) => (
+          <li>
+            <div>
+              <strong>{o.city}</strong>
+              <span class="fc-office-note">{o.note}</span>
+            </div>
+            <a href={`tel:${o.phone.replace(/\s/g, '')}`}>{o.phone}</a>
+          </li>
+        ))}
+      </ul>
+
+      <a class="fc-cta" href="/contact/">Send a detailed inquiry →</a>
+      <p class="fc-foot">English · German · French · 中文 · Beijing hours UTC+8</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .fc-root { position: fixed; bottom: 24px; right: 24px; z-index: 1000; }
+
+  .float-chat {
+    background: var(--ink);
+    color: var(--canvas);
+    padding: 14px 22px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(31, 58, 54, 0.28);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .float-chat:hover { background: var(--jade-deep); transform: translateY(-2px); }
+  .float-chat .ping {
+    width: 8px; height: 8px; border-radius: 50%; background: #6EE7B7;
+    box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.6);
+    animation: fc-ping 2s infinite;
+  }
+  @keyframes fc-ping {
+    0%   { box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.6); }
+    70%  { box-shadow: 0 0 0 10px rgba(110, 231, 183, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(110, 231, 183, 0); }
+  }
+
+  .fc-panel {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    right: 0;
+    width: 360px;
+    max-width: calc(100vw - 32px);
+    background: var(--canvas);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(31, 58, 54, 0.22);
+    border: 1px solid var(--hairline);
+    overflow: hidden;
+    transform-origin: bottom right;
+    animation: fc-in 0.18s ease-out;
+  }
+  @keyframes fc-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .fc-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 12px;
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--rice);
+  }
+  .fc-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--ink); }
+  .fc-sub { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .fc-close {
+    background: transparent; border: none; cursor: pointer;
+    font-size: 26px; line-height: 1; color: var(--muted); padding: 0 4px;
+    transition: color 0.2s;
+  }
+  .fc-close:hover { color: var(--seal); }
+
+  .fc-body { padding: 12px 16px 18px; }
+  .fc-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s;
+  }
+  .fc-row:hover { background: var(--mist); }
+  .fc-icon {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--mist);
+    color: var(--jade-deep);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fc-content { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .fc-l { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .fc-v { font-size: 14px; color: var(--ink); font-weight: 500; word-break: break-all; }
+  .fc-copy {
+    flex-shrink: 0;
+    background: transparent; border: 1px solid var(--hairline);
+    color: var(--ink-soft);
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 6px 10px; border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .fc-copy:hover { border-color: var(--jade); color: var(--jade-deep); }
+  .fc-copy.copied { background: var(--jade); border-color: var(--jade); color: #fff; }
+
+  .fc-divider { text-align: center; margin: 14px 4px 8px; position: relative; }
+  .fc-divider::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--hairline);
+  }
+  .fc-divider span {
+    position: relative; padding: 0 12px; background: var(--canvas);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+  }
+
+  .fc-offices { list-style: none; padding: 0; margin: 0 4px 14px; }
+  .fc-offices li {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 13px;
+  }
+  .fc-offices li:last-child { border-bottom: none; }
+  .fc-offices strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 16px; color: var(--ink); display: block;
+  }
+  .fc-office-note { color: var(--muted); font-size: 11px; }
+  .fc-offices a { color: var(--seal); text-decoration: none; font-variant-numeric: tabular-nums; }
+
+  .fc-cta {
+    display: block;
+    background: var(--ink); color: var(--canvas);
+    text-align: center; text-decoration: none;
+    padding: 12px;
+    border-radius: 9999px;
+    font-size: 14px; font-weight: 500;
+    margin: 6px 4px 8px;
+    transition: background 0.2s;
+  }
+  .fc-cta:hover { background: var(--jade-deep); }
+  .fc-foot { text-align: center; font-size: 11px; color: var(--muted); margin: 0 4px; letter-spacing: 0.04em; }
+
+  @media (max-width: 480px) {
+    .fc-root { bottom: 16px; right: 16px; left: 16px; }
+    .fc-panel { right: 0; left: 0; width: auto; max-width: none; }
+    .fc-label { display: none; }
+    .float-chat { padding: 12px 14px; margin-left: auto; display: inline-flex; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('.fc-root');
+  const trigger = document.querySelector<HTMLButtonElement>('.float-chat');
+  const panel = document.querySelector<HTMLElement>('.fc-panel');
+  const closeBtn = document.querySelector<HTMLButtonElement>('.fc-close');
+
+  function setOpen(open: boolean) {
+    if (!root || !panel || !trigger) return;
+    root.dataset.open = String(open);
+    trigger.setAttribute('aria-expanded', String(open));
+    if (open) panel.hidden = false; else panel.hidden = true;
+  }
+
+  trigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(root?.dataset.open !== 'true');
+  });
+  closeBtn?.addEventListener('click', () => setOpen(false));
+
+  document.addEventListener('click', (e) => {
+    if (root?.dataset.open === 'true' && !root.contains(e.target as Node)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.fc-copy').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const value = btn.dataset.copy;
+      if (!value) return;
+      try {
+        await navigator.clipboard.writeText(value);
+        const orig = btn.textContent;
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove('copied');
+        }, 1400);
+      } catch {
+        /* clipboard blocked; silently no-op */
+      }
+    });
+  });
+</script>

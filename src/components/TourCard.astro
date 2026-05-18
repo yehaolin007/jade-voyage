@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  entry: CollectionEntry<'tours'>;
+}
+const { entry } = Astro.props;
+const t = entry.data;
+const href = `/tours/${entry.slug}/`;
+const priceStr = t.priceFrom.toLocaleString('en-US');
+---
+
+<article class="tour-card">
+  <a href={href} class="tour-img">
+    <img src={t.image} alt={t.alt} loading="lazy" />
+    {t.badge && (
+      <span class={`tour-badge${t.badge.type === 'seal' ? ' seal' : ''}`}>{t.badge.label}</span>
+    )}
+  </a>
+  <button class="tour-fav" aria-label="Save to favorites">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  </button>
+  <div class="tour-body">
+    <div class="tour-region">{t.region}</div>
+    <h3 class="tour-title"><a href={href}>{t.title}{t.subtitle && <><br />— {t.subtitle}</>}</a></h3>
+    <div class="tour-meta">
+      <span>{t.nights} nights</span>
+      <span>{t.groupSize}</span>
+      <span>{t.season}</span>
+    </div>
+    <div class="tour-footer">
+      <div class="tour-price">
+        <span class="from">From </span><span class="amount">${priceStr}</span><span class="per"> / person</span>
+      </div>
+      <div class="tour-rating"><span class="star">★</span> {t.rating.toFixed(2)} ({t.reviews})</div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .tour-card .tour-img { cursor: pointer; }
+  .tour-card .tour-title a { color: inherit; text-decoration: none; }
+  .tour-card .tour-title a:hover { color: var(--jade-deep); }
+</style>

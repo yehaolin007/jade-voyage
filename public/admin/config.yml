@@ -1,0 +1,121 @@
+# Decap CMS configuration for Jade Voyage
+# Auth backend is git-gateway when deployed (configure Identity on Cloudflare/Netlify);
+# for local development run `npx decap-server` and use ?local_backend=true on /admin/.
+
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: "public/assets"
+public_folder: "/assets"
+
+site_url: https://jade-voyage.pages.dev
+display_url: https://jade-voyage.pages.dev
+logo_url: /assets/jade-hero-wellness.png
+
+collections:
+  - name: "tours"
+    label: "Tours · 行程"
+    label_singular: "Tour"
+    folder: "src/content/tours"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{title}} — {{region}} · {{nights}} nights · ${{priceFrom}}"
+    sortable_fields: ['order', 'title', 'priceFrom', 'rating']
+    view_filters:
+      - label: "Wellness"
+        field: category
+        pattern: "Wellness"
+      - label: "Medical"
+        field: category
+        pattern: "Medical"
+      - label: "Culture"
+        field: category
+        pattern: "Culture"
+      - label: "Bespoke"
+        field: category
+        pattern: "Bespoke"
+    fields:
+      - { label: "Title", name: "title", widget: "string", hint: "Main itinerary name, e.g. West Lake Restoration" }
+      - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
+      - { label: "Region", name: "region", widget: "string", hint: "Location · category, e.g. Hangzhou · Wellness" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Wellness", "Medical", "Culture", "Bespoke"]
+        default: "Wellness"
+      - { label: "Nights", name: "nights", widget: "number", value_type: "int", min: 1, max: 30, default: 5 }
+      - { label: "Group size", name: "groupSize", widget: "string", default: "Max 8 guests" }
+      - { label: "Season", name: "season", widget: "string", default: "Year-round" }
+      - { label: "Price from (USD)", name: "priceFrom", widget: "number", value_type: "int", min: 0, default: 3000 }
+      - { label: "Currency", name: "currency", widget: "string", default: "USD" }
+      - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.01, default: 4.9 }
+      - { label: "Reviews count", name: "reviews", widget: "number", value_type: "int", min: 0, default: 0 }
+      - label: "Badge (optional)"
+        name: "badge"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - label: "Style"
+            name: "type"
+            widget: "select"
+            options: ["default", "seal"]
+            default: "default"
+            required: false
+      - { label: "Hero image", name: "image", widget: "image", hint: "Upload or pick from /assets" }
+      - { label: "Image alt text", name: "alt", widget: "string" }
+      - { label: "Display order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Lower numbers appear first" }
+      - { label: "Featured on home", name: "featured", widget: "boolean", default: true }
+      - { label: "Overview", name: "body", widget: "markdown", hint: "Shown on the detail page as the introductory paragraph" }
+
+  - name: "stories"
+    label: "Stories · 真实故事"
+    label_singular: "Story"
+    folder: "src/content/stories"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{guestName}} — {{location}}"
+    fields:
+      - label: "Card layout"
+        name: "cardLayout"
+        widget: "select"
+        options: ["video", "quote"]
+        default: "video"
+        hint: "video = guest with image; quote = pure pull-quote"
+      - { label: "Guest name", name: "guestName", widget: "string", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false, hint: "City the guest is from" }
+      - { label: "Trip taken", name: "trip", widget: "string", required: false, hint: "e.g. West Lake Sanctuary · 7 nights · 2025" }
+      - { label: "Avatar letter", name: "avatar", widget: "string", required: false, pattern: ['^.{1,2}$', "1-2 characters"] }
+      - { label: "Image (video layout only)", name: "image", widget: "image", required: false }
+      - { label: "Headline (in quotes)", name: "headline", widget: "string", required: false }
+      - { label: "Citation (quote layout only)", name: "citation", widget: "string", required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 99 }
+      - { label: "Story body", name: "body", widget: "markdown", hint: "For quote layout this is the quote itself; for video layout it is the supporting paragraph" }
+
+  - name: "services"
+    label: "Services · 三大服务"
+    label_singular: "Service"
+    folder: "src/content/services"
+    create: true
+    delete: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Chinese title", name: "cnTitle", widget: "string", hint: "e.g. 医 疗 体 检 (spaces between characters)" }
+      - { label: "Icon SVG paths", name: "iconSvg", widget: "text", hint: "Inner <path>/<circle>... of a 24x24 line icon" }
+      - { label: "CTA label", name: "cta", widget: "string", default: "Learn more" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 99 }
+      - { label: "Description", name: "body", widget: "markdown" }

@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import TourCard from './TourCard.astro';
+
+const entries = (await getCollection('tours', ({ data }) => data.featured))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="tours" id="tours">
+  <div class="container">
+    <div class="section-head-flex">
+      <div class="section-head" style="margin-bottom: 0;">
+        <span class="micro">— Signature Itineraries</span>
+        <h2>Routes our guests return for.</h2>
+      </div>
+      <a href="/tours/" class="btn btn-outline">View All Tours →</a>
+    </div>
+
+    <div class="tours-grid">
+      {entries.map((entry) => <TourCard entry={entry} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,266 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import FloatChat from '../../components/FloatChat.astro';
+import PageHero from '../../components/PageHero.astro';
+import PayPalButton from '../../components/PayPalButton.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+type TourData = CollectionEntry<'tours'>['data'] & { slug: string };
+
+export async function getStaticPaths() {
+  const entries = await getCollection('tours');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { tour: { ...entry.data, slug: entry.slug } },
+  }));
+}
+
+interface Props { tour: TourData }
+const { tour } = Astro.props;
+
+const tiers = [
+  {
+    id: 'deposit',
+    label: 'Reserve',
+    percent: 20,
+    refund: 'Refundable up to 30 days before arrival',
+    note: 'Holds your dates while we finalise the full proposal.',
+  },
+  {
+    id: 'half',
+    label: 'Half pay',
+    percent: 50,
+    refund: 'Refundable up to 14 days before arrival',
+    note: 'Most guests choose this — confirms hotels and partner bookings.',
+  },
+  {
+    id: 'full',
+    label: 'Pay in full',
+    percent: 100,
+    refund: 'Refundable up to 7 days before arrival',
+    note: 'Locks every line of the itinerary at today\'s exchange rate.',
+  },
+];
+
+const fullTitle = `${tour.title}${tour.subtitle ? ' — ' + tour.subtitle : ''}`;
+const invoiceBase = `JV-${tour.slug.toUpperCase().slice(0, 8)}-${Date.now().toString(36).slice(-5).toUpperCase()}`;
+
+function money(n: number) {
+  return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+---
+
+<Layout title={`Payment · ${tour.title} — Jade Voyage`} description={`Secure your ${tour.title} itinerary with a partial or full PayPal deposit.`}>
+  <Nav />
+
+  <PageHero
+    eyebrow="Secure Payment"
+    title="Confirm your booking with PayPal."
+    subtitle={`You are reserving the ${fullTitle} itinerary (${tour.nights} nights · ${tour.region}). Choose a deposit tier on the right.`}
+    crumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Itineraries', href: '/tours/' },
+      { label: tour.title, href: `/tours/${tour.slug}/` },
+      { label: 'Payment' },
+    ]}
+  />
+
+  <section class="pay-main">
+    <div class="container pay-grid">
+      <div class="pay-summary">
+        <span class="micro">— Order Summary</span>
+        <h2>{fullTitle}</h2>
+        <div class="underline"></div>
+
+        <div class="summary-card">
+          <img src={tour.image} alt={tour.alt} loading="lazy" />
+          <div class="sum-meta">
+            <div class="sum-row"><span>Region</span><strong>{tour.region}</strong></div>
+            <div class="sum-row"><span>Length</span><strong>{tour.nights} nights</strong></div>
+            <div class="sum-row"><span>Group</span><strong>{tour.groupSize}</strong></div>
+            <div class="sum-row"><span>Season</span><strong>{tour.season}</strong></div>
+            <div class="sum-row total">
+              <span>Total per person</span>
+              <strong class="total-amount">${money(tour.priceFrom)}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="pay-fine">
+          <h4>Before you pay</h4>
+          <ul>
+            <li>This is a <strong>per-person</strong> reservation amount. Multi-guest bookings are confirmed via concierge once a deposit is received.</li>
+            <li>All amounts are charged in <strong>USD</strong>. PayPal converts from your home currency at checkout.</li>
+            <li>You will receive an email receipt and a concierge follow-up within four hours.</li>
+            <li>By paying you agree to the cancellation and refund policy linked at each tier below.</li>
+          </ul>
+        </div>
+      </div>
+
+      <aside class="pay-checkout">
+        <span class="micro">— Choose a Tier</span>
+        <h3>How much would you like to pay today?</h3>
+
+        <div class="tier-list" role="tablist">
+          {tiers.map((t, i) => {
+            const amount = Math.round(tour.priceFrom * (t.percent / 100));
+            return (
+              <button
+                class:list={['tier-card', i === 0 && 'active']}
+                data-tier={t.id}
+                data-amount={amount}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+              >
+                <div class="tier-head">
+                  <span class="tier-label">{t.label}</span>
+                  <span class="tier-percent">{t.percent}%</span>
+                </div>
+                <div class="tier-amount">${money(amount)}</div>
+                <div class="tier-refund">{t.refund}</div>
+                <div class="tier-note">{t.note}</div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div class="paypal-stage">
+          {tiers.map((t, i) => {
+            const amount = Math.round(tour.priceFrom * (t.percent / 100));
+            const containerId = `pp-${tour.slug}-${t.id}`;
+            return (
+              <div class:list={['pp-slot', i === 0 && 'active']} data-slot={t.id}>
+                <PayPalButton
+                  amount={amount}
+                  description={`${fullTitle} · ${t.label} (${t.percent}%) · ${tour.nights}n`}
+                  invoiceId={`${invoiceBase}-${t.id.toUpperCase()}`}
+                  containerId={containerId}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <Footer />
+  <FloatChat />
+</Layout>
+
+<style>
+  .pay-main { padding: 72px 0 96px; background: var(--canvas); }
+  .pay-grid { display: grid; grid-template-columns: 1fr 460px; gap: 56px; align-items: start; }
+  .pay-summary .micro { color: var(--jade-deep); margin-bottom: 12px; display: inline-block; }
+  .pay-summary h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 38px; color: var(--ink); line-height: 1.1;
+  }
+  .underline { width: 40px; height: 1px; background: var(--jade); margin: 18px 0 28px; }
+
+  .summary-card {
+    display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+    background: var(--rice); border-radius: 14px; padding: 20px;
+    margin-bottom: 28px; align-items: center;
+  }
+  .summary-card img { width: 100%; height: 100%; min-height: 180px; object-fit: cover; border-radius: 10px; }
+  .sum-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; border-bottom: 1px solid var(--hairline); }
+  .sum-row:last-child { border-bottom: none; }
+  .sum-row span { color: var(--muted); }
+  .sum-row strong { color: var(--ink); font-weight: 500; }
+  .sum-row.total { margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--ink); border-bottom: none; }
+  .total-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 26px; color: var(--seal);
+  }
+
+  .pay-fine { background: var(--mist); border-radius: 12px; padding: 24px 28px; }
+  .pay-fine h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 20px; color: var(--ink); margin-bottom: 12px;
+  }
+  .pay-fine ul { list-style: none; padding: 0; margin: 0; }
+  .pay-fine li {
+    padding: 8px 0 8px 22px;
+    color: var(--ink-soft); font-size: 14px; line-height: 1.55;
+    position: relative;
+  }
+  .pay-fine li::before {
+    content: ''; position: absolute; left: 0; top: 16px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--jade);
+  }
+
+  .pay-checkout { position: sticky; top: 100px; }
+  .pay-checkout .micro { color: var(--jade-deep); margin-bottom: 10px; display: inline-block; }
+  .pay-checkout h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 26px; color: var(--ink); line-height: 1.15; margin-bottom: 22px;
+  }
+
+  .tier-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .tier-card {
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 16px 18px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: inherit;
+  }
+  .tier-card:hover { border-color: var(--jade); }
+  .tier-card.active {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--canvas);
+    box-shadow: 0 8px 24px rgba(31, 58, 54, 0.2);
+  }
+  .tier-card.active .tier-amount { color: #E8C77A; }
+  .tier-card.active .tier-refund,
+  .tier-card.active .tier-note { color: rgba(255,255,255,0.7); }
+  .tier-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .tier-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 20px;
+  }
+  .tier-percent {
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .tier-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 500; color: var(--seal);
+    margin-top: 4px; font-variant-numeric: tabular-nums;
+  }
+  .tier-refund { font-size: 12px; color: var(--ink-soft); margin-top: 6px; letter-spacing: 0.02em; }
+  .tier-note { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+
+  .paypal-stage { position: relative; }
+  .pp-slot { display: none; }
+  .pp-slot.active { display: block; }
+
+  @media (max-width: 960px) {
+    .pay-grid { grid-template-columns: 1fr; }
+    .pay-checkout { position: static; }
+    .summary-card { grid-template-columns: 1fr; }
+    .summary-card img { min-height: 200px; }
+  }
+</style>
+
+<script>
+  const tierBtns = document.querySelectorAll<HTMLButtonElement>('.tier-card');
+  const slots = document.querySelectorAll<HTMLElement>('.pp-slot');
+  tierBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.tier;
+      tierBtns.forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', String(on));
+      });
+      slots.forEach((s) => s.classList.toggle('active', s.dataset.slot === id));
+    });
+  });
+</script>

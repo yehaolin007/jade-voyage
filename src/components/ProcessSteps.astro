@@ -1,0 +1,27 @@
+---
+const steps = [
+  { dot: 'i', h: 'Share Your Wishes', p: 'A short form or a 30-minute video call — tell us about your health goals, travel rhythm, and dates.' },
+  { dot: 'ii', h: 'Receive Your Plan', p: 'Within 48 hours we send a tailored proposal — itinerary, hospitals, clinicians, accommodations, transparent pricing.' },
+  { dot: 'iii', h: 'Travel Without Worry', p: 'Visa support, English-speaking drivers, in-trip concierge on WhatsApp, 24-hour medical hotline.' },
+  { dot: 'iv', h: 'Continue at Home', p: 'Post-trip follow-up: medical reports translated, TCM prescriptions explained, optional telehealth check-ins.' },
+];
+---
+
+<section class="process">
+  <div class="container">
+    <div class="section-head" style="text-align: center; margin-left: auto; margin-right: auto;">
+      <span class="micro">— How It Works</span>
+      <h2>Four quiet steps. No paperwork stress.</h2>
+    </div>
+
+    <div class="process-timeline">
+      {steps.map((s) => (
+        <div class="step">
+          <div class="step-dot">{s.dot}</div>
+          <h5>{s.h}</h5>
+          <p>{s.p}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

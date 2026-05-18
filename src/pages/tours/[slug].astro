@@ -1,0 +1,354 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import FloatChat from '../../components/FloatChat.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+type TourData = CollectionEntry<'tours'>['data'] & { slug: string };
+
+export async function getStaticPaths() {
+  const entries = await getCollection('tours');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { tour: { ...entry.data, slug: entry.slug } },
+  }));
+}
+
+interface Props { tour: TourData }
+const { tour } = Astro.props;
+
+const dayTemplates: Record<TourData['category'], string[]> = {
+  Wellness: [
+    'Arrival & private transfer · welcome tea ceremony · light evening consultation with your concierge.',
+    'Morning TCM diagnostic with a licensed physician · personal herbal formulation · lakeside walk.',
+    'Acupuncture session · guided Tai Chi at dawn · vegetarian cuisine workshop.',
+    'Hot-spring half-day · meridian massage · afternoon at leisure in the garden pavilion.',
+    'Optional day-trip to a tea-mountain retreat · calligraphy or Guqin class on return.',
+    'Final consultation · take-home prescriptions translated · farewell dinner.',
+    'Private transfer to airport · post-trip telehealth booked if requested.',
+    'Buffer day for individual wellness preferences (added on longer routes).',
+    'Bespoke closing experience selected by your concierge.',
+  ],
+  Medical: [
+    'Arrival & airport meet-and-greet · check into JCI-accredited recovery hotel · light dinner.',
+    'Full pre-screening intake · bloodwork · ECG · imaging at the partner hospital.',
+    'Specialist consultations · results review · English-language report assembled.',
+    'Post-screening rest day · gentle excursion or in-house spa · concierge debrief.',
+    'Optional secondary specialist appointment or wellness extension.',
+  ],
+  Culture: [
+    'Arrival · evening orientation walk · cultural curator briefing.',
+    'Early sunrise expedition · heritage site tour · regional cuisine dinner.',
+    'Crafts workshop · meet local artisan · afternoon hiking with bilingual guide.',
+    'Off-the-grid village stay · twilight meditation by ancient pine.',
+    'Museum & private gallery access · curator-led conversation.',
+    'Slow morning · optional photography session · seasonal banquet.',
+    'Final reflection walk · transfer to next leg or airport.',
+  ],
+  Bespoke: [
+    'Arrival in private vehicle · meeting with route designer · welcome banquet.',
+    'Tea Horse Road segment · ancient post-station stay · regional cuisine.',
+    'Forest soak & herbalist consultation · slow afternoon among Pu-erh terraces.',
+    'Optional Naxi music evening or sound-bath practice in a temple courtyard.',
+    'Day-trek with mule porters · highland picnic · stargazing camp.',
+    'Crafts village stay · indigo dye / silver work workshop.',
+    'Concluding wellness review · TCM prescription written for home practice.',
+    'Buffer day for weather-dependent itinerary adjustments.',
+    'Private transfer · debrief & lifestyle continuation plan delivered.',
+  ],
+};
+
+const days = dayTemplates[tour.category].slice(0, tour.nights);
+
+const inclusions = [
+  'Bilingual concierge accompaniment throughout the journey',
+  'Boutique five-star or heritage accommodation',
+  'All in-trip transfers in private vehicles',
+  'Daily breakfast + curated regional dining experiences',
+  'Entrance fees to all heritage and partner sites',
+  'Medical / TCM consultations as per category',
+  '24-hour medical hotline during your stay',
+];
+const exclusions = [
+  'International flights (we can arrange on request)',
+  'Personal travel insurance (mandatory; partner referral available)',
+  'Visa application fees (we provide invitation letters)',
+  'Gratuities and personal shopping',
+  'Optional add-on experiences priced separately',
+];
+
+const otherTours = (await getCollection('tours'))
+  .filter((e) => e.slug !== tour.slug)
+  .slice(0, 3)
+  .map((e) => ({ ...e.data, slug: e.slug }));
+const priceStr = tour.priceFrom.toLocaleString('en-US');
+const title = `${tour.title}${tour.subtitle ? ' — ' + tour.subtitle : ''} | Jade Voyage`;
+---
+
+<Layout title={title} description={`A ${tour.nights}-night ${tour.category.toLowerCase()} journey across ${tour.region.split('·')[0].trim()}.`}>
+  <Nav />
+
+  <PageHero
+    eyebrow={tour.category}
+    title={`${tour.title}${tour.subtitle ? ' — ' + tour.subtitle : ''}`}
+    subtitle={`${tour.nights} nights · ${tour.region} · ${tour.season}`}
+    bgImage={tour.image}
+    crumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Itineraries', href: '/tours' },
+      { label: tour.title },
+    ]}
+  />
+
+  <section class="tour-detail">
+    <div class="container detail-grid">
+      <div class="detail-main">
+        <div class="lead-block">
+          <span class="micro">— Overview</span>
+          <p class="lead-copy">
+            A {tour.nights}-night curated journey through {tour.region.split('·')[0].trim()}, designed
+            for guests seeking {tour.category === 'Medical' ? 'precise diagnostics paired with quiet recovery' : tour.category === 'Wellness' ? 'restorative rhythms grounded in Traditional Chinese Medicine' : tour.category === 'Culture' ? 'unhurried immersion in heritage landscapes and crafts' : 'a fully private, slow-paced reset shaped to your life'}.
+            Each day balances meaningful experience with generous rest — your concierge holds every detail so you simply arrive.
+          </p>
+        </div>
+
+        <div class="itinerary-block">
+          <span class="micro">— Day-By-Day</span>
+          <h2>A rhythm, not a schedule.</h2>
+          <div class="underline"></div>
+          <ol class="itinerary">
+            {days.map((d, i) => (
+              <li class="itin-day">
+                <div class="day-num">Day {String(i + 1).padStart(2, '0')}</div>
+                <div class="day-body">{d}</div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="incl-block">
+          <div class="col">
+            <span class="micro">— Inclusions</span>
+            <h3>What's included.</h3>
+            <ul class="incl-list">
+              {inclusions.map((i) => <li>{i}</li>)}
+            </ul>
+          </div>
+          <div class="col">
+            <span class="micro">— Not included</span>
+            <h3>What's separate.</h3>
+            <ul class="excl-list">
+              {exclusions.map((e) => <li>{e}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <aside class="detail-aside">
+        <div class="price-card">
+          <span class="from">From</span>
+          <div class="price-amount">${priceStr}</div>
+          <span class="per">per person · twin share</span>
+          <ul class="quick-facts">
+            <li><span>Nights</span><strong>{tour.nights}</strong></li>
+            <li><span>Group</span><strong>{tour.groupSize}</strong></li>
+            <li><span>Season</span><strong>{tour.season}</strong></li>
+            <li><span>Rating</span><strong>★ {tour.rating.toFixed(2)} ({tour.reviews})</strong></li>
+          </ul>
+          <a href="/contact" class="btn btn-primary full">Request This Itinerary →</a>
+          <a href={`/payment/${tour.slug}/`} class="btn btn-outline full">Pay Deposit with PayPal →</a>
+          <a href="/contact" class="btn btn-ghost full">Ask the Concierge a Question</a>
+          <p class="reassure">No deposit required to enquire. Custom adjustments welcome.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="other-tours">
+    <div class="container">
+      <div class="section-head">
+        <span class="micro">— You May Also Like</span>
+        <h2>Three more routes our guests return for.</h2>
+        <div class="underline"></div>
+      </div>
+      <div class="other-grid">
+        {otherTours.map((t) => (
+          <a class="other-card" href={`/tours/${t.slug}`}>
+            <img src={t.image} alt={t.alt} loading="lazy" />
+            <div class="other-body">
+              <div class="other-region">{t.region}</div>
+              <h4>{t.title}</h4>
+              <span class="other-meta">{t.nights} nights · From ${t.priceFrom.toLocaleString('en-US')}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+  <FloatChat />
+</Layout>
+
+<style>
+  .tour-detail { padding: 80px 0 96px; background: var(--canvas); }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 64px;
+    align-items: start;
+  }
+  .lead-block { margin-bottom: 64px; }
+  .lead-block .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .lead-copy { font-size: 19px; line-height: 1.65; color: var(--ink-soft); font-weight: 300; }
+  .itinerary-block { margin-bottom: 72px; }
+  .itinerary-block .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .itinerary-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0;
+  }
+  .underline { width: 40px; height: 1px; background: var(--jade); margin: 20px 0 32px; }
+  .itinerary { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--hairline); }
+  .itin-day {
+    position: relative;
+    padding: 20px 0 20px 40px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .itin-day::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 28px;
+    width: 9px;
+    height: 9px;
+    background: var(--jade);
+    border-radius: 50%;
+  }
+  .day-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--seal);
+    margin-bottom: 6px;
+  }
+  .day-body { color: var(--ink-soft); line-height: 1.6; font-size: 16px; }
+  .incl-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding: 48px;
+    background: var(--rice);
+    border-radius: 14px;
+  }
+  .incl-block .micro { color: var(--jade-deep); margin-bottom: 12px; display: inline-block; }
+  .incl-block h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .incl-list, .excl-list { list-style: none; padding: 0; margin: 0; }
+  .incl-list li, .excl-list li {
+    padding: 10px 0 10px 26px;
+    border-bottom: 1px solid var(--hairline);
+    color: var(--ink-soft);
+    font-size: 15px;
+    position: relative;
+  }
+  .incl-list li:last-child, .excl-list li:last-child { border-bottom: none; }
+  .incl-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    color: var(--jade-deep);
+    font-weight: 600;
+  }
+  .excl-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    color: var(--muted);
+  }
+
+  .detail-aside {
+    position: sticky;
+    top: 100px;
+  }
+  .price-card {
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+  .price-card .from { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 44px;
+    color: var(--seal);
+    line-height: 1;
+    margin: 6px 0 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .price-card .per { font-size: 13px; color: var(--muted); display: block; margin-bottom: 24px; }
+  .quick-facts {
+    list-style: none;
+    padding: 16px 0;
+    margin: 0 0 20px;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .quick-facts li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .quick-facts li span { color: var(--muted); }
+  .quick-facts li strong { color: var(--ink); font-weight: 500; }
+  .btn.full { display: flex; justify-content: center; width: 100%; margin-bottom: 10px; }
+  .reassure { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.5; }
+
+  .other-tours { padding: 96px 0; background: var(--rice); }
+  .other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .other-card {
+    background: var(--canvas);
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: var(--shadow);
+    transition: transform 0.4s, box-shadow 0.4s;
+  }
+  .other-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+  .other-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+  .other-body { padding: 22px 24px 26px; }
+  .other-region { font-size: 12px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .other-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .other-meta { font-size: 13px; color: var(--ink-soft); }
+
+  @media (max-width: 960px) {
+    .detail-grid { grid-template-columns: 1fr; }
+    .detail-aside { position: static; }
+    .incl-block { grid-template-columns: 1fr; gap: 32px; padding: 32px; }
+    .other-grid { grid-template-columns: 1fr; }
+  }
+</style>

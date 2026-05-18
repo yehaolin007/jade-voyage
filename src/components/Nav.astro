@@ -1,0 +1,28 @@
+---
+const links = [
+  { href: '#services', label: 'Services' },
+  { href: '#tours', label: 'Tours', hasSub: true },
+  { href: '#trust', label: 'Verified Partners', hasSub: true },
+  { href: '#stories', label: 'Stories' },
+  { href: '#about', label: 'About' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<nav class="top">
+  <div class="container row">
+    <a href="/" class="brand">
+      <span class="seal">玉</span>
+      <span class="brand-text">
+        <span class="en">Jade Voyage</span>
+        <span class="cn-mini">玉 行</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      {links.map((l) => (
+        <a href={l.href} class={l.hasSub ? 'has-sub' : ''}>{l.label}</a>
+      ))}
+    </div>
+    <a href="#contact" class="btn btn-primary">Plan My Journey →</a>
+  </div>
+</nav>

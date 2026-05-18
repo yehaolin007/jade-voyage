@@ -1,0 +1,164 @@
+---
+import { site } from '../data/site';
+
+export interface Props {
+  amount: number;
+  description: string;
+  invoiceId?: string;
+  containerId?: string;
+}
+
+const {
+  amount,
+  description,
+  invoiceId,
+  containerId = `paypal-btn-${Math.random().toString(36).slice(2, 10)}`,
+} = Astro.props;
+
+const clientId = site.paypal.clientId;
+const currency = site.paypal.currency;
+const sdkSrc = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=${encodeURIComponent(currency)}&intent=capture&components=buttons`;
+const isSandboxPlaceholder = clientId === 'sb';
+const amountFixed = amount.toFixed(2);
+---
+
+<div class="paypal-wrap">
+  {isSandboxPlaceholder && (
+    <div class="paypal-warning">
+      <strong>Sandbox demo mode.</strong>
+      Replace <code>site.paypal.clientId</code> in <code>src/data/site.ts</code> with your PayPal Developer Sandbox Client ID to enable a real test checkout.
+    </div>
+  )}
+
+  <div id={containerId} class="paypal-button-container" data-amount={amountFixed} data-currency={currency} data-description={description} data-invoice={invoiceId || ''}></div>
+
+  <div class="paypal-fallback" hidden data-fallback-for={containerId}>
+    <p>PayPal could not be loaded — please try again or use one of the alternatives below.</p>
+    <a class="btn btn-outline" href="/contact/">Contact us to pay another way</a>
+  </div>
+
+  <p class="paypal-trust">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <rect x="4" y="11" width="16" height="9" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </svg>
+    Secured by PayPal · Buyer protection · No PayPal account required
+  </p>
+</div>
+
+<script is:inline src={sdkSrc} data-paypal-loader async></script>
+
+<script is:inline define:vars={{ containerId, amount: amountFixed, currency, description, invoiceId: invoiceId || '' }}>
+  (function () {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const fallback = document.querySelector('[data-fallback-for="' + containerId + '"]');
+
+    let tries = 0;
+    function waitForPaypal() {
+      if (window.paypal && typeof window.paypal.Buttons === 'function') {
+        renderButton();
+      } else if (tries++ < 40) {
+        setTimeout(waitForPaypal, 200);
+      } else {
+        container.style.display = 'none';
+        if (fallback) fallback.hidden = false;
+      }
+    }
+
+    function renderButton() {
+      window.paypal
+        .Buttons({
+          style: { layout: 'vertical', color: 'black', shape: 'pill', label: 'paypal', height: 45 },
+          createOrder: function (_data, actions) {
+            return actions.order.create({
+              intent: 'CAPTURE',
+              purchase_units: [
+                {
+                  amount: { value: amount, currency_code: currency },
+                  description: description,
+                  invoice_id: invoiceId || undefined,
+                },
+              ],
+              application_context: {
+                brand_name: 'Jade Voyage',
+                user_action: 'PAY_NOW',
+                shipping_preference: 'NO_SHIPPING',
+              },
+            });
+          },
+          onApprove: function (_data, actions) {
+            return actions.order.capture().then(function (details) {
+              const root = container.closest('.paypal-wrap');
+              if (!root) return;
+              root.innerHTML =
+                '<div class="paypal-success">' +
+                '<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>' +
+                '<h3>Thank you, ' + (details.payer && details.payer.name ? details.payer.name.given_name : 'guest') + '.</h3>' +
+                '<p>Your deposit has been received. A concierge will email you within four hours to confirm the next steps.</p>' +
+                '<p class="paypal-receipt">Order reference: <code>' + details.id + '</code></p>' +
+                '</div>';
+            });
+          },
+          onError: function (err) {
+            console.error('[PayPal]', err);
+            if (fallback) fallback.hidden = false;
+          },
+        })
+        .render('#' + containerId);
+    }
+
+    waitForPaypal();
+  })();
+</script>
+
+<style>
+  .paypal-wrap {
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .paypal-warning {
+    background: #FFF4E0;
+    border: 1px solid #E8C77A;
+    color: #6A4E14;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .paypal-warning code {
+    background: rgba(0,0,0,0.06);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .paypal-button-container { min-height: 120px; }
+  .paypal-fallback { text-align: center; padding: 18px 0; }
+  .paypal-fallback p { color: var(--ink-soft); margin-bottom: 14px; font-size: 14px; }
+  .paypal-trust {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 14px;
+    font-size: 12px; color: var(--muted); letter-spacing: 0.04em;
+  }
+  :global(.paypal-success) {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--ink);
+  }
+  :global(.paypal-success svg) { color: var(--jade-deep); margin-bottom: 12px; }
+  :global(.paypal-success h3) {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500; font-size: 26px; margin-bottom: 10px; color: var(--ink);
+  }
+  :global(.paypal-success p) { color: var(--ink-soft); line-height: 1.6; margin-bottom: 10px; }
+  :global(.paypal-success .paypal-receipt) {
+    font-size: 13px; color: var(--muted); margin-top: 18px;
+  }
+  :global(.paypal-success code) {
+    background: var(--rice); padding: 3px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  }
+</style>

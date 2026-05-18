@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('stories'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const rendered = await Promise.all(
+  entries.map(async (e) => {
+    const { Content } = await e.render();
+    return { ...e, Content };
+  })
+);
+---
+
+<section class="stories" id="stories">
+  <div class="container">
+    <div class="section-head">
+      <span class="micro">— Real Voices</span>
+      <h2>Stories from guests who came for healing, and stayed for the landscape.</h2>
+      <div class="underline"></div>
+    </div>
+
+    <div class="stories-grid">
+      {rendered.map((s) => (
+        s.data.cardLayout === 'video' ? (
+          <article class="story-card video">
+            <div class="thumb">
+              {s.data.image && <img src={s.data.image} alt={s.data.guestName || 'Guest story'} loading="lazy" />}
+              <span class="play-btn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z" /></svg>
+              </span>
+            </div>
+            <div class="story-body">
+              <div class="meta-row">
+                <div class="avatar">{s.data.avatar}</div>
+                <div>
+                  <div class="name">{s.data.guestName} — {s.data.location}</div>
+                  <div class="geo">{s.data.trip}</div>
+                </div>
+              </div>
+              {s.data.headline && <h4>{s.data.headline}</h4>}
+              <div class="story-prose"><s.Content /></div>
+            </div>
+          </article>
+        ) : (
+          <article class="story-card quote">
+            <div>
+              <span class="qmark">"</span>
+              <blockquote><s.Content /></blockquote>
+            </div>
+            <div class="cite">{s.data.citation}</div>
+          </article>
+        )
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .story-prose :global(p) { margin: 0; }
+</style>

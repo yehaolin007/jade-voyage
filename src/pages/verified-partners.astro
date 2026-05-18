@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import FloatChat from '../components/FloatChat.astro';
+import PageHero from '../components/PageHero.astro';
+
+const medical = [
+  { name: 'Huadong Health Centre', loc: 'Shanghai', tier: 'JCI · Class III Tier-A', note: 'Executive screening · cardiac & oncological diagnostics' },
+  { name: 'Zhejiang United Family Hospital', loc: 'Hangzhou', tier: 'JCI Accredited', note: 'Bilingual specialists · post-screening rehabilitation' },
+  { name: 'Huaxi Medical Centre', loc: 'Chengdu', tier: 'Class III Tier-A', note: 'High-resolution imaging · sleep medicine' },
+  { name: 'Beijing International Clinic', loc: 'Beijing', tier: 'JCI Affiliated', note: 'Concierge medicine · second-opinion programmes' },
+];
+
+const wellness = [
+  { name: 'West Lake TCM Sanctuary', loc: 'Hangzhou', tier: 'CNATCM Licensed', note: 'Acupuncture · herbal compounding · meditation' },
+  { name: 'Emei Mountain Retreat', loc: 'Sichuan', tier: 'CNATCM Licensed', note: 'Hot-spring therapy · Buddhist breathwork' },
+  { name: 'Pu-erh Tea Forest Lodge', loc: 'Yunnan', tier: 'CNATCM Licensed', note: 'Herbalist consultation · forest soaking' },
+  { name: 'Wudang Inner Practice House', loc: 'Hubei', tier: 'CNATCM Licensed', note: 'Tai Chi master sessions · Daoist nutrition' },
+];
+
+const travel = [
+  { name: 'Silk Road Heritage Travel', loc: 'National operator', tier: 'AAAAA · CITS Member', note: 'Small-group cultural escorts · museum access' },
+  { name: 'Eastern Gardens Atelier', loc: 'Suzhou · Hangzhou', tier: 'AAAAA Boutique', note: 'Private garden curators · craft-village circuits' },
+  { name: 'Yunnan Slow Routes Co.', loc: 'Kunming · Dali', tier: 'AAAA Specialist', note: 'Tea Horse Road expeditions · ethnographic guides' },
+  { name: 'North Capital Heritage', loc: 'Beijing', tier: 'AAAAA', note: 'Imperial site access · master craftsperson visits' },
+];
+
+const sections = [
+  { id: 'medical', title: 'Accredited Medical Centres', cn: '权 威 体 检', items: medical },
+  { id: 'wellness', title: 'Professional Wellness Clinics', cn: '专 业 康 养', items: wellness },
+  { id: 'travel', title: 'Top-Rated Travel Partners', cn: '口 碑 旅 行', items: travel },
+];
+---
+
+<Layout title="Verified Partners — Jade Voyage" description="Every Jade Voyage journey is delivered through internationally accredited medical, wellness and travel partners.">
+  <Nav />
+
+  <PageHero
+    eyebrow="Verified Partners"
+    title="Every route is held to international standards."
+    subtitle="We partner only with institutions that meet international accreditation or top national tier — and we re-verify every relationship annually."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Verified Partners' }]}
+  />
+
+  <section class="vp-intro">
+    <div class="container vp-intro-grid">
+      <div class="vp-stat">
+        <div class="num">12<sup>+</sup></div>
+        <div class="label">JCI-Accredited Hospitals</div>
+      </div>
+      <div class="vp-stat">
+        <div class="num">18</div>
+        <div class="label">Class III Tier-A Facilities</div>
+      </div>
+      <div class="vp-stat">
+        <div class="num">22</div>
+        <div class="label">CNATCM-Licensed Clinics</div>
+      </div>
+      <div class="vp-stat">
+        <div class="num">100%</div>
+        <div class="label">Annually Re-Verified</div>
+      </div>
+    </div>
+  </section>
+
+  {sections.map((s) => (
+    <section id={s.id} class="vp-section">
+      <div class="container">
+        <div class="vp-head">
+          <span class="micro">— {s.title}</span>
+          <h2>{s.title.split(' ').slice(-1)[0] === 'Centres' ? 'Diagnostic precision, English-language care.' : s.id === 'wellness' ? 'Practitioners with national licensure.' : 'Operators that respect the slowness of the route.'}</h2>
+          <div class="cn-sub">{s.cn}</div>
+          <div class="underline"></div>
+        </div>
+        <div class="vp-list">
+          {s.items.map((it) => (
+            <div class="vp-row">
+              <div class="vp-mark">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2L4 5v7c0 5 3.5 9 8 10 4.5-1 8-5 8-10V5l-8-3z" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </div>
+              <div class="vp-content">
+                <div class="vp-name">{it.name}</div>
+                <div class="vp-meta">{it.loc} · <span class="vp-tier">{it.tier}</span></div>
+                <div class="vp-note">{it.note}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="vp-foot-cta">
+    <div class="container">
+      <p>Looking for a specific accreditation document or certification? <a href="/contact">Speak with a concierge →</a></p>
+      <p class="privacy">Detailed privacy & data-handling practices are available in our <a href="/privacy-policy">Privacy Policy</a>.</p>
+    </div>
+  </section>
+
+  <Footer />
+  <FloatChat />
+</Layout>
+
+<style>
+  .vp-intro { padding: 64px 0; background: var(--mist); border-bottom: 1px solid var(--hairline); }
+  .vp-intro-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+  .vp-stat .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 56px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .vp-stat .num sup { font-size: 26px; color: var(--seal); vertical-align: super; }
+  .vp-stat .label { margin-top: 10px; font-size: 13px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .vp-section { padding: 96px 0; border-bottom: 1px solid var(--hairline); }
+  .vp-section:nth-child(even) { background: var(--rice); }
+  .vp-head { margin-bottom: 48px; max-width: 720px; }
+  .vp-head .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .vp-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .vp-head .cn-sub {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0.22em;
+    margin-top: 10px;
+  }
+  .vp-head .underline { width: 40px; height: 1px; background: var(--jade); margin-top: 20px; }
+
+  .vp-list { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .vp-row {
+    display: flex;
+    gap: 18px;
+    padding: 24px 28px;
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .vp-row:hover { border-color: var(--jade); box-shadow: var(--shadow); }
+  .vp-mark {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--jade);
+    border-radius: 50%;
+    color: var(--jade-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vp-content { flex: 1; }
+  .vp-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .vp-meta { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 8px; }
+  .vp-tier { color: var(--seal); font-weight: 500; }
+  .vp-note { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
+  .vp-foot-cta { padding: 64px 0; background: var(--ink); color: var(--canvas); text-align: center; }
+  .vp-foot-cta p { font-size: 17px; margin-bottom: 10px; }
+  .vp-foot-cta a { color: #E8C77A; border-bottom: 1px solid #E8C77A; padding-bottom: 1px; }
+  .vp-foot-cta .privacy { font-size: 13px; opacity: 0.6; }
+
+  @media (max-width: 768px) {
+    .vp-intro-grid { grid-template-columns: repeat(2, 1fr); }
+    .vp-list { grid-template-columns: 1fr; }
+  }
+</style>

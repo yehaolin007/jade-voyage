@@ -1,0 +1,344 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import FloatChat from '../components/FloatChat.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+
+const faqs = [
+  {
+    q: 'How quickly will I receive a response?',
+    a: 'Typically within four hours during Beijing business hours (UTC+8), and within twenty-four hours otherwise. Every initial inquiry is answered by a real concierge, not a chatbot.',
+  },
+  {
+    q: 'Do I need to pay a deposit to enquire?',
+    a: 'No. The first proposal — including suggested hospitals, accommodations and a transparent quote — is delivered without any deposit. A 20% deposit only secures the booking once you have approved the plan.',
+  },
+  {
+    q: 'Which languages do you work in?',
+    a: 'English, German, French and Mandarin. We can also arrange interpretation for Spanish, Italian and Russian on request.',
+  },
+  {
+    q: 'Are the medical reports translated?',
+    a: 'Yes. All diagnostic reports are issued in English (or your preferred language) and reviewed by our medical director before being shared.',
+  },
+  {
+    q: 'How do you handle medical privacy?',
+    a: 'We are GDPR-aligned and partner only with hospitals that meet Chinese national health-data regulations. No personal data is shared with third parties without your written consent.',
+  },
+  {
+    q: 'Can you adjust an itinerary for accessibility needs?',
+    a: 'Yes. We have designed itineraries for guests with mobility aids, dietary restrictions and ongoing medical conditions. Please share your requirements with your concierge.',
+  },
+];
+---
+
+<Layout title="Contact — Jade Voyage" description="Reach a real concierge — not a chatbot. We respond in English, German, French or Mandarin, typically within four hours.">
+  <Nav />
+
+  <PageHero
+    eyebrow="Speak with a Concierge"
+    title="Your journey begins with a single conversation."
+    subtitle="Tell us what you have in mind — a date range, a health goal, or simply a region you have been curious about. We reply with a tailored proposal within forty-eight hours."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
+  />
+
+  <section class="contact-main">
+    <div class="container contact-grid">
+      <div class="contact-form-wrap">
+        <span class="micro">— Inquiry Form</span>
+        <h2>Send us your wishes.</h2>
+        <div class="underline"></div>
+
+        <form class="inquiry-form" action={site.formspreeEndpoint} method="POST">
+          <div class="row two">
+            <label>
+              <span>Full name *</span>
+              <input type="text" name="name" required autocomplete="name" />
+            </label>
+            <label>
+              <span>Email *</span>
+              <input type="email" name="email" required autocomplete="email" />
+            </label>
+          </div>
+          <div class="row two">
+            <label>
+              <span>Country</span>
+              <input type="text" name="country" autocomplete="country-name" />
+            </label>
+            <label>
+              <span>WhatsApp / phone</span>
+              <input type="tel" name="phone" autocomplete="tel" />
+            </label>
+          </div>
+          <div class="row two">
+            <label>
+              <span>Interest *</span>
+              <select name="interest" required>
+                <option value="">Select a category</option>
+                <option>Medical · Health Check-up</option>
+                <option>Wellness · TCM Retreat</option>
+                <option>Cultural Itinerary</option>
+                <option>Fully Bespoke Journey</option>
+                <option>Not sure yet — please advise</option>
+              </select>
+            </label>
+            <label>
+              <span>Preferred dates</span>
+              <input type="text" name="dates" placeholder="e.g. Oct 2026 · 7-10 nights" />
+            </label>
+          </div>
+          <label class="row">
+            <span>Travelling party</span>
+            <input type="text" name="party" placeholder="e.g. couple, family of 4, solo" />
+          </label>
+          <label class="row">
+            <span>Tell us more</span>
+            <textarea name="message" rows="5" placeholder="Goals, must-haves, any health considerations we should know about, languages preferred…"></textarea>
+          </label>
+          <label class="consent">
+            <input type="checkbox" name="consent" required />
+            <span>I agree that Jade Voyage may contact me about my inquiry. We will never share your details.</span>
+          </label>
+          <button type="submit" class="btn btn-primary submit">Send Inquiry →</button>
+          <p class="form-foot">Or email us directly at <a href={`mailto:${site.email}`}>{site.email}</a></p>
+        </form>
+      </div>
+
+      <aside class="contact-side">
+        <div class="side-block">
+          <span class="micro">— Direct Lines</span>
+          <h3>Reach us, however you prefer.</h3>
+          <ul class="direct-list">
+            <li>
+              <span class="d-label">Email</span>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </li>
+            <li>
+              <span class="d-label">WhatsApp</span>
+              <a href={`https://wa.me/${site.whatsapp.replace(/[^0-9]/g, '')}`}>{site.whatsapp}</a>
+            </li>
+            <li>
+              <span class="d-label">Live Chat</span>
+              <a href="#" class="chat-trigger">Open chat widget →</a>
+            </li>
+            <li>
+              <span class="d-label">Response time</span>
+              <strong>Within 4 hours · Beijing hours</strong>
+            </li>
+          </ul>
+        </div>
+        <div class="side-block offices">
+          <span class="micro">— Our Offices</span>
+          <h3>Three quiet bases.</h3>
+          <ul class="office-list">
+            {site.offices.map((city) => (
+              <li>
+                <strong>{city}</strong>
+                <span>{city === 'Hangzhou' ? 'West Lake · Headquarters' : city === 'Shanghai' ? 'Jing\'an · Medical liaison' : 'Jinjiang · Cultural team'}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="contact-faq">
+    <div class="container">
+      <div class="section-head" style="text-align:center; margin-left:auto; margin-right:auto;">
+        <span class="micro">— Frequently Asked</span>
+        <h2>What guests usually ask first.</h2>
+      </div>
+      <div class="faq-list">
+        {faqs.map((f, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary>
+              <span>{f.q}</span>
+              <span class="caret">+</span>
+            </summary>
+            <div class="faq-body"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+  <FloatChat />
+</Layout>
+
+<style>
+  .contact-main { padding: 80px 0 96px; background: var(--canvas); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-form-wrap .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .contact-form-wrap h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 40px;
+    color: var(--ink);
+    line-height: 1.05;
+  }
+  .underline { width: 40px; height: 1px; background: var(--jade); margin: 20px 0 36px; }
+
+  .inquiry-form .row { display: block; margin-bottom: 18px; }
+  .inquiry-form .row.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .inquiry-form label { display: block; }
+  .inquiry-form label span {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .inquiry-form input,
+  .inquiry-form select,
+  .inquiry-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    background: var(--canvas);
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .inquiry-form input:focus,
+  .inquiry-form select:focus,
+  .inquiry-form textarea:focus {
+    outline: none;
+    border-color: var(--jade);
+    box-shadow: 0 0 0 3px rgba(107, 144, 128, 0.15);
+  }
+  .inquiry-form textarea { resize: vertical; min-height: 110px; }
+  .consent {
+    display: flex !important;
+    align-items: start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .consent input { width: auto !important; margin-top: 3px; }
+  .consent span {
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    font-size: 13px !important;
+    color: var(--ink-soft) !important;
+    margin: 0 !important;
+  }
+  .submit { padding: 14px 28px; font-size: 15px; }
+  .form-foot { margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .form-foot a { color: var(--seal); border-bottom: 1px solid var(--seal); }
+
+  .contact-side { display: flex; flex-direction: column; gap: 32px; }
+  .side-block {
+    background: var(--rice);
+    border-radius: 14px;
+    padding: 32px;
+  }
+  .side-block .micro { color: var(--jade-deep); margin-bottom: 10px; display: inline-block; }
+  .side-block h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .direct-list { list-style: none; padding: 0; margin: 0; }
+  .direct-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .direct-list li:last-child { border-bottom: none; }
+  .d-label { color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .direct-list a { color: var(--ink); border-bottom: 1px solid var(--jade); padding-bottom: 1px; }
+  .direct-list strong { color: var(--ink); font-weight: 500; }
+  .office-list { list-style: none; padding: 0; margin: 0; }
+  .office-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 14px;
+  }
+  .office-list li:last-child { border-bottom: none; }
+  .office-list strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .office-list span { color: var(--muted); font-size: 13px; }
+
+  .contact-faq { padding: 96px 0; background: var(--mist); }
+  .section-head { margin-bottom: 56px; max-width: 720px; }
+  .section-head .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .section-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .faq-list { max-width: 820px; margin: 0 auto; }
+  .faq-item {
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 22px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item .caret {
+    font-size: 22px;
+    color: var(--jade-deep);
+    font-weight: 300;
+    transition: transform 0.2s;
+  }
+  .faq-item[open] .caret { transform: rotate(45deg); }
+  .faq-body { padding: 0 28px 24px; color: var(--ink-soft); line-height: 1.65; }
+
+  @media (max-width: 960px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .inquiry-form .row.two { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const chatTrigger = document.querySelector<HTMLAnchorElement>('.chat-trigger');
+  chatTrigger?.addEventListener('click', (e) => {
+    e.preventDefault();
+    const btn = document.querySelector<HTMLButtonElement>('.float-chat');
+    btn?.click();
+    btn?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>

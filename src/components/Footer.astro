@@ -1,0 +1,53 @@
+---
+const cols = [
+  {
+    title: 'Journeys',
+    links: ['Small Group Tours', 'Private Custom Tours', 'Health Check-ups', 'Wellness Retreats', 'All Itineraries'],
+  },
+  {
+    title: 'Trust',
+    links: ['Accredited Hospitals', 'Wellness Clinics', 'Travel Partners', 'Privacy Policy', 'Refund Policy'],
+  },
+  {
+    title: 'Company',
+    links: ['Why Choose Us', 'Our Team', 'Real Stories', 'Press', 'Contact'],
+  },
+];
+---
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <span class="seal">玉</span>
+          <span class="en">Jade Voyage</span>
+        </div>
+        <p class="foot-tag">Where ancient healing meets modern care — across the heart of China.</p>
+        <div class="foot-contact">
+          Hangzhou · Shanghai · Chengdu<br />
+          <a href="mailto:hello@jadevoyage.com">hello@jadevoyage.com</a><br />
+          <a href="#">WhatsApp +86 138-0000-0000</a>
+        </div>
+      </div>
+      {cols.map((c) => (
+        <div class="foot-col">
+          <h6>{c.title}</h6>
+          <ul>
+            {c.links.map((l) => <li><a href="#">{l}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Jade Voyage Ltd. · All rights reserved.</span>
+      <div class="foot-payments">
+        <span style="font-size: 11px; opacity: 0.6; letter-spacing: 0.1em;">SECURE PAYMENTS</span>
+        <span class="pp">PayPal</span>
+        <span class="pp">Visa</span>
+        <span class="pp">Mastercard</span>
+        <span class="pp">Amex</span>
+      </div>
+    </div>
+  </div>
+</footer>

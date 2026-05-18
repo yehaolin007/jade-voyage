@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import FloatChat from '../../components/FloatChat.astro';
+import PageHero from '../../components/PageHero.astro';
+import TourCard from '../../components/TourCard.astro';
+import { getCollection } from 'astro:content';
+
+const tours = (await getCollection('tours')).sort((a, b) => a.data.order - b.data.order);
+const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
+---
+
+<Layout title="All Itineraries — Jade Voyage" description="Browse the full catalogue of Jade Voyage signature journeys across medical, wellness and cultural categories.">
+  <Nav />
+
+  <PageHero
+    eyebrow="Signature Itineraries"
+    title="Routes shaped by fifteen years of careful relationships."
+    subtitle="Every itinerary is curated by a bilingual concierge. Filter by category, or speak with us about a fully bespoke route."
+    bgImage="/assets/hangzhou-westlake-retreat.png"
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Itineraries' }]}
+  />
+
+  <section class="tours-listing">
+    <div class="container">
+      <div class="filter-bar">
+        <div class="filter-group">
+          <span class="filter-label">Category</span>
+          <div class="chips">
+            {categories.map((c, i) => (
+              <button class:list={['chip', i === 0 && 'active']} data-cat={c}>{c}</button>
+            ))}
+          </div>
+        </div>
+        <div class="result-count">
+          <span class="count-num">{tours.length}</span> curated journeys · sorted by guest rating
+        </div>
+      </div>
+
+      <div class="tours-grid tours-grid-page">
+        {tours.map((t) => <TourCard entry={t} />)}
+      </div>
+
+      <div class="bespoke-cta">
+        <div>
+          <span class="micro">— Can't find your route?</span>
+          <h3>We design bespoke itineraries for every guest.</h3>
+          <p>Tell us your dates, your interests, and any medical or wellness goals — we'll send a private proposal within 48 hours.</p>
+        </div>
+        <a href="/contact" class="btn btn-primary">Request a Custom Proposal →</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+  <FloatChat />
+</Layout>
+
+<style>
+  .tours-listing { padding: 80px 0 96px; background: var(--canvas); }
+  .filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 32px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+  .filter-label {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 16px;
+  }
+  .filter-group { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 8px 18px;
+    border-radius: 9999px;
+    border: 1px solid var(--hairline);
+    background: var(--canvas);
+    color: var(--ink-soft);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .chip:hover { border-color: var(--jade); color: var(--jade-deep); }
+  .chip.active { background: var(--ink); border-color: var(--ink); color: var(--canvas); }
+  .result-count { color: var(--muted); font-size: 14px; }
+  .count-num { color: var(--ink); font-weight: 600; font-family: 'Cormorant Garamond', serif; font-size: 22px; }
+  .tours-grid-page { margin-bottom: 80px; }
+  .bespoke-cta {
+    background: var(--rice);
+    border-radius: 14px;
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .bespoke-cta h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 30px;
+    color: var(--ink);
+    margin: 12px 0 8px;
+    max-width: 560px;
+  }
+  .bespoke-cta p { color: var(--ink-soft); max-width: 560px; }
+  .bespoke-cta .micro { color: var(--jade-deep); }
+</style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const cards = document.querySelectorAll<HTMLElement>('.tours-grid-page > .tour-card');
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      const cat = chip.dataset.cat;
+      cards.forEach((card) => {
+        const region = card.querySelector('.tour-region')?.textContent || '';
+        const match = cat === 'All' || region.includes(cat || '');
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+</script>
