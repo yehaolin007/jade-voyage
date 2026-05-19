@@ -1,6 +1,9 @@
 # Decap CMS configuration for Jade Voyage
 # Production auth uses the GitHub OAuth proxy Worker in ../oauth-worker/.
 # For local dev, set local_backend: true below and run `npx decap-server`.
+#
+# 注意：字段的 `name` 必须保持英文（对应 markdown frontmatter 的 key，
+# 站点构建时用），改了会导致网站读不到内容。这里只汉化 `label` 和 `hint`。
 
 locale: zh_Hans
 
@@ -22,67 +25,72 @@ logo_url: /assets/jade-hero-wellness.png
 
 collections:
   - name: "tours"
-    label: "Tours · 行程"
-    label_singular: "Tour"
+    label: "行程 Tours"
+    label_singular: "行程"
+    description: "点任意一行进入编辑。编辑完成后，右上角『保存』=暂存草稿；下拉旁边的『发布』→『立即发布』才会上线到网站。"
     folder: "src/content/tours"
     create: true
     delete: true
     extension: "md"
     format: "frontmatter"
     slug: "{{slug}}"
-    summary: "{{title}} — {{region}} · {{nights}} nights · ${{priceFrom}}"
+    summary: "{{title}} — {{region}} · {{nights}} 晚 · ${{priceFrom}}"
     sortable_fields: ['order', 'title', 'priceFrom', 'rating']
     view_filters:
-      - label: "Wellness"
+      - label: "康养 Wellness"
         field: category
         pattern: "Wellness"
-      - label: "Medical"
+      - label: "医疗 Medical"
         field: category
         pattern: "Medical"
-      - label: "Culture"
+      - label: "文化 Culture"
         field: category
         pattern: "Culture"
-      - label: "Bespoke"
+      - label: "定制 Bespoke"
         field: category
         pattern: "Bespoke"
     fields:
-      - { label: "Title", name: "title", widget: "string", hint: "Main itinerary name, e.g. West Lake Restoration" }
-      - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
-      - { label: "Region", name: "region", widget: "string", hint: "Location · category, e.g. Hangzhou · Wellness" }
-      - label: "Category"
+      - { label: "行程标题（英文）", name: "title", widget: "string", hint: "面向海外客户展示，例如 West Lake Restoration" }
+      - { label: "副标题（英文）", name: "subtitle", widget: "string", required: false, hint: "可选。例如 A TCM Sanctuary Week" }
+      - { label: "地区 · 类别", name: "region", widget: "string", hint: "格式：城市 · 类别，例如 Hangzhou · Wellness" }
+      - label: "类别"
         name: "category"
         widget: "select"
         options: ["Wellness", "Medical", "Culture", "Bespoke"]
         default: "Wellness"
-      - { label: "Nights", name: "nights", widget: "number", value_type: "int", min: 1, max: 30, default: 5 }
-      - { label: "Group size", name: "groupSize", widget: "string", default: "Max 8 guests" }
-      - { label: "Season", name: "season", widget: "string", default: "Year-round" }
-      - { label: "Price from (USD)", name: "priceFrom", widget: "number", value_type: "int", min: 0, default: 3000 }
-      - { label: "Currency", name: "currency", widget: "string", default: "USD" }
-      - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.01, default: 4.9 }
-      - { label: "Reviews count", name: "reviews", widget: "number", value_type: "int", min: 0, default: 0 }
-      - label: "Badge (optional)"
+        hint: "Wellness=康养 / Medical=医疗 / Culture=文化 / Bespoke=定制"
+      - { label: "晚数", name: "nights", widget: "number", value_type: "int", min: 1, max: 30, default: 5 }
+      - { label: "团队规模", name: "groupSize", widget: "string", default: "Max 8 guests", hint: "例如 Max 8 guests" }
+      - { label: "适合季节", name: "season", widget: "string", default: "Year-round", hint: "例如 Sept – Nov 或 Year-round" }
+      - { label: "起价（美元）", name: "priceFrom", widget: "number", value_type: "int", min: 0, default: 3000 }
+      - { label: "币种", name: "currency", widget: "string", default: "USD" }
+      - { label: "评分（0–5）", name: "rating", widget: "number", value_type: "float", min: 0, max: 5, step: 0.01, default: 4.9 }
+      - { label: "评价数", name: "reviews", widget: "number", value_type: "int", min: 0, default: 0 }
+      - label: "角标（可选）"
         name: "badge"
         widget: "object"
         required: false
         collapsed: true
+        hint: "点这一行展开。不需要可整段留空。"
         fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - label: "Style"
+          - { label: "角标文字", name: "label", widget: "string", hint: "例如 Most Loved / New" }
+          - label: "角标样式"
             name: "type"
             widget: "select"
             options: ["default", "seal"]
             default: "default"
             required: false
-      - { label: "Hero image", name: "image", widget: "image", hint: "Upload or pick from /assets" }
-      - { label: "Image alt text", name: "alt", widget: "string" }
-      - { label: "Display order", name: "order", widget: "number", value_type: "int", default: 99, hint: "Lower numbers appear first" }
-      - { label: "Featured on home", name: "featured", widget: "boolean", default: true }
-      - { label: "Overview", name: "body", widget: "markdown", hint: "Shown on the detail page as the introductory paragraph" }
+            hint: "default=普通底色 / seal=印章红"
+      - { label: "头图", name: "image", widget: "image", hint: "点框选择已上传图片，或拖入新图。新图会自动存到站点 /assets/ 目录，发布后才生效。" }
+      - { label: "头图替代文本", name: "alt", widget: "string", hint: "图片加载失败或屏幕阅读器读出的文字，英文，例如 Hangzhou West Lake wellness retreat" }
+      - { label: "显示顺序", name: "order", widget: "number", value_type: "int", default: 99, hint: "数字越小越靠前。1 排第一位。" }
+      - { label: "首页推荐", name: "featured", widget: "boolean", default: true, hint: "勾选后会出现在首页『Featured Itineraries』区块" }
+      - { label: "行程概述（英文）", name: "body", widget: "markdown", hint: "详情页顶部的介绍段落，英文撰写。" }
 
   - name: "stories"
-    label: "Stories · 真实故事"
-    label_singular: "Story"
+    label: "客户故事 Stories"
+    label_singular: "故事"
+    description: "点任意一行进入编辑。修改图片或文字后，右上角『发布』→『立即发布』推送到网站。"
     folder: "src/content/stories"
     create: true
     delete: true
@@ -91,25 +99,26 @@ collections:
     slug: "{{slug}}"
     summary: "{{guestName}} — {{location}}"
     fields:
-      - label: "Card layout"
+      - label: "卡片样式"
         name: "cardLayout"
         widget: "select"
         options: ["video", "quote"]
         default: "video"
-        hint: "video = guest with image; quote = pure pull-quote"
-      - { label: "Guest name", name: "guestName", widget: "string", required: false }
-      - { label: "Location", name: "location", widget: "string", required: false, hint: "City the guest is from" }
-      - { label: "Trip taken", name: "trip", widget: "string", required: false, hint: "e.g. West Lake Sanctuary · 7 nights · 2025" }
-      - { label: "Avatar letter", name: "avatar", widget: "string", required: false, pattern: ['^.{1,2}$', "1-2 characters"] }
-      - { label: "Image (video layout only)", name: "image", widget: "image", required: false }
-      - { label: "Headline (in quotes)", name: "headline", widget: "string", required: false }
-      - { label: "Citation (quote layout only)", name: "citation", widget: "string", required: false }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 99 }
-      - { label: "Story body", name: "body", widget: "markdown", hint: "For quote layout this is the quote itself; for video layout it is the supporting paragraph" }
+        hint: "video=客人头像 + 图片（带视频感）；quote=纯引述卡片，无图"
+      - { label: "客人姓名", name: "guestName", widget: "string", required: false, hint: "英文，例如 Margaret K." }
+      - { label: "客人来自城市", name: "location", widget: "string", required: false, hint: "英文，例如 Toronto" }
+      - { label: "完成的行程", name: "trip", widget: "string", required: false, hint: "例如 West Lake Sanctuary · 7 nights · 2025" }
+      - { label: "头像首字母", name: "avatar", widget: "string", required: false, pattern: ['^.{1,2}$', "1-2 个字符"], hint: "1-2 个字母，没有图片时显示在圆形头像里" }
+      - { label: "客人配图（仅 video 样式）", name: "image", widget: "image", required: false, hint: "点框上传或选择已有图片。quote 样式可留空。" }
+      - { label: "引文标题（带引号）", name: "headline", widget: "string", required: false, hint: "卡片正中央的金句，建议 1 句话，可带英文引号" }
+      - { label: "出处（仅 quote 样式）", name: "citation", widget: "string", required: false, hint: "引述出处。例如 — Dr. James A. Whitford" }
+      - { label: "显示顺序", name: "order", widget: "number", value_type: "int", default: 99, hint: "数字越小越靠前" }
+      - { label: "故事正文", name: "body", widget: "markdown", hint: "quote 样式时这里是引述本体；video 样式时这里是辅助段落。" }
 
   - name: "services"
-    label: "Services · 三大服务"
-    label_singular: "Service"
+    label: "核心服务 Services"
+    label_singular: "服务"
+    description: "首页『三大支柱』区块的三张卡片内容。一般不增删，只改文字/图标。"
     folder: "src/content/services"
     create: true
     delete: true
@@ -118,9 +127,9 @@ collections:
     slug: "{{slug}}"
     summary: "{{title}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Chinese title", name: "cnTitle", widget: "string", hint: "e.g. 医 疗 体 检 (spaces between characters)" }
-      - { label: "Icon SVG paths", name: "iconSvg", widget: "text", hint: "Inner <path>/<circle>... of a 24x24 line icon" }
-      - { label: "CTA label", name: "cta", widget: "string", default: "Learn more" }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 99 }
-      - { label: "Description", name: "body", widget: "markdown" }
+      - { label: "标题（英文）", name: "title", widget: "string", hint: "例如 Health Checkups" }
+      - { label: "中文标题", name: "cnTitle", widget: "string", hint: "字符之间加空格，例如『医 疗 体 检』" }
+      - { label: "图标 SVG path", name: "iconSvg", widget: "text", hint: "24×24 线性图标的内部 <path>/<circle> 等元素。普通编辑者不用动这个字段。" }
+      - { label: "CTA 按钮文字", name: "cta", widget: "string", default: "Learn more", hint: "例如 Learn more / Explore" }
+      - { label: "显示顺序", name: "order", widget: "number", value_type: "int", default: 99 }
+      - { label: "服务描述（英文）", name: "body", widget: "markdown", hint: "卡片正文，1-2 段英文。" }
