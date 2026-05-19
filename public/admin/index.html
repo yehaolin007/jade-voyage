@@ -5,38 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager · Jade Voyage</title>
     <link rel="icon" href="data:," />
-  </head>
-  <body>
     <script>
-      // Manual OAuth bridge — intercept the Worker's postMessage and persist
-      // the token to localStorage in the exact shape Decap CMS expects, then
-      // reload so Decap rehydrates its session.
+      // OAuth callback handler — must run BEFORE decap-cms.js loads so we can
+      // intercept the hash before Decap routes it.
       //
-      // The localStorage key is `decap-cms-user` in Decap CMS 3.x (was
-      // `netlify-cms-user` in the older netlify-cms 2.x). We write both for
-      // safety. Decap CMS 3.6.x's NetlifyAuthenticator listener does not
-      // always pick up our Worker's success message under this deployment,
-      // so we bypass it with a direct localStorage write + reload.
+      // Why same-origin redirect (not popup postMessage):
+      // Worker domain (workers.dev) and site domain (pages.dev) are treated
+      // as cross-origin third parties by modern browsers (Chrome storage
+      // partitioning, Firefox Total Cookie Protection, Safari ITP). They
+      // silently drop window.opener.postMessage() in that case — the call
+      // succeeds in the popup but the main tab never sees the message.
+      //
+      // Instead: Worker /callback now 302-redirects the popup to
+      // /admin/#auth_token=...  Both popup and main tab are now on pages.dev,
+      // so window.opener.localStorage works and BroadcastChannel works.
       (function () {
-        var WORKER_ORIGIN = 'https://jade-voyage-oauth.072688hl.workers.dev';
-        var PREFIX = 'authorization:github:success:';
-        window.addEventListener('message', function (e) {
-          if (e.origin !== WORKER_ORIGIN) return;
-          if (typeof e.data !== 'string' || e.data.indexOf(PREFIX) !== 0) return;
+        var hash = location.hash || '';
+
+        var tokenMatch = hash.match(/auth_token=([^&]+)/);
+        var errorMatch = hash.match(/auth_error=([^&]+)/);
+
+        if (tokenMatch) {
+          var token = decodeURIComponent(tokenMatch[1]);
+          var user = JSON.stringify({ token: token, backendName: 'github' });
+
+          // Write our own localStorage so a self-reload also works
           try {
-            var info = JSON.parse(e.data.slice(PREFIX.length));
-            if (!info || !info.token) return;
-            var user = JSON.stringify({ token: info.token, backendName: 'github' });
             localStorage.setItem('decap-cms-user', user);
             localStorage.setItem('netlify-cms-user', user);
-            // small delay so the auth popup has a chance to close itself
-            setTimeout(function () { window.location.reload(); }, 150);
-          } catch (err) {
-            console.error('[Jade Voyage auth bridge] parse failed:', err);
+          } catch (_) {}
+
+          // Tell every other /admin/ tab (same-origin BroadcastChannel)
+          try {
+            var bc = new BroadcastChannel('jv-auth');
+            bc.postMessage({ type: 'logged-in' });
+            bc.close();
+          } catch (_) {}
+
+          // Best case: we're a popup whose opener is the admin tab.
+          // Same origin, so we can write its localStorage + reload it directly.
+          var openerHandled = false;
+          try {
+            if (window.opener && !window.opener.closed) {
+              window.opener.localStorage.setItem('decap-cms-user', user);
+              window.opener.localStorage.setItem('netlify-cms-user', user);
+              window.opener.location.reload();
+              openerHandled = true;
+            }
+          } catch (_) {}
+
+          if (openerHandled) {
+            try { window.close(); } catch (_) {}
+            // If close() is blocked, show a hint
+            setTimeout(function () {
+              document.body.innerHTML =
+                '<p style="font:14px system-ui;padding:24px;color:#1F3A36">Signed in. You can close this tab.</p>';
+            }, 400);
+            return;
           }
-        });
+
+          // Fallback: no usable opener (popup blocker, COOP, manual nav).
+          // Clean the hash and reload ourselves — Decap will pick up the
+          // localStorage user on next boot.
+          history.replaceState(null, '', location.pathname);
+          location.reload();
+          return;
+        }
+
+        if (errorMatch) {
+          var err = decodeURIComponent(errorMatch[1]);
+          document.documentElement.innerHTML =
+            '<body style="font:14px system-ui;padding:24px;color:#1F3A36;max-width:560px;margin:0 auto">' +
+            '<h2 style="font-family:Georgia,serif;margin:0 0 8px">Login failed</h2>' +
+            '<p style="color:#4A5C58">GitHub returned: <code>' + err.replace(/</g, '&lt;') + '</code></p>' +
+            '<p><a href="/admin/" style="color:#6B9080">Try again</a></p></body>';
+          return;
+        }
+
+        // Main admin page path: listen for sibling tab login broadcasts.
+        try {
+          var bc2 = new BroadcastChannel('jv-auth');
+          bc2.addEventListener('message', function (e) {
+            if (e.data && e.data.type === 'logged-in') location.reload();
+          });
+        } catch (_) {}
       })();
     </script>
+  </head>
+  <body>
     <script src="https://unpkg.com/decap-cms@^3.6.0/dist/decap-cms.js"></script>
   </body>
 </html>
