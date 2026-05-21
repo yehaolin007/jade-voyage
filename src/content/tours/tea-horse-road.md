@@ -14,6 +14,10 @@ badge:
   label: Bespoke
 image: /assets/yunnan-tea-forest.png
 alt: Yunnan tea forest lifestyle reset
+highlights:
+  - Ancient Tea Tree Forest
+  - Naxi Cultural Immersion
+  - Lifestyle & Sleep Reset
 order: 6
 featured: true
 ---

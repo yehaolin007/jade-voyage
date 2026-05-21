@@ -124,8 +124,7 @@ const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
       chip.classList.add('active');
       const cat = chip.dataset.cat;
       cards.forEach((card) => {
-        const region = card.querySelector('.tour-region')?.textContent || '';
-        const match = cat === 'All' || region.includes(cat || '');
+        const match = cat === 'All' || card.dataset.category === cat;
         card.style.display = match ? '' : 'none';
       });
     });

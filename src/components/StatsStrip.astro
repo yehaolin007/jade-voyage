@@ -1,19 +1,108 @@
 ---
 const stats = [
-  { num: '15', sup: '+', label: 'Years Of Service' },
-  { num: '8,000', sup: '+', label: 'Guests Welcomed' },
-  { num: '200', sup: '+', label: 'Curated Itineraries' },
-  { num: '30', sup: '+', label: 'Certified Partners' },
+  {
+    num: '50', sup: '+', label: 'Partner Hospitals', sub: 'Top-tier JCI Accredited',
+    icon: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01"/>',
+  },
+  {
+    num: '100', sup: '%', label: 'Privacy Protection', sub: 'Strict Medical Data Security',
+    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+  },
+  {
+    num: '24/7', sup: '', label: 'Translation Support', sub: 'Professional Medical Interpreters',
+    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+  },
+  {
+    num: '10', sup: '+', label: 'Cities Expansion', sub: 'National Network Roadmap',
+    icon: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>',
+  },
 ];
 ---
 
-<section class="stats" style="padding: 56px 0;">
-  <div class="container stats-grid">
+<section class="stats-dark">
+  <div class="container stats-dark-grid">
     {stats.map((s) => (
-      <div class="stat">
+      <div class="stat-dark">
+        <span class="stat-icon-circle">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={s.icon} />
+        </span>
         <div class="num">{s.num}<sup>{s.sup}</sup></div>
         <div class="label">{s.label}</div>
+        <div class="sub">{s.sub}</div>
       </div>
     ))}
   </div>
 </section>
+
+<style>
+  .stats-dark {
+    background: linear-gradient(180deg, #1F3A36 0%, #163029 100%);
+    padding: 132px 0 86px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .stats-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(184, 146, 74, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(107, 144, 128, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .stats-dark-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+  .stat-dark { padding: 8px 12px; }
+  .stat-icon-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(184, 146, 74, 0.12);
+    border: 1px solid rgba(184, 146, 74, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #E8C77A;
+    margin-bottom: 22px;
+  }
+  .stat-dark .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 64px;
+    color: #E8C77A;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .stat-dark .num sup {
+    font-size: 24px;
+    color: #B8924A;
+    vertical-align: super;
+    margin-left: 2px;
+  }
+  .stat-dark .label {
+    margin-top: 12px;
+    font-size: 17px;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .stat-dark .sub {
+    margin-top: 6px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .stats-dark { padding: 56px 0; }
+    .stats-dark-grid { grid-template-columns: repeat(2, 1fr); gap: 36px; }
+    .stat-dark .num { font-size: 40px; }
+    .stat-icon-circle { width: 52px; height: 52px; margin-bottom: 14px; }
+  }
+</style>

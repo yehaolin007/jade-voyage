@@ -14,6 +14,10 @@ badge:
   label: Wellness
 image: /assets/sichuan-hot-spring.png
 alt: Sichuan hot spring buddhist retreat
+highlights:
+  - Mineral Hot-Spring Therapy
+  - Monastery Meditation
+  - Vegetarian Wellness Cuisine
 order: 4
 featured: true
 ---

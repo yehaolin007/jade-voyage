@@ -15,6 +15,10 @@ badge:
   type: seal
 image: /assets/hangzhou-westlake-retreat.png
 alt: Hangzhou West Lake wellness retreat
+highlights:
+  - Daily TCM Consultation
+  - Acupuncture & Herbal Therapy
+  - Full Diagnostic Day
 order: 1
 featured: true
 ---

@@ -27,10 +27,10 @@ export const offices = [
 ];
 
 export const nav = [
-  { label: 'Services', href: '#services' },
+  { label: 'Services', href: '/#services' },
   { label: 'Tours', href: '/tours', hasSub: true },
   { label: 'Verified Partners', href: '/verified-partners', hasSub: true },
-  { label: 'Stories', href: '#stories' },
+  { label: 'Stories', href: '/#stories' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' }
 ];

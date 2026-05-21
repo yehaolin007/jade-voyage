@@ -341,4 +341,35 @@ const faqs = [
     btn?.click();
     btn?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
+
+  const params = new URLSearchParams(window.location.search);
+  const dest = params.get('dest');
+  const service = params.get('service');
+  const month = params.get('month');
+  if (dest || service || month) {
+    const msg = document.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+    const parts: string[] = [];
+    if (dest && dest !== 'Any Destination') parts.push(`Destination: ${dest}`);
+    if (service) parts.push(`Service: ${service}`);
+    if (month && month !== 'Any Month') parts.push(`Travel month: ${month}`);
+    if (msg && parts.length) msg.value = parts.join('\n') + '\n\n';
+    const interest = document.querySelector<HTMLSelectElement>('select[name="interest"]');
+    if (interest && service) {
+      const map: Record<string, string> = {
+        'MRI Precision Screening': 'Medical · Health Check-up',
+        'Wellness Retreat': 'Wellness · TCM Retreat',
+        'Cultural Itinerary': 'Cultural Itinerary',
+        'Fully Bespoke Journey': 'Fully Bespoke Journey',
+      };
+      const target = map[service];
+      if (target) {
+        for (const opt of Array.from(interest.options)) {
+          if (opt.value === target || opt.text === target) { interest.value = opt.value; break; }
+        }
+      }
+    }
+    const dates = document.querySelector<HTMLInputElement>('input[name="dates"]');
+    if (dates && month && month !== 'Any Month') dates.value = month;
+    document.querySelector('.inquiry-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 </script>

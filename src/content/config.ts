@@ -22,6 +22,7 @@ const tours = defineCollection({
       .optional(),
     image: z.string(),
     alt: z.string(),
+    highlights: z.array(z.string()).max(3).optional(),
     order: z.number().int().default(0),
     featured: z.boolean().default(true),
   }),

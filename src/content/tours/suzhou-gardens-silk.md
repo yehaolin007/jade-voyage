@@ -15,6 +15,10 @@ badge:
   type: seal
 image: /assets/suzhou-silk-garden.png
 alt: Suzhou silk garden heritage tour
+highlights:
+  - Ming-Dynasty Garden Tours
+  - Silk Workshop Experience
+  - Pingjiang Canal Walk
 order: 5
 featured: true
 ---

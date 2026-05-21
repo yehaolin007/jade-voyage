@@ -8,13 +8,22 @@ const { entry } = Astro.props;
 const t = entry.data;
 const href = `/tours/${entry.slug}/`;
 const priceStr = t.priceFrom.toLocaleString('en-US');
+const catClass = `cat-${t.category.toLowerCase()}`;
+const catLabel = t.category === 'Medical'
+  ? 'PRECISION HEALTH'
+  : t.category === 'Wellness'
+    ? 'WELLNESS RETREAT'
+    : t.category === 'Culture'
+      ? 'CULTURAL HERITAGE'
+      : 'BESPOKE JOURNEY';
 ---
 
-<article class="tour-card">
+<article class="tour-card" data-category={t.category}>
   <a href={href} class="tour-img">
     <img src={t.image} alt={t.alt} loading="lazy" />
-    {t.badge && (
-      <span class={`tour-badge${t.badge.type === 'seal' ? ' seal' : ''}`}>{t.badge.label}</span>
+    <span class={`tour-cat-badge ${catClass}`}>{catLabel}</span>
+    {t.badge && t.badge.type === 'seal' && (
+      <span class="tour-flag-seal">{t.badge.label}</span>
     )}
   </a>
   <button class="tour-fav" aria-label="Save to favorites">
@@ -23,24 +32,173 @@ const priceStr = t.priceFrom.toLocaleString('en-US');
     </svg>
   </button>
   <div class="tour-body">
-    <div class="tour-region">{t.region}</div>
-    <h3 class="tour-title"><a href={href}>{t.title}{t.subtitle && <><br />— {t.subtitle}</>}</a></h3>
-    <div class="tour-meta">
-      <span>{t.nights} nights</span>
-      <span>{t.groupSize}</span>
-      <span>{t.season}</span>
+    <div class="tour-meta-top">
+      <span class="tm-region">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        {t.region}
+      </span>
+      <span class="tm-dot">·</span>
+      <span class="tm-nights">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        {t.nights} nights
+      </span>
+      <span class="tm-rating"><span class="star">★</span> {t.rating.toFixed(2)}</span>
     </div>
+    <h3 class="tour-title"><a href={href}>{t.title}{t.subtitle && <><br />— {t.subtitle}</>}</a></h3>
+    {t.highlights && t.highlights.length > 0 && (
+      <ul class="tour-highlights">
+        {t.highlights.map((h, i) => (
+          <li class={i === 0 ? 'h-primary' : ''}>{h}</li>
+        ))}
+      </ul>
+    )}
     <div class="tour-footer">
       <div class="tour-price">
-        <span class="from">From </span><span class="amount">${priceStr}</span><span class="per"> / person</span>
+        <span class="from">Starting from</span>
+        <div><span class="amount">${priceStr}</span><span class="per"> / person</span></div>
       </div>
-      <div class="tour-rating"><span class="star">★</span> {t.rating.toFixed(2)} ({t.reviews})</div>
+      <a href={href} class="btn-card-cta">View Details →</a>
     </div>
   </div>
 </article>
 
 <style>
-  .tour-card .tour-img { cursor: pointer; }
+  .tour-card { position: relative; }
+  .tour-card .tour-img { cursor: pointer; display: block; }
   .tour-card .tour-title a { color: inherit; text-decoration: none; }
   .tour-card .tour-title a:hover { color: var(--jade-deep); }
+
+  .tour-cat-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 7px 14px;
+    border-radius: 9999px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #fff;
+    z-index: 2;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(15, 28, 26, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .tour-cat-badge.cat-medical { background: rgba(31, 58, 54, 0.95); }
+  .tour-cat-badge.cat-wellness { background: rgba(79, 117, 104, 0.95); }
+  .tour-cat-badge.cat-culture { background: rgba(184, 146, 74, 0.95); }
+  .tour-cat-badge.cat-bespoke { background: rgba(178, 58, 58, 0.95); }
+
+  .tour-flag-seal {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    transform: translateY(36px);
+    background: var(--seal);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  .tour-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .tm-region, .tm-nights {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--jade-deep);
+    font-weight: 500;
+  }
+  .tm-dot { color: var(--hairline); }
+  .tm-rating {
+    margin-left: auto;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .tm-rating .star { color: var(--gold); margin-right: 2px; }
+
+  .tour-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tour-highlights li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .tour-highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--jade);
+  }
+  .tour-highlights li.h-primary {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .tour-highlights li.h-primary::before { background: var(--seal); }
+
+  .tour-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid var(--hairline);
+    gap: 12px;
+  }
+  .tour-price .from {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .tour-price .amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .tour-price .per { font-size: 12px; color: var(--muted); }
+
+  .btn-card-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 9999px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .btn-card-cta:hover {
+    background: var(--ink);
+    color: var(--canvas);
+    transform: translateX(2px);
+  }
 </style>

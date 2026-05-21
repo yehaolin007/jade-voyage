@@ -1,6 +1,11 @@
 ---
-cardLayout: quote
-citation: Dr. James A. Whitford · Retired cardiologist · Boston · Repeat guest since 2022
+cardLayout: video
+guestName: Dr. James A. Whitford
+location: Boston
+trip: West Lake Sanctuary · Repeat guest since 2022
+avatar: J
+image: /assets/hangzhou-westlake-retreat.png
+headline: '"The quiet moments stayed with me most."'
 order: 3
 ---
 

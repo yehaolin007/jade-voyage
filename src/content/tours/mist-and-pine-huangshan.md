@@ -14,6 +14,10 @@ badge:
   label: Culture
 image: /assets/huangshan-cultural-trek.png
 alt: Huangshan cultural trek
+highlights:
+  - Sunrise Cloud Sea Viewing
+  - Tang-Dynasty Temple Stay
+  - Local Tea Ceremony
 order: 3
 featured: true
 ---

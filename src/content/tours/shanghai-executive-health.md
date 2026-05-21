@@ -14,6 +14,10 @@ badge:
   label: Medical
 image: /assets/clinic-executive-checkup.png
 alt: Shanghai executive health clinic
+highlights:
+  - Full Body MRI Scan
+  - Cardiac & Oncology Panel
+  - English Medical Report
 order: 2
 featured: true
 ---

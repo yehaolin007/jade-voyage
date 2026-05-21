@@ -7,7 +7,14 @@ const entries = (await getCollection('stories'))
 const rendered = await Promise.all(
   entries.map(async (e) => {
     const { Content } = await e.render();
-    return { ...e, Content };
+    const citationParts = (e.data.citation || '').split(' · ');
+    return {
+      ...e,
+      Content,
+      fallbackGuest: citationParts[0] || 'Guest',
+      fallbackLocation: citationParts[2] || '',
+      fallbackTrip: citationParts.slice(3).join(' · ') || citationParts[1] || 'Guest story',
+    };
   })
 );
 ---
@@ -43,12 +50,24 @@ const rendered = await Promise.all(
             </div>
           </article>
         ) : (
-          <article class="story-card quote">
-            <div>
-              <span class="qmark">"</span>
-              <blockquote><s.Content /></blockquote>
+          <article class="story-card video">
+            <div class="thumb">
+              <img src={s.data.image || '/assets/hangzhou-westlake-retreat.png'} alt={s.data.guestName || s.fallbackGuest || 'Guest story'} loading="lazy" />
+              <span class="play-btn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z" /></svg>
+              </span>
             </div>
-            <div class="cite">{s.data.citation}</div>
+            <div class="story-body">
+              <div class="meta-row">
+                <div class="avatar">{s.data.avatar || 'J'}</div>
+                <div>
+                  <div class="name">{s.data.guestName || s.fallbackGuest} {s.data.location || s.fallbackLocation ? `— ${s.data.location || s.fallbackLocation}` : ''}</div>
+                  <div class="geo">{s.data.trip || s.fallbackTrip}</div>
+                </div>
+              </div>
+              <h4>{s.data.headline || '"The quiet moments stayed with me most."'}</h4>
+              <div class="story-prose"><s.Content /></div>
+            </div>
           </article>
         )
       ))}
@@ -58,4 +77,12 @@ const rendered = await Promise.all(
 
 <style>
   .story-prose :global(p) { margin: 0; }
+  .story-card.quote blockquote :global(p) {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 18px;
+    line-height: 1.55;
+  }
+  .story-card.quote .cite {
+    color: rgba(255, 255, 255, 0.72);
+  }
 </style>

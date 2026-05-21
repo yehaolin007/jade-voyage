@@ -1,28 +1,188 @@
 ---
 const items = [
-  { num: '— 01', h: 'One concierge, end to end.', p: 'From your first inquiry to your return flight, a single bilingual concierge accompanies your file — no handoffs, no relayed questions.' },
-  { num: '— 02', h: 'Hospital-grade, hospitality-led.', p: 'We partner only with JCI-accredited hospitals and Class III Tier-A facilities, paired with five-star recovery accommodations.' },
-  { num: '— 03', h: 'Quietly luxurious, never loud.', p: 'Boutique hotels, small groups (under 8 guests), and itineraries that respect the slowness Chinese landscape was designed for.' },
-  { num: '— 04', h: 'Honest about outcomes.', p: 'We share medical and wellness results plainly. No promises of cures — only credentialed care and verifiable practitioners.' },
+  {
+    icon: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+    h: 'One concierge, end to end.',
+    p: 'From your first inquiry to your return flight, a single bilingual concierge accompanies your file — no handoffs, no relayed questions.',
+  },
+  {
+    icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+    h: 'Hospital-grade, hospitality-led.',
+    p: 'We partner only with JCI-accredited hospitals and Class III Tier-A facilities, paired with five-star recovery accommodations.',
+  },
+  {
+    icon: '<path d="M12 2 15.09 8.26 22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
+    h: 'Quietly luxurious, never loud.',
+    p: 'Boutique hotels, small groups (under 8 guests), and itineraries that respect the slowness Chinese landscape was designed for.',
+  },
+  {
+    icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+    h: 'Honest about outcomes.',
+    p: 'We share medical and wellness results plainly. No promises of cures — only credentialed care and verifiable practitioners.',
+  },
 ];
 ---
 
-<section id="about">
-  <div class="container">
-    <div class="section-head">
+<section id="about" class="why-section">
+  <div class="container why-layout">
+    <div class="why-left">
       <span class="micro">— Why Jade Voyage</span>
       <h2>Built on fifteen years of careful relationships.</h2>
       <div class="underline"></div>
+
+      <div class="why-list">
+        {items.map((i) => (
+          <div class="why-row">
+            <span class="why-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={i.icon} />
+            </span>
+            <div class="why-text">
+              <h4>{i.h}</h4>
+              <p>{i.p}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
 
-    <div class="why-grid">
-      {items.map((i) => (
-        <div class="why-item">
-          <span class="num">{i.num}</span>
-          <h4>{i.h}</h4>
-          <p>{i.p}</p>
+    <div class="why-right">
+      <div class="why-image-wrap">
+        <img src="/assets/story-concierge-lounge.png" alt="A Jade Voyage concierge in a serene lounge setting" loading="eager" />
+        <div class="why-image-seal">
+          <span class="seal">玉</span>
         </div>
-      ))}
+      </div>
+      <div class="why-caption">
+        <strong>15+ Years</strong>
+        <span>Of attentive concierge service across China</span>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .why-section { background: var(--canvas); }
+  .why-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .why-left .micro { color: var(--jade-deep); margin-bottom: 16px; display: inline-block; }
+  .why-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(34px, 4vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .why-left .underline { width: 40px; height: 1px; background: var(--jade); margin-bottom: 40px; }
+
+  .why-list { display: flex; flex-direction: column; gap: 28px; }
+  .why-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .why-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--rice);
+    border: 1px solid var(--hairline);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--jade-deep);
+    flex-shrink: 0;
+  }
+  .why-text h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    margin: 4px 0 6px;
+    line-height: 1.2;
+  }
+  .why-text p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .why-right { position: relative; }
+  .why-image-wrap {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lift);
+  }
+  .why-image-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(0.94) brightness(0.97);
+  }
+  .why-image-seal {
+    position: absolute;
+    bottom: -24px;
+    left: -24px;
+    width: 80px;
+    height: 80px;
+    background: var(--canvas);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lift);
+  }
+  .why-image-seal .seal {
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+  }
+  .why-caption {
+    position: absolute;
+    top: 32px;
+    right: -16px;
+    background: var(--ink);
+    color: var(--canvas);
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lift);
+    max-width: 220px;
+  }
+  .why-caption strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #E8C77A;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+  .why-caption span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .why-layout {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .why-right { order: -1; }
+    .why-image-wrap { aspect-ratio: 16 / 11; }
+    .why-caption {
+      top: auto;
+      bottom: -16px;
+      right: 16px;
+      padding: 14px 18px;
+    }
+    .why-caption strong { font-size: 22px; }
+  }
+</style>
