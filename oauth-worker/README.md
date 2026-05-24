@@ -1,4 +1,4 @@
-# Jade Voyage · Decap CMS OAuth Worker
+# Harmony Retreats · Decap CMS OAuth Worker
 
 A 110-line Cloudflare Worker that lets Decap CMS authenticate against GitHub
 without exposing the OAuth client secret to the browser.
@@ -9,7 +9,7 @@ without exposing the OAuth client secret to the browser.
 
 1. Open https://github.com/settings/applications/new
 2. Fill in:
-   - **Application name**: `Jade Voyage CMS`
+   - **Application name**: `Harmony Retreats CMS`
    - **Homepage URL**: `https://jade-voyage.pages.dev`
    - **Authorization callback URL**: `https://jade-voyage-oauth.<your-cf-subdomain>.workers.dev/callback`
      (you'll know `<your-cf-subdomain>` after the first `wrangler deploy` — for the first registration, fill any placeholder and edit it after deploy)

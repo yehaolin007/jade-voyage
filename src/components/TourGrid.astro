@@ -10,10 +10,11 @@ const entries = (await getCollection('tours', ({ data }) => data.featured))
   <div class="container">
     <div class="section-head-flex">
       <div class="section-head" style="margin-bottom: 0;">
-        <span class="micro">— Signature Itineraries</span>
-        <h2>Routes our guests return for.</h2>
+        <span class="micro">Signature Itineraries</span>
+        <h2>Travel featured trips</h2>
+        <p class="deck">Curated medical, wellness and cultural journeys with clear routes, dates and concierge support.</p>
       </div>
-      <a href="/tours/" class="btn btn-outline">View All Tours →</a>
+      <a href="/tours/" class="btn btn-outline">View All Tours</a>
     </div>
 
     <div class="tours-grid">
@@ -21,3 +22,21 @@ const entries = (await getCollection('tours', ({ data }) => data.featured))
     </div>
   </div>
 </section>
+
+<style>
+  .section-head .deck {
+    max-width: 620px;
+    margin-top: 14px;
+  }
+  .tours :global(.btn-outline) {
+    background: #fff;
+    border-color: var(--hairline);
+    color: var(--ink);
+    font-weight: 800;
+  }
+  .tours :global(.btn-outline:hover) {
+    background: var(--seal);
+    border-color: var(--seal);
+    color: #fff;
+  }
+</style>

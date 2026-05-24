@@ -1,5 +1,5 @@
 /**
- * Jade Voyage · Decap CMS GitHub OAuth Proxy
+ * Harmony Retreats · Decap CMS GitHub OAuth Proxy
  * Cloudflare Worker that bridges Decap CMS to GitHub OAuth.
  *
  * Required secrets:
@@ -26,7 +26,7 @@ export default {
 
     if (url.pathname === '/' || url.pathname === '') {
       return new Response(
-        'Jade Voyage · Decap OAuth proxy\n\nEndpoints:\n  GET /auth      — start GitHub OAuth\n  GET /callback  — handle GitHub callback\n',
+        'Harmony Retreats · Decap OAuth proxy\n\nEndpoints:\n  GET /auth      — start GitHub OAuth\n  GET /callback  — handle GitHub callback\n',
         { headers: { 'Content-Type': 'text/plain; charset=utf-8' } }
       );
     }

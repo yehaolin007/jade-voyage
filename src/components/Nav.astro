@@ -1,27 +1,82 @@
 ---
-import { nav } from '../data/site';
+import { nav, site } from '../data/site';
+
+const searchIndex = [
+  { label: 'All Itineraries', href: '/tours', tags: 'tours catalogue itineraries 全部 路线', kind: 'Catalogue' },
+  { label: 'West Lake Restoration', href: '/tours/west-lake-restoration/', tags: 'hangzhou wellness tcm retreat 杭州 西湖 康养', kind: 'Itinerary' },
+  { label: 'Mist & Pine Huangshan', href: '/tours/mist-and-pine-huangshan/', tags: 'huangshan culture trek anhui 黄山 文化 徒步', kind: 'Itinerary' },
+  { label: 'Shanghai Executive Health', href: '/tours/shanghai-executive-health/', tags: 'shanghai mri executive medical screening 上海 体检 医疗', kind: 'Itinerary' },
+  { label: 'Suzhou Gardens & Silk', href: '/tours/suzhou-gardens-silk/', tags: 'suzhou silk gardens culture 苏州 园林 丝绸', kind: 'Itinerary' },
+  { label: 'Tea Horse Road', href: '/tours/tea-horse-road/', tags: 'yunnan tea horse road 云南 茶马古道', kind: 'Itinerary' },
+  { label: 'Emei Hot Spring Retreat', href: '/tours/emei-hot-spring-retreat/', tags: 'emei sichuan hot spring wellness 峨眉 温泉 康养', kind: 'Itinerary' },
+  { label: 'Verified Partners', href: '/verified-partners', tags: 'hospitals accredited credentials trust 医院 资质 信任', kind: 'Trust' },
+  { label: 'About Us', href: '/about', tags: 'team curators founders harmony retreats 团队 创始人 关于', kind: 'Page' },
+  { label: 'Contact a Concierge', href: '/contact', tags: 'contact concierge whatsapp email inquiry 联系 咨询 客服', kind: 'Page' },
+  { label: 'Services Overview', href: '/#services', tags: 'medical wellness cultural services 服务', kind: 'Section' },
+  { label: 'Guest Stories', href: '/#stories', tags: 'stories reviews testimonials guests 故事 评价', kind: 'Section' },
+];
 ---
 
 <nav class="top">
   <div class="container row">
     <a href="/" class="brand">
-      <span class="seal">玉</span>
+      <span class="seal">和</span>
       <span class="brand-text">
-        <span class="en">Jade Voyage</span>
-        <span class="cn-mini">玉 行</span>
+        <span class="en">{site.brand}</span>
+        <span class="cn-mini">{site.brandCn}</span>
       </span>
     </a>
-    <div class="nav-links">
-      {nav.map((l) => (
-        <a href={l.href} class={l.hasSub ? 'has-sub' : ''}>{l.label}</a>
-      ))}
+    <div class="nav-center">
+      <div class="nav-links">
+        {nav.map((l) => (
+          <div class="nav-item">
+            <a href={l.href} class={l.hasSub ? 'has-sub' : ''} aria-haspopup={l.hasSub ? 'true' : undefined}>
+              <span>{l.label}</span>
+              {l.hasSub && (
+                <svg class="nav-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              )}
+            </a>
+            {'children' in l && l.children && (
+              <div class="nav-menu" aria-label={`${l.label} menu`}>
+                {l.children.map((child) => (
+                  <a href={child.href}>
+                    <span>{child.label}</span>
+                    {'desc' in child && child.desc && <small>{child.desc}</small>}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
     <div class="nav-actions">
-      <button class="nav-search" aria-label="Search">
+      <button class="nav-search" data-search-open aria-label="Open site search" aria-haspopup="dialog">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
         </svg>
       </button>
+      <details class="mobile-menu">
+        <summary aria-label="Open site menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </summary>
+        <div class="mobile-panel">
+          {nav.map((l) => (
+            <div class="mobile-group">
+              <a class="mobile-main" href={l.href}>{l.label}</a>
+              {'children' in l && l.children && (
+                <div class="mobile-sub">
+                  {l.children.map((child) => <a href={child.href}>{child.label}</a>)}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </details>
       <button class="lang-toggle" data-lang-toggle aria-label="Language">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
@@ -33,35 +88,482 @@ import { nav } from '../data/site';
   </div>
 </nav>
 
+<div class="search-overlay" data-search-overlay hidden role="dialog" aria-label="Site search" aria-modal="true">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-shell">
+    <div class="search-bar">
+      <svg class="search-bar-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+      <input
+        type="text"
+        data-search-input
+        placeholder="Search itineraries, hospitals, services…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="search-close" data-search-close aria-label="Close search">esc</button>
+    </div>
+    <ul class="search-results" data-search-results>
+      {searchIndex.map((item) => (
+        <li>
+          <a href={item.href} data-tags={item.tags.toLowerCase()} data-label={item.label.toLowerCase()}>
+            <span class="sr-kind">{item.kind}</span>
+            <span class="sr-label">{item.label}</span>
+            <span class="sr-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="search-empty" data-search-empty hidden>No matches. Try "hangzhou", "medical" or "contact".</p>
+    <p class="search-hint"><kbd>↵</kbd> open · <kbd>esc</kbd> close</p>
+  </div>
+</div>
+
 <style>
-  .nav-actions { display: flex; align-items: center; gap: 14px; }
-  .nav-search {
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--ink-soft);
-    border-radius: 50%;
-    transition: background 0.2s, color 0.2s;
+  :global(nav.top .row) {
+    display: grid;
+    grid-template-columns: minmax(390px, auto) minmax(0, 1fr) auto;
+    gap: clamp(24px, 2.2vw, 36px);
   }
-  .nav-search:hover { background: var(--mist); color: var(--jade-deep); }
-  .lang-toggle {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 12px;
+  :global(nav.top .container) {
+    max-width: 1760px;
+    padding-left: clamp(22px, 2.5vw, 40px);
+    padding-right: clamp(22px, 2.5vw, 40px);
+  }
+  .nav-center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+    min-width: 0;
+  }
+  .nav-links {
+    gap: clamp(12px, 1.35vw, 22px);
+    min-width: 0;
+  }
+  :global(.brand-text .en) {
+    font-size: clamp(23px, 1.7vw, 28px);
+  }
+  :global(.brand) {
+    min-width: 0;
+    justify-self: start;
+  }
+  .nav-actions { display: flex; align-items: center; gap: 14px; }
+  .nav-item {
+    position: relative;
+    padding: 24px 0;
+  }
+  .nav-item > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    font-size: clamp(13px, 0.85vw, 15px);
+    font-weight: 800;
+  }
+  .nav-item > a.has-sub::after {
+    content: none;
+  }
+  .nav-chev {
+    flex: 0 0 auto;
+    color: var(--seal);
+    opacity: 0.9;
+    transform: translateY(1px);
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+  .nav-item:hover .nav-chev,
+  .nav-item:focus-within .nav-chev {
+    opacity: 1;
+    transform: translateY(1px) rotate(180deg);
+  }
+  .nav-menu {
+    position: absolute;
+    top: calc(100% - 8px);
+    left: 50%;
+    min-width: 260px;
+    padding: 12px;
     border: 1px solid var(--hairline);
-    border-radius: 9999px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 18px 46px rgba(7, 27, 99, 0.12);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 8px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .nav-item:nth-last-child(-n+2) .nav-menu {
+    left: auto;
+    right: 0;
+    transform: translateY(8px);
+  }
+  .nav-item:hover .nav-menu,
+  .nav-item:focus-within .nav-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, 0);
+  }
+  .nav-item:nth-last-child(-n+2):hover .nav-menu,
+  .nav-item:nth-last-child(-n+2):focus-within .nav-menu {
+    transform: translateY(0);
+  }
+  .nav-menu a {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .nav-menu small {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: normal;
+  }
+  .nav-menu a:hover {
+    background: #fff2ea;
+    color: var(--seal);
+  }
+  .nav-menu a:hover small {
+    color: var(--ink-soft);
+  }
+  .nav-search {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .nav-search:hover {
+    background: #FFF1EA;
+    color: var(--seal);
+    border-color: rgba(241, 90, 36, 0.16);
+    transform: translateY(-1px);
+  }
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
     color: var(--ink-soft);
     font-size: 12px;
     letter-spacing: 0.08em;
     transition: border-color 0.2s, color 0.2s;
   }
-  .lang-toggle:hover { border-color: var(--jade); color: var(--jade-deep); }
-  .lang-pair { display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
+  .lang-toggle:hover { border-color: var(--seal); color: var(--seal); }
+  .lang-pair { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }
   .lang-pair .sep { color: var(--hairline); }
   .lang-pair span:not(.sep) { opacity: 0.45; transition: opacity 0.2s, color 0.2s; }
   .lang-pair span.on { opacity: 1; color: var(--ink); }
-  .nav-cta { padding: 10px 18px; font-size: 13px; }
+  .nav-cta {
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 800;
+    background: var(--seal);
+    color: #fff;
+    box-shadow: none;
+  }
+  .mobile-menu {
+    display: none;
+    position: relative;
+  }
+  .mobile-menu summary {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    color: var(--ink);
+    cursor: pointer;
+    list-style: none;
+  }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .mobile-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: min(320px, calc(100vw - 32px));
+    max-height: calc(100vh - 110px);
+    overflow: auto;
+    padding: 12px;
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 18px 46px rgba(7, 27, 99, 0.16);
+  }
+  .mobile-group {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .mobile-group:last-child { border-bottom: none; }
+  .mobile-main {
+    display: block;
+    color: var(--ink);
+    font-weight: 900;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .mobile-sub {
+    display: grid;
+    gap: 2px;
+  }
+  .mobile-sub a {
+    display: block;
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: var(--ink-soft);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .mobile-sub a:hover {
+    background: #fff2ea;
+    color: var(--seal);
+  }
   @media (max-width: 900px) {
+    :global(nav.top .row) {
+      display: flex;
+    }
+    .nav-center { display: none; }
     .nav-search { display: none; }
-    .lang-toggle { padding: 5px 10px; font-size: 11px; }
-    .nav-cta { padding: 8px 14px; font-size: 12px; }
+    .mobile-menu { display: block; }
+    .lang-toggle { padding: 8px 10px; font-size: 11px; }
+    .nav-cta { padding: 10px 12px; font-size: 12px; }
+  }
+  @media (max-width: 1320px) {
+    :global(nav.top .row) {
+      grid-template-columns: minmax(320px, auto) minmax(0, 1fr) auto;
+      gap: 16px;
+    }
+    .nav-links {
+      gap: 10px;
+    }
+    .nav-item > a {
+      font-size: 13px;
+    }
+    .nav-cta {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+  @media (max-width: 640px) {
+    :global(nav.top .row) {
+      gap: 14px;
+    }
+    .nav-actions {
+      gap: 8px;
+    }
+    .lang-toggle {
+      min-width: 74px;
+      justify-content: center;
+    }
+    .nav-cta {
+      display: none;
+    }
+  }
+
+  /* ─── SEARCH OVERLAY ─── */
+  .search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(56px, 9vh, 120px) 20px 20px;
+  }
+  .search-overlay[hidden] { display: none; }
+  .search-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 27, 99, 0.42);
+    backdrop-filter: blur(6px);
+    animation: searchFadeIn 0.18s ease-out;
+  }
+  .search-shell {
+    position: relative;
+    width: min(640px, 100%);
+    background: rgba(255, 255, 255, 0.99);
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    box-shadow: 0 30px 70px rgba(7, 27, 99, 0.25);
+    overflow: hidden;
+    animation: searchSlideIn 0.22s cubic-bezier(.2,.7,.2,1);
+  }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .search-bar-icon { color: var(--navy-soft); flex: 0 0 auto; }
+  .search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .search-bar input::placeholder { color: var(--muted); font-weight: 500; }
+  .search-close {
+    flex: 0 0 auto;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--hairline);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .search-close:hover { background: var(--navy); color: #fff; }
+  .search-results {
+    list-style: none;
+    margin: 0;
+    padding: 8px;
+    max-height: min(420px, 55vh);
+    overflow-y: auto;
+  }
+  .search-results li[hidden] { display: none; }
+  .search-results a {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: background 0.15s, transform 0.1s;
+  }
+  .search-results a:hover,
+  .search-results a.is-active {
+    background: var(--sky-mist);
+    transform: translateX(2px);
+  }
+  .sr-kind {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy-soft);
+  }
+  .sr-label { font-size: 15px; font-weight: 700; }
+  .sr-arrow { font-size: 18px; color: var(--orange); opacity: 0.7; }
+  .search-results a:hover .sr-arrow { opacity: 1; transform: translateX(2px); }
+  .search-empty,
+  .search-hint {
+    margin: 0;
+    padding: 14px 22px;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .search-hint { border-top: 1px solid var(--hairline); font-size: 11px; letter-spacing: 0.08em; }
+  .search-hint kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    margin: 0 2px;
+    background: var(--hairline);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  @keyframes searchFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes searchSlideIn {
+    from { opacity: 0; transform: translateY(-12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @media (max-width: 640px) {
+    .search-results a { grid-template-columns: 1fr auto; }
+    .sr-kind { display: none; }
   }
 </style>
+
+<script>
+  const overlay = document.querySelector<HTMLElement>('[data-search-overlay]');
+  const input = document.querySelector<HTMLInputElement>('[data-search-input]');
+  const resultsList = document.querySelector<HTMLElement>('[data-search-results]');
+  const emptyMsg = document.querySelector<HTMLElement>('[data-search-empty]');
+  const openButtons = document.querySelectorAll<HTMLButtonElement>('[data-search-open]');
+  const closeButtons = document.querySelectorAll<HTMLElement>('[data-search-close]');
+
+  function setOpen(open: boolean) {
+    if (!overlay || !input) return;
+    overlay.hidden = !open;
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      input.value = '';
+      filter('');
+      setTimeout(() => input.focus(), 30);
+    }
+  }
+
+  function filter(query: string) {
+    if (!resultsList || !emptyMsg) return;
+    const q = query.trim().toLowerCase();
+    const items = resultsList.querySelectorAll<HTMLLIElement>('li');
+    let visible = 0;
+    let firstVisible: HTMLAnchorElement | null = null;
+    items.forEach((li) => {
+      const a = li.querySelector<HTMLAnchorElement>('a');
+      if (!a) return;
+      a.classList.remove('is-active');
+      const haystack = `${a.dataset.label || ''} ${a.dataset.tags || ''}`;
+      const match = q === '' || haystack.includes(q);
+      li.hidden = !match;
+      if (match) {
+        visible += 1;
+        if (!firstVisible) firstVisible = a;
+      }
+    });
+    emptyMsg.hidden = visible > 0;
+    if (firstVisible) firstVisible.classList.add('is-active');
+  }
+
+  openButtons.forEach((btn) => btn.addEventListener('click', () => setOpen(true)));
+  closeButtons.forEach((btn) => btn.addEventListener('click', () => setOpen(false)));
+
+  input?.addEventListener('input', (e) => filter((e.target as HTMLInputElement).value));
+
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const active = resultsList?.querySelector<HTMLAnchorElement>('a.is-active');
+      if (active) {
+        e.preventDefault();
+        window.location.href = active.href;
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay && !overlay.hidden) setOpen(false);
+    // Ctrl/Cmd + K opens search
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      setOpen(overlay?.hidden ?? true);
+    }
+  });
+</script>

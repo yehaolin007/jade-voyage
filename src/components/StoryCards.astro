@@ -77,6 +77,12 @@ const rendered = await Promise.all(
 
 <style>
   .story-prose :global(p) { margin: 0; }
+  .story-prose {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   .story-card.quote blockquote :global(p) {
     color: rgba(255, 255, 255, 0.78);
     font-size: 18px;

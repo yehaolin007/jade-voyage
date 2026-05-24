@@ -1,45 +1,66 @@
 ---
 const trusts = [
-  {
-    name: 'JCI Accredited',
-    meta: 'Joint Commission Intl.',
-    icon: '<path d="M12 2L4 5v7c0 5 3.5 9 8 10 4.5-1 8-5 8-10V5l-8-3z"/><path d="M9 12l2 2 4-4"/>',
-  },
-  {
-    name: 'Class III · Tier A',
-    meta: '三甲医院合作',
-    icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-  },
-  {
-    name: 'CNATCM Licensed',
-    meta: 'Chinese Medicine Board',
-    icon: '<path d="M3 12l9-9 9 9M5 10v10h4v-6h6v6h4V10"/>',
-  },
-  {
-    name: 'AAAAA Travel',
-    meta: 'National Top-Rated',
-    icon: '<path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/>',
-  },
+  { name: 'JCI Accredited', meta: 'Joint Commission Intl.' },
+  { name: 'Class III Tier A', meta: 'Hospital Partners' },
+  { name: 'CNATCM Licensed', meta: 'Chinese Medicine Board' },
+  { name: 'AAAAA Travel', meta: 'National Top-Rated' },
 ];
 ---
 
 <section class="trust" id="trust">
   <div class="container">
-    <div class="trust-head">
-      <span class="micro">— Verified Partners</span>
-      <h3>Every journey is held to international standards.</h3>
-    </div>
-    <div class="trust-grid">
+    <div class="trust-strip">
       {trusts.map((t) => (
-        <div class="trust-cell">
-          <div class="tc-mark">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={t.icon} />
-          </div>
-          <div class="tc-name">{t.name}</div>
-          <div class="tc-meta">{t.meta}</div>
+        <div class="trust-logo">
+          <span>{t.name}</span>
+          <small>{t.meta}</small>
         </div>
       ))}
     </div>
-    <p class="trust-foot">All medical, wellness and travel partners verified annually. <a href="#">View accreditation documents →</a></p>
   </div>
 </section>
+
+<style>
+  .trust {
+    background: #fff;
+    padding: 42px 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .trust-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    align-items: center;
+  }
+  .trust-logo {
+    min-height: 74px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgba(7, 27, 99, 0.45);
+    text-align: center;
+    filter: grayscale(1);
+  }
+  .trust-logo span {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .trust-logo small {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .trust-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 520px) {
+    .trust-strip { grid-template-columns: 1fr; }
+  }
+</style>

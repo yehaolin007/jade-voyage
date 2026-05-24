@@ -34,7 +34,7 @@ const faqs = [
 ];
 ---
 
-<Layout title="Contact — Jade Voyage" description="Reach a real concierge — not a chatbot. We respond in English, German, French or Mandarin, typically within four hours.">
+<Layout title="Contact — Harmony Retreats" description="Reach a real concierge — not a chatbot. We respond in English, German, French or Mandarin, typically within four hours.">
   <Nav />
 
   <PageHero
@@ -99,7 +99,7 @@ const faqs = [
           </label>
           <label class="consent">
             <input type="checkbox" name="consent" required />
-            <span>I agree that Jade Voyage may contact me about my inquiry. We will never share your details.</span>
+            <span>I agree that Harmony Retreats may contact me about my inquiry. We will never share your details.</span>
           </label>
           <button type="submit" class="btn btn-primary submit">Send Inquiry →</button>
           <p class="form-foot">Or email us directly at <a href={`mailto:${site.email}`}>{site.email}</a></p>
@@ -170,11 +170,11 @@ const faqs = [
 </Layout>
 
 <style>
-  .contact-main { padding: 80px 0 96px; background: var(--canvas); }
+  .contact-main { padding: 64px 0 84px; background: var(--canvas); }
   .contact-grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
-    gap: 64px;
+    gap: 56px;
     align-items: start;
   }
   .contact-form-wrap .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
@@ -185,7 +185,7 @@ const faqs = [
     color: var(--ink);
     line-height: 1.05;
   }
-  .underline { width: 40px; height: 1px; background: var(--jade); margin: 20px 0 36px; }
+  .underline { width: 40px; height: 1px; background: var(--jade); margin: 18px 0 30px; }
 
   .inquiry-form .row { display: block; margin-bottom: 18px; }
   .inquiry-form .row.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -240,11 +240,11 @@ const faqs = [
   .form-foot { margin-top: 16px; font-size: 13px; color: var(--muted); }
   .form-foot a { color: var(--seal); border-bottom: 1px solid var(--seal); }
 
-  .contact-side { display: flex; flex-direction: column; gap: 32px; }
+  .contact-side { display: flex; flex-direction: column; gap: 24px; }
   .side-block {
     background: var(--rice);
     border-radius: 14px;
-    padding: 32px;
+    padding: 28px;
   }
   .side-block .micro { color: var(--jade-deep); margin-bottom: 10px; display: inline-block; }
   .side-block h3 {
@@ -286,7 +286,7 @@ const faqs = [
   }
   .office-list span { color: var(--muted); font-size: 13px; }
 
-  .contact-faq { padding: 96px 0; background: var(--mist); }
+  .contact-faq { padding: 80px 0; background: var(--mist); }
   .section-head { margin-bottom: 56px; max-width: 720px; }
   .section-head .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
   .section-head h2 {
@@ -344,12 +344,14 @@ const faqs = [
 
   const params = new URLSearchParams(window.location.search);
   const dest = params.get('dest');
+  const trust = params.get('trust');
   const service = params.get('service');
   const month = params.get('month');
-  if (dest || service || month) {
+  if (dest || trust || service || month) {
     const msg = document.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
     const parts: string[] = [];
     if (dest && dest !== 'Any Destination') parts.push(`Destination: ${dest}`);
+    if (trust) parts.push(`Trust & safety: ${trust}`);
     if (service) parts.push(`Service: ${service}`);
     if (month && month !== 'Any Month') parts.push(`Travel month: ${month}`);
     if (msg && parts.length) msg.value = parts.join('\n') + '\n\n';

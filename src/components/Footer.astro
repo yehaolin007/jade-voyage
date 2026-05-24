@@ -1,4 +1,6 @@
 ---
+import { site } from '../data/site';
+
 const cols = [
   {
     title: 'Journeys',
@@ -20,13 +22,13 @@ const cols = [
     <div class="foot-grid">
       <div>
         <div class="foot-brand">
-          <span class="seal">玉</span>
-          <span class="en">Jade Voyage</span>
+          <span class="seal">和</span>
+          <span class="en">{site.brand}</span>
         </div>
-        <p class="foot-tag">Where ancient healing meets modern care — across the heart of China.</p>
+        <p class="foot-tag">Harmony Retreats · 和旅出行</p>
         <div class="foot-contact">
           Hangzhou · Shanghai · Chengdu<br />
-          <a href="mailto:hello@jadevoyage.com">hello@jadevoyage.com</a><br />
+          <a href={`mailto:${site.email}`}>{site.email}</a><br />
           <a href="#">WhatsApp +86 138-0000-0000</a>
         </div>
       </div>
@@ -40,7 +42,7 @@ const cols = [
       ))}
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Jade Voyage Ltd. · All rights reserved.</span>
+      <span>© 2026 Harmony Retreats Ltd. All rights reserved.</span>
       <div class="foot-payments">
         <span style="font-size: 11px; opacity: 0.6; letter-spacing: 0.1em;">SECURE PAYMENTS</span>
         <span class="pp">PayPal</span>

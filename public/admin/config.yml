@@ -1,4 +1,4 @@
-# Decap CMS configuration for Jade Voyage
+# Decap CMS configuration for Harmony Retreats
 # Production auth uses the GitHub OAuth proxy Worker in ../oauth-worker/.
 # For local dev, set local_backend: true below and run `npx decap-server`.
 #
