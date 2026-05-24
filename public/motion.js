@@ -4,15 +4,16 @@
 
   function initReveal() {
     const targets = document.querySelectorAll(
-      '.hero-copy, .hero-photo, .service-card, .stat-dark, .tour-card, .story-card, .why-row, .why-image-wrap, .cta-collage .tile, .cta-copy, .trust-logo, .step, .product-gallery, .product-panel, .day-section, .included-item, .review-panel'
+      '.hero-copy, .hero-photo, .service-card, .stat-dark, .tour-card, .story-card, .why-row, .why-image-wrap, .why-caption, .cta-collage .tile, .cta-copy, .trust-logo, .step, .product-gallery, .product-panel, .day-section, .included-item, .review-panel'
     );
     targets.forEach((el, index) => {
       el.classList.add('motion-reveal');
       const parent = el.parentElement;
-      const siblings = parent ? Array.from(parent.children).filter((child) => child.matches && child.matches('.service-card, .stat-dark, .tour-card, .story-card, .why-row, .trust-logo, .step, .tile, .day-section, .included-item')) : [];
+      const siblings = parent ? Array.from(parent.children).filter((child) => child.matches && child.matches('.service-card, .stat-dark, .tour-card, .story-card, .why-row, .why-image-wrap, .why-caption, .trust-logo, .step, .tile, .day-section, .included-item')) : [];
       const localIndex = siblings.indexOf(el);
       const delayIndex = localIndex >= 0 ? localIndex : index % 5;
-      el.style.setProperty('--motion-delay', `${Math.min(delayIndex, 5) * 120}ms`);
+      const delay = el.matches('.why-caption') ? 260 : Math.min(delayIndex, 5) * 120;
+      el.style.setProperty('--motion-delay', `${delay}ms`);
     });
 
     if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -66,24 +67,22 @@
 
   function initParallax() {
     if (reduceMotion || !finePointer) return;
-    const zones = document.querySelectorAll('.hero-media, .cta-collage, .stories-grid, .tours-grid, .product-gallery, .image-table');
-    zones.forEach((zone) => {
-      zone.addEventListener('mousemove', (event) => {
-        const rect = zone.getBoundingClientRect();
+    const items = document.querySelectorAll('.hero-photo, .cta-collage .tile, .story-card .thumb, .tour-img, .why-image-wrap, .main-image, .thumb, .table-img');
+    items.forEach((item) => {
+      const img = item.querySelector('img');
+      if (!img) return;
+
+      item.addEventListener('mousemove', (event) => {
+        const rect = item.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
         const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-        zone.querySelectorAll('img').forEach((img, index) => {
-          const depth = (index + 1) * 5;
-          img.style.setProperty('--mx', `${x * depth}px`);
-          img.style.setProperty('--my', `${y * depth}px`);
-        });
+        img.style.setProperty('--mx', `${x * 7}px`);
+        img.style.setProperty('--my', `${y * 7}px`);
       }, { passive: true });
 
-      zone.addEventListener('mouseleave', () => {
-        zone.querySelectorAll('img').forEach((img) => {
-          img.style.setProperty('--mx', '0px');
-          img.style.setProperty('--my', '0px');
-        });
+      item.addEventListener('mouseleave', () => {
+        img.style.setProperty('--mx', '0px');
+        img.style.setProperty('--my', '0px');
       });
     });
   }

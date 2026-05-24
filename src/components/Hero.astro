@@ -64,7 +64,7 @@ const proofItems = [
     </div>
   </div>
 
-  <form class="hero-search container" action="/contact" method="GET">
+  <form class="hero-search" action="/contact" method="GET">
     <label class="hs-field">
       <span class="hs-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -279,9 +279,9 @@ const proofItems = [
 
   .hero-search {
     position: absolute;
-    left: 50%;
+    left: 50vw;
     bottom: -48px;
-    width: min(1120px, calc(100% - 64px));
+    width: min(1120px, calc(100vw - 64px));
     max-width: 1120px;
     transform: translateX(-50%);
     z-index: 3;

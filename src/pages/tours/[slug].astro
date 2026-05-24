@@ -241,10 +241,11 @@ const imageRows = galleryPool.slice(0, 4);
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.01);
     transition: transform 0.8s cubic-bezier(.2,.7,.2,1);
   }
   .main-image:hover img {
-    transform: scale(1.035);
+    transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.045);
   }
   .thumb-row {
     display: grid;
@@ -273,6 +274,11 @@ const imageRows = galleryPool.slice(0, 4);
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.01);
+    transition: transform 0.45s ease;
+  }
+  .thumb:hover img {
+    transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.055);
   }
   .product-panel {
     position: sticky;
@@ -550,10 +556,11 @@ const imageRows = galleryPool.slice(0, 4);
     width: 100%;
     height: 150px;
     object-fit: cover;
+    transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.01);
     transition: transform 0.5s ease, filter 0.3s ease;
   }
   .table-img:hover img {
-    transform: scale(1.04);
+    transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(1.055);
     filter: saturate(1.04);
   }
   .included-panel,
