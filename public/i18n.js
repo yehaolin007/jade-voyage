@@ -1634,6 +1634,7 @@
       translateTextNodes(lang);
       translateAttrs(lang);
     } else {
+      restoreHtml();
       applyHtml(lang);
       translateTextNodes(lang);
       translateAttrs(lang);

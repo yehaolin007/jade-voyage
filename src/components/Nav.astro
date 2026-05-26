@@ -386,12 +386,19 @@ const searchIndex = [
     color: var(--navy-soft);
   }
   .nav-cta {
-    padding: 15px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    padding: 0 20px;
     font-size: 14px;
     font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
     background: var(--seal);
     color: #fff;
     box-shadow: none;
+    flex: 0 0 auto;
   }
   .mobile-menu {
     display: none;
@@ -458,7 +465,7 @@ const searchIndex = [
     .nav-search { display: none; }
     .mobile-menu { display: block; }
     .lang-trigger { padding: 8px 10px; font-size: 11px; }
-    .nav-cta { padding: 10px 12px; font-size: 12px; }
+    .nav-cta { height: 42px; padding: 0 12px; font-size: 12px; }
   }
   @media (max-width: 1320px) {
     :global(nav.top .row) {
@@ -482,8 +489,10 @@ const searchIndex = [
       gap: 8px;
     }
     .nav-cta {
-      padding-left: 16px;
-      padding-right: 16px;
+      height: 48px;
+      padding-left: 14px;
+      padding-right: 14px;
+      font-size: 12px;
     }
   }
   @media (max-width: 640px) {
