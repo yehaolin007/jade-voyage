@@ -3,16 +3,34 @@ import { site } from '../data/site';
 
 const cols = [
   {
-    title: 'Journeys',
-    links: ['Small Group Tours', 'Private Custom Tours', 'Health Check-ups', 'Wellness Retreats', 'All Itineraries'],
+    title: 'Packages',
+    links: [
+      { label: 'Featured Packages', href: '/#tours' },
+      { label: 'Custom Travel', href: '/contact?service=Custom%20Travel' },
+      { label: 'Checkup Services', href: '/#services' },
+      { label: 'TCM Wellness', href: '/#services' },
+      { label: 'All Packages', href: '/tours/' },
+    ],
   },
   {
     title: 'Trust',
-    links: ['Accredited Hospitals', 'Wellness Clinics', 'Travel Partners', 'Privacy Policy', 'Refund Policy'],
+    links: [
+      { label: 'Accredited Hospitals', href: '/verified-partners#medical' },
+      { label: 'Wellness Clinics', href: '/verified-partners#wellness' },
+      { label: 'Travel Partners', href: '/verified-partners#travel' },
+      { label: 'Privacy Policy', href: '/verified-partners#privacy-policy' },
+      { label: 'Refund Policy', href: '/contact' },
+    ],
   },
   {
     title: 'Company',
-    links: ['Why Choose Us', 'Our Team', 'Real Stories', 'Press', 'Contact'],
+    links: [
+      { label: 'Why Choose Us', href: '/#why-choose-us' },
+      { label: 'Our Team', href: '/about' },
+      { label: 'Real Stories', href: '/#stories' },
+      { label: 'Press', href: '/contact' },
+      { label: 'Contact', href: '/contact' },
+    ],
   },
 ];
 ---
@@ -22,21 +40,21 @@ const cols = [
     <div class="foot-grid">
       <div>
         <div class="foot-brand">
-          <span class="seal">和</span>
+          <span class="seal">康</span>
           <span class="en">{site.brand}</span>
         </div>
-        <p class="foot-tag">Harmony Retreats · 和旅出行</p>
+        <p class="foot-tag">Harmony Retreats · {site.brandCn}</p>
         <div class="foot-contact">
-          Hangzhou · Shanghai · Chengdu<br />
+          Chongqing · Shanghai · Hangzhou<br />
           <a href={`mailto:${site.email}`}>{site.email}</a><br />
-          <a href="#">WhatsApp +86 138-0000-0000</a>
+          <a href={`https://wa.me/${site.whatsapp.replace(/[^0-9]/g, '')}`}>WhatsApp {site.whatsapp}</a>
         </div>
       </div>
       {cols.map((c) => (
         <div class="foot-col">
           <h6>{c.title}</h6>
           <ul>
-            {c.links.map((l) => <li><a href="#">{l}</a></li>)}
+            {c.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
           </ul>
         </div>
       ))}

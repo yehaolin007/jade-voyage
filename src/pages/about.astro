@@ -4,50 +4,49 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import FloatChat from '../components/FloatChat.astro';
 import PageHero from '../components/PageHero.astro';
-import WhyItems from '../components/WhyItems.astro';
 
 const team = [
   {
     name: 'Lin Yuwen',
     role: 'Founder & Chief Concierge',
-    bio: 'Fifteen years between hospital administration in Shanghai and bespoke travel design in Hangzhou. Lin started Harmony Retreats after her own family\'s search for English-language medical care turned into a study of every accredited centre in eastern China.',
+    bio: 'Fifteen years between hospital administration, cross-border guest care and bespoke travel design. Lin built Harmony Retreats around one practical promise: international guests should be able to combine checkups, TCM heritage therapies and Chongqing travel without friction.',
     img: '/assets/story-concierge-lounge.png',
   },
   {
     name: 'Dr. Chen Mei',
     role: 'Medical Director',
-    bio: 'Internal medicine specialist with twenty years at a JCI-accredited tertiary hospital. Dr. Chen oversees every hospital partnership and reviews each guest\'s diagnostic plan before arrival.',
+    bio: 'Internal medicine specialist with twenty years at a Class III tertiary hospital. Dr. Chen reviews partner standards, checkup logic and report interpretation workflows before guest arrival.',
     img: '/assets/clinic-executive-checkup.png',
   },
   {
     name: 'Master Wu Tianqing',
     role: 'TCM & Wellness Curator',
-    bio: 'CNATCM-licensed practitioner trained at the Zhejiang Academy of TCM. Designs every wellness retreat — from herbal compounding to morning Tai Chi rhythms — and personally meets guests on Wellness routes.',
+    bio: 'Licensed TCM wellness practitioner focused on heritage therapies, meridian care and practical recovery routines that guests can continue after returning home.',
     img: '/assets/sichuan-hot-spring.png',
   },
   {
     name: 'Sarah Whitmore',
     role: 'European Liaison',
-    bio: 'Former luxury travel editor based in London. Sarah is the first voice many guests hear — speaking English, German and French, with a gift for translating wishes into concrete day-by-day plans.',
+    bio: 'Former luxury travel editor based in London. Sarah is the first voice many guests hear, speaking English, German and French, with a gift for translating wishes into concrete day-by-day plans.',
     img: '/assets/private-custom-planning.png',
   },
 ];
 
 const principles = [
-  { num: '01', h: 'Slowness is luxury.', p: 'We never overschedule. White space on the itinerary is intentional — it is where the journey actually happens.' },
-  { num: '02', h: 'Credentials, not claims.', p: 'Every hospital, clinic and practitioner we work with holds national or international accreditation we can show you on request.' },
-  { num: '03', h: 'A single phone number.', p: 'One concierge from inquiry to return flight. No call-centre, no relayed messages, no surprises.' },
-  { num: '04', h: 'Honesty about outcomes.', p: 'We share results plainly. We will not promise cures — only credentialed care and verifiable practitioners.' },
+  { num: '01', h: 'One route, three services.', p: 'Checkup, TCM heritage therapies and cultural travel are planned as one coordinated service, not separate vendors stitched together late.' },
+  { num: '02', h: 'Credentials, not claims.', p: 'Hospitals, clinics and travel partners are selected for visible qualifications and operational reliability.' },
+  { num: '03', h: 'A single point of contact.', p: 'One concierge follows the file from inquiry to return, reducing repeated explanations and missed details.' },
+  { num: '04', h: 'Clear pricing.', p: 'We prefer all-inclusive proposals, plain exclusions and no hidden consumption pressure during the trip.' },
 ];
 ---
 
-<Layout title="About — Harmony Retreats" description="A small, bilingual team of medical, wellness and travel curators with fifteen years of careful relationships across China.">
+<Layout title="About Harmony Retreats" description="A bilingual cross-border wellness travel team focused on Chongqing checkups, TCM heritage therapies and mountain-city experiences.">
   <Nav />
 
   <PageHero
     eyebrow="About Harmony Retreats"
-    title="A small team. Fifteen years of careful relationships."
-    subtitle="Harmony Retreats is held by a tight group of medical, wellness and travel curators based in Hangzhou, Shanghai and Chengdu. We design and accompany every itinerary ourselves."
+    title="Cross-border wellness travel, held by one team."
+    subtitle="Harmony Retreats coordinates checkups, TCM heritage therapies and Chongqing mountain-city experiences for international guests who want a clear, supported journey."
     bgImage="/assets/story-concierge-lounge.png"
     crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
   />
@@ -55,27 +54,19 @@ const principles = [
   <section class="about-story">
     <div class="container story-grid">
       <div>
-        <span class="micro">— Our Story</span>
-        <h2>It started with a single phone call.</h2>
+        <span class="micro">Our Story</span>
+        <h2>Built for guests who need clarity.</h2>
         <div class="underline"></div>
       </div>
       <div class="story-copy">
         <p>
-          In 2011 our founder, Lin Yuwen, took a call from a family friend visiting Hangzhou —
-          they needed a cardiac screening with English-language reporting and a quiet place
-          to recover. What should have been straightforward took three weeks of phone calls,
-          translations and apologies.
+          The idea behind Harmony Retreats is simple: international guests should not have to coordinate medical appointments, TCM wellness experiences, transport, translation and travel planning through five disconnected channels.
         </p>
         <p>
-          That experience became Harmony Retreats. We are now a team of fourteen — physicians,
-          TCM practitioners, cultural curators and a small group of bilingual concierges —
-          and our singular promise has not changed: a guest should arrive carrying nothing
-          but their suitcase. Every detail is held.
+          We focus on Chongqing as a practical wellness base: strong hospital access, mountain-city culture, distinctive food, riverside movement and surrounding restorative routes. The concierge layer holds the plan together before, during and after the trip.
         </p>
         <p>
-          We remain deliberately small. We accept no more than thirty bookings a month,
-          turn away high volume corporate referrals, and re-verify every hospital and
-          clinic partnership annually. Our reputation is the only thing we cannot replace.
+          We remain deliberately small. Each booking receives a named advisor, a clear package scope, visible partner standards and follow-up support after guests return home.
         </p>
       </div>
     </div>
@@ -84,7 +75,7 @@ const principles = [
   <section class="about-principles">
     <div class="container">
       <div class="section-head">
-        <span class="micro">— Four Principles</span>
+        <span class="micro">Four Principles</span>
         <h2>What we will, and will not, do.</h2>
         <div class="underline"></div>
       </div>
@@ -103,7 +94,7 @@ const principles = [
   <section class="about-team">
     <div class="container">
       <div class="section-head">
-        <span class="micro">— Our Team</span>
+        <span class="micro">Our Team</span>
         <h2>The people who actually answer your messages.</h2>
         <div class="underline"></div>
       </div>
@@ -122,8 +113,6 @@ const principles = [
     </div>
   </section>
 
-  <WhyItems />
-
   <Footer />
   <FloatChat />
 </Layout>
@@ -131,30 +120,29 @@ const principles = [
 <style>
   .about-story { padding: 96px 0; background: var(--canvas); }
   .story-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
-  .about-story .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .about-story .micro { color: var(--seal); margin-bottom: 14px; display: inline-block; }
   .about-story h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 44px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: clamp(34px, 4vw, 48px);
     color: var(--ink);
-    line-height: 1.05;
+    line-height: 1.12;
   }
-  .underline { width: 40px; height: 1px; background: var(--jade); margin-top: 20px; }
+  .underline { width: 40px; height: 2px; background: var(--seal); margin-top: 20px; }
   .story-copy p {
     color: var(--ink-soft);
     font-size: 17px;
     line-height: 1.7;
     margin-bottom: 18px;
-    font-weight: 300;
   }
   .story-copy p:first-letter {
-    font-family: 'Cormorant Garamond', serif;
     font-size: 38px;
     color: var(--seal);
     float: left;
     line-height: 1;
     margin-right: 8px;
     margin-top: 4px;
+    font-weight: 900;
   }
 
   .about-principles { padding: 96px 0; background: var(--rice); }
@@ -162,19 +150,19 @@ const principles = [
   .principle {
     background: var(--canvas);
     padding: 32px;
-    border-radius: 14px;
+    border-radius: 10px;
     border: 1px solid var(--hairline);
   }
   .p-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
+    font-size: 20px;
     color: var(--seal);
     margin-bottom: 14px;
+    font-weight: 900;
   }
   .principle h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 26px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: 22px;
     color: var(--ink);
     margin-bottom: 10px;
   }
@@ -188,24 +176,25 @@ const principles = [
     gap: 24px;
     padding: 24px;
     background: var(--rice);
-    border-radius: 14px;
+    border-radius: 10px;
     align-items: start;
   }
   .team-img { width: 100%; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 10px; }
-  .team-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.92); }
+  .team-img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.96); }
   .team-card h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
     font-size: 22px;
     color: var(--ink);
     margin-bottom: 4px;
   }
   .team-role {
     font-size: 12px;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--jade-deep);
+    color: var(--seal);
     margin-bottom: 12px;
+    font-weight: 800;
   }
   .team-card p { color: var(--ink-soft); font-size: 14px; line-height: 1.6; }
 
@@ -213,13 +202,13 @@ const principles = [
     margin-bottom: 56px;
     max-width: 720px;
   }
-  .section-head .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .section-head .micro { color: var(--seal); margin-bottom: 14px; display: inline-block; }
   .section-head h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 38px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: clamp(32px, 3.6vw, 46px);
     color: var(--ink);
-    line-height: 1.1;
+    line-height: 1.14;
   }
 
   @media (max-width: 960px) {

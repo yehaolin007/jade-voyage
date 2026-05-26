@@ -1,13 +1,11 @@
 export const site = {
   brand: 'Harmony Retreats',
-  brandCn: '和旅出行',
-  slogan: 'Medical wellness retreats, trusted travel care, and restorative journeys across China.',
-  tagline: 'Medical · Wellness · Cultural Itineraries',
+  brandCn: '跨境康旅',
+  slogan: 'Checkup, TCM heritage therapies, and Chongqing mountain-city travel in one coordinated wellness journey.',
+  tagline: 'Checkup · TCM · Travel',
   email: 'hello@harmonyretreats.com',
   whatsapp: '+86 138-0000-0000',
-  offices: ['Hangzhou', 'Shanghai', 'Chengdu'],
-  formspreeEndpoint: 'https://formspree.io/f/YOUR_FORM_ID',
-  tawkPropertyId: 'YOUR_TAWK_PROPERTY_ID',
+  offices: ['Chongqing', 'Shanghai', 'Hangzhou'],
   paypal: {
     clientId: 'sb',
     currency: 'USD',
@@ -21,9 +19,9 @@ export const site = {
 };
 
 export const offices = [
-  { city: 'Hangzhou', note: 'West Lake · Headquarters', phone: '+86 571 8800-0000' },
+  { city: 'Chongqing', note: 'Mountain-city wellness base', phone: '+86 23 8800-0000' },
   { city: 'Shanghai', note: "Jing'an · Medical liaison", phone: '+86 21 6200-0000' },
-  { city: 'Chengdu', note: 'Jinjiang · Cultural team', phone: '+86 28 6688-0000' },
+  { city: 'Hangzhou', note: 'Recovery partner liaison', phone: '+86 571 8800-0000' },
 ];
 
 export const nav = [
@@ -33,16 +31,16 @@ export const nav = [
     hasSub: true,
     children: [
       { label: 'Overview', href: '/', desc: 'Hero and quick inquiry' },
-      { label: 'Core Credentials', href: '/#trust-safety', desc: 'Trust and safety proof' },
+      { label: 'Why Choose Us', href: '/#why-choose-us', desc: 'One-stop service and transparent pricing' },
       { label: 'Featured Packages', href: '/#tours', desc: 'Popular retreat products' },
     ],
   },
   {
-    label: 'Tour SOP',
+    label: 'Packages',
     href: '/tours',
     hasSub: true,
     children: [
-      { label: 'Tour Packages', href: '/tours/west-lake-restoration/', desc: 'Detail page and booking options' },
+      { label: 'Tour Packages', href: '/tours/chongqing-wellness-starter/', desc: 'Detail page and booking options' },
     ],
   },
   {
@@ -50,10 +48,10 @@ export const nav = [
     href: '/#trust-safety',
     hasSub: true,
     children: [
-      { label: 'Hospital Credentials', href: '/verified-partners', desc: 'Medical partner standards' },
-      { label: 'Privacy Policy', href: '/verified-partners', desc: 'Data handling and consent' },
-      { label: 'Insurance Support', href: '/contact', desc: 'Claim material guidance' },
-      { label: 'Licensed Travel Partners', href: '/verified-partners', desc: 'Screened travel agencies' },
+      { label: 'Hospital Credentials', href: '/verified-partners#medical', desc: 'Medical partner standards' },
+      { label: 'TCM Clinic Credentials', href: '/verified-partners#wellness', desc: 'Licensed heritage therapy partners' },
+      { label: 'Travel Agency Credentials', href: '/verified-partners#travel', desc: 'Screened travel operators' },
+      { label: 'Privacy Policy', href: '/verified-partners#privacy-policy', desc: 'Data handling and consent' },
     ],
   },
   {
@@ -82,7 +80,7 @@ export const nav = [
     href: '/about',
     hasSub: true,
     children: [
-      { label: 'Why Choose Us', href: '/#about', desc: 'What makes us different' },
+      { label: 'Why Choose Us', href: '/#why-choose-us', desc: 'What makes us different' },
       { label: 'Team Introduction', href: '/about', desc: 'Medical and travel curators' },
       { label: 'Partner Network', href: '/verified-partners', desc: 'Hospitals and agencies' },
     ],

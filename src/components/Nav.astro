@@ -3,12 +3,12 @@ import { nav, site } from '../data/site';
 
 const searchIndex = [
   { label: 'All Itineraries', href: '/tours', tags: 'tours catalogue itineraries 全部 路线', kind: 'Catalogue' },
-  { label: 'West Lake Restoration', href: '/tours/west-lake-restoration/', tags: 'hangzhou wellness tcm retreat 杭州 西湖 康养', kind: 'Itinerary' },
-  { label: 'Mist & Pine Huangshan', href: '/tours/mist-and-pine-huangshan/', tags: 'huangshan culture trek anhui 黄山 文化 徒步', kind: 'Itinerary' },
-  { label: 'Shanghai Executive Health', href: '/tours/shanghai-executive-health/', tags: 'shanghai mri executive medical screening 上海 体检 医疗', kind: 'Itinerary' },
-  { label: 'Suzhou Gardens & Silk', href: '/tours/suzhou-gardens-silk/', tags: 'suzhou silk gardens culture 苏州 园林 丝绸', kind: 'Itinerary' },
-  { label: 'Tea Horse Road', href: '/tours/tea-horse-road/', tags: 'yunnan tea horse road 云南 茶马古道', kind: 'Itinerary' },
-  { label: 'Emei Hot Spring Retreat', href: '/tours/emei-hot-spring-retreat/', tags: 'emei sichuan hot spring wellness 峨眉 温泉 康养', kind: 'Itinerary' },
+  { label: 'Chongqing Wellness Starter', href: '/tours/chongqing-wellness-starter/', tags: 'chongqing wellness starter tcm checkup featured 重庆 山城 康养 体检 中医 一站式', kind: 'Package' },
+  { label: 'TCM Heritage Wellness', href: '/tours/tcm-heritage-wellness/', tags: 'tcm heritage wellness meridian hot spring 中医 非遗 经络 温泉', kind: 'Package' },
+  { label: 'Executive Checkup Journey', href: '/tours/executive-checkup-journey/', tags: 'executive checkup hospital screening medical report 体检 医院 报告 国际部', kind: 'Package' },
+  { label: 'Mountain City Culture', href: '/tours/mountain-city-culture/', tags: 'mountain city culture riverside local food 山城 文化 江岸 美食', kind: 'Package' },
+  { label: 'Fully Custom Chongqing', href: '/tours/fully-custom-chongqing/', tags: 'custom bespoke chongqing private tailor 定制 私人 重庆 自由', kind: 'Package' },
+  { label: 'Mountain Hot-Spring Reset', href: '/tours/mountain-hot-spring-reset/', tags: 'hot spring reset recovery quiet 温泉 修复 静养 康复', kind: 'Package' },
   { label: 'Verified Partners', href: '/verified-partners', tags: 'hospitals accredited credentials trust 医院 资质 信任', kind: 'Trust' },
   { label: 'About Us', href: '/about', tags: 'team curators founders harmony retreats 团队 创始人 关于', kind: 'Page' },
   { label: 'Contact a Concierge', href: '/contact', tags: 'contact concierge whatsapp email inquiry 联系 咨询 客服', kind: 'Page' },
@@ -81,7 +81,13 @@ const searchIndex = [
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
         </svg>
-        <span class="lang-pair"><span data-lang-en class="on">EN</span><span class="sep">/</span><span data-lang-cn>CN</span></span>
+        <span class="lang-pair">
+          <span data-lang-en class="on">EN</span>
+          <span class="sep">/</span>
+          <span data-lang-cn>CN</span>
+          <span class="sep">/</span>
+          <span data-lang-fr>FR</span>
+        </span>
       </button>
       <a href="/contact" class="btn btn-primary nav-cta">Book Consultation</a>
     </div>
@@ -364,7 +370,7 @@ const searchIndex = [
       gap: 8px;
     }
     .lang-toggle {
-      min-width: 74px;
+      min-width: 96px;
       justify-content: center;
     }
     .nav-cta {

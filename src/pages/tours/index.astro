@@ -11,15 +11,15 @@ const tours = (await getCollection('tours')).sort((a, b) => a.data.order - b.dat
 const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
 ---
 
-<Layout title="All Itineraries — Harmony Retreats" description="Browse the full catalogue of Harmony Retreats signature journeys across medical, wellness and cultural categories.">
+<Layout title="All Packages — Harmony Retreats" description="Browse Chongqing checkup, TCM heritage and travel packages with clear concierge support.">
   <Nav />
 
   <PageHero
-    eyebrow="Signature Itineraries"
-    title="Routes shaped by fifteen years of careful relationships."
-    subtitle="Every itinerary is curated by a bilingual concierge. Filter by category, or speak with us about a fully bespoke route."
+    eyebrow="All Packages"
+    title="Chongqing wellness packages with clear scope."
+    subtitle="Filter by package category, or speak with us about a fully custom Chongqing plan."
     bgImage="/assets/hangzhou-westlake-retreat.png"
-    crumbs={[{ label: 'Home', href: '/' }, { label: 'Itineraries' }]}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Packages' }]}
   />
 
   <section class="tours-listing">
@@ -34,7 +34,7 @@ const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
           </div>
         </div>
         <div class="result-count">
-          <span class="count-num">{tours.length}</span> curated journeys · sorted by guest rating
+          <span class="count-num">{tours.length}</span> packages · sorted by guest rating
         </div>
       </div>
 
@@ -44,9 +44,9 @@ const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
 
       <div class="bespoke-cta">
         <div>
-          <span class="micro">— Can't find your route?</span>
-          <h3>We design bespoke itineraries for every guest.</h3>
-          <p>Tell us your dates, your interests, and any medical or wellness goals — we'll send a private proposal within 48 hours.</p>
+          <span class="micro">— Can't find your package?</span>
+          <h3>We build custom Chongqing plans for each guest.</h3>
+          <p>Tell us your dates, checkup needs, TCM interests and travel rhythm — we'll send a private proposal within 48 hours.</p>
         </div>
         <a href="/contact" class="btn btn-primary">Request a Custom Proposal →</a>
       </div>

@@ -2,11 +2,11 @@
 cardLayout: video
 guestName: Dr. James A. Whitford
 location: Boston
-trip: West Lake Sanctuary · Repeat guest since 2022
+trip: Executive Checkup Journey · Repeat guest since 2024
 avatar: J
-image: /assets/hangzhou-westlake-retreat.png
+image: /assets/clinic-executive-checkup.png
 headline: '"The quiet moments stayed with me most."'
 order: 3
 ---
 
-The medical care was world-class, but the small moments — the herbalist explaining each leaf, the silent breakfast by the lotus pond — those stay with me most.
+The checkup was efficient, but the small moments stayed with me most: the careful report reading, the herbal consultation, and the quiet city walks after dinner.

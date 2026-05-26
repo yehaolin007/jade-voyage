@@ -9,7 +9,7 @@ import { site } from '../data/site';
 const faqs = [
   {
     q: 'How quickly will I receive a response?',
-    a: 'Typically within four hours during Beijing business hours (UTC+8), and within twenty-four hours otherwise. Every initial inquiry is answered by a real concierge, not a chatbot.',
+    a: 'Typically within four hours during China business hours (UTC+8), and within twenty-four hours otherwise. Every initial inquiry is answered by a real concierge, not a chatbot.',
   },
   {
     q: 'Do I need to pay a deposit to enquire?',
@@ -44,14 +44,14 @@ const faqs = [
     crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
   />
 
-  <section class="contact-main">
+  <section class="contact-main" id="contact-form">
     <div class="container contact-grid">
       <div class="contact-form-wrap">
         <span class="micro">— Inquiry Form</span>
         <h2>Send us your wishes.</h2>
         <div class="underline"></div>
 
-        <form class="inquiry-form" action={site.formspreeEndpoint} method="POST">
+        <form class="inquiry-form" action={`mailto:${site.email}`} method="POST" enctype="text/plain">
           <div class="row two">
             <label>
               <span>Full name *</span>
@@ -74,13 +74,13 @@ const faqs = [
           </div>
           <div class="row two">
             <label>
-              <span>Interest *</span>
+              <span>Package Type *</span>
               <select name="interest" required>
                 <option value="">Select a category</option>
-                <option>Medical · Health Check-up</option>
-                <option>Wellness · TCM Retreat</option>
-                <option>Cultural Itinerary</option>
-                <option>Fully Bespoke Journey</option>
+                <option>Featured Packages</option>
+                <option>TCM Heritage + Travel</option>
+                <option>Checkup + Travel</option>
+                <option>Custom Travel</option>
                 <option>Not sure yet — please advise</option>
               </select>
             </label>
@@ -121,11 +121,11 @@ const faqs = [
             </li>
             <li>
               <span class="d-label">Live Chat</span>
-              <a href="#" class="chat-trigger">Open chat widget →</a>
+              <a href="/contact#contact-form" class="chat-trigger">Open chat widget →</a>
             </li>
             <li>
               <span class="d-label">Response time</span>
-              <strong>Within 4 hours · Beijing hours</strong>
+              <strong>Within 4 hours · China time UTC+8</strong>
             </li>
           </ul>
         </div>
@@ -136,7 +136,7 @@ const faqs = [
             {site.offices.map((city) => (
               <li>
                 <strong>{city}</strong>
-                <span>{city === 'Hangzhou' ? 'West Lake · Headquarters' : city === 'Shanghai' ? 'Jing\'an · Medical liaison' : 'Jinjiang · Cultural team'}</span>
+                <span>{city === 'Chongqing' ? 'Mountain-city wellness base' : city === 'Shanghai' ? 'Jing\'an · Medical liaison' : 'Recovery partner liaison'}</span>
               </li>
             ))}
           </ul>
@@ -358,10 +358,10 @@ const faqs = [
     const interest = document.querySelector<HTMLSelectElement>('select[name="interest"]');
     if (interest && service) {
       const map: Record<string, string> = {
-        'MRI Precision Screening': 'Medical · Health Check-up',
-        'Wellness Retreat': 'Wellness · TCM Retreat',
-        'Cultural Itinerary': 'Cultural Itinerary',
-        'Fully Bespoke Journey': 'Fully Bespoke Journey',
+        'Featured Packages': 'Featured Packages',
+        'TCM Heritage + Travel': 'TCM Heritage + Travel',
+        'Checkup + Travel': 'Checkup + Travel',
+        'Custom Travel': 'Custom Travel',
       };
       const target = map[service];
       if (target) {

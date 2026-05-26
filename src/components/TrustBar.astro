@@ -1,20 +1,24 @@
 ---
 const trusts = [
-  { name: 'JCI Accredited', meta: 'Joint Commission Intl.' },
-  { name: 'Class III Tier A', meta: 'Hospital Partners' },
-  { name: 'CNATCM Licensed', meta: 'Chinese Medicine Board' },
-  { name: 'AAAAA Travel', meta: 'National Top-Rated' },
+  { name: 'Hospital Credentials', meta: 'Partner standards', href: '/verified-partners#medical' },
+  { name: 'TCM Clinic Credentials', meta: 'Licensed heritage therapies', href: '/verified-partners#wellness' },
+  { name: 'Travel Agency Credentials', meta: 'Screened operators', href: '/verified-partners#travel' },
+  { name: 'Privacy Policy', meta: 'Consent and data handling', href: '/verified-partners#privacy-policy' },
 ];
 ---
 
-<section class="trust" id="trust">
+<section class="trust" id="trust-safety">
   <div class="container">
+    <div class="trust-head">
+      <span class="micro">Trust & Safety</span>
+      <h2>Four credential entrances before booking.</h2>
+    </div>
     <div class="trust-strip">
       {trusts.map((t) => (
-        <div class="trust-logo">
+        <a class="trust-logo" href={t.href}>
           <span>{t.name}</span>
           <small>{t.meta}</small>
-        </div>
+        </a>
       ))}
     </div>
   </div>
@@ -23,9 +27,28 @@ const trusts = [
 <style>
   .trust {
     background: #fff;
-    padding: 42px 0;
+    padding: 56px 0;
     border-top: 1px solid var(--hairline);
     border-bottom: 1px solid var(--hairline);
+  }
+  .trust-head {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .trust-head .micro {
+    color: var(--seal);
+  }
+  .trust-head h2 {
+    max-width: 560px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 900;
+    line-height: 1.12;
+    color: var(--ink);
+    text-align: right;
   }
   .trust-strip {
     display: grid;
@@ -39,24 +62,41 @@ const trusts = [
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: rgba(7, 27, 99, 0.45);
+    color: var(--ink);
     text-align: center;
-    filter: grayscale(1);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 18px 14px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .trust-logo:hover {
+    border-color: rgba(241, 90, 36, 0.35);
+    box-shadow: 0 14px 28px rgba(7, 27, 99, 0.08);
+    transform: translateY(-2px);
   }
   .trust-logo span {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 900;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
   .trust-logo small {
-    margin-top: 4px;
+    margin-top: 6px;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: var(--seal);
   }
 
   @media (max-width: 900px) {
+    .trust-head {
+      display: block;
+    }
+    .trust-head h2 {
+      margin-top: 8px;
+      text-align: left;
+    }
     .trust-strip { grid-template-columns: repeat(2, 1fr); }
   }
 

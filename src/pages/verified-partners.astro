@@ -6,60 +6,60 @@ import FloatChat from '../components/FloatChat.astro';
 import PageHero from '../components/PageHero.astro';
 
 const medical = [
-  { name: 'Huadong Health Centre', loc: 'Shanghai', tier: 'JCI · Class III Tier-A', note: 'Executive screening · cardiac & oncological diagnostics' },
-  { name: 'Zhejiang United Family Hospital', loc: 'Hangzhou', tier: 'JCI Accredited', note: 'Bilingual specialists · post-screening rehabilitation' },
-  { name: 'Huaxi Medical Centre', loc: 'Chengdu', tier: 'Class III Tier-A', note: 'High-resolution imaging · sleep medicine' },
-  { name: 'Beijing International Clinic', loc: 'Beijing', tier: 'JCI Affiliated', note: 'Concierge medicine · second-opinion programmes' },
+  { name: 'Chongqing International Health Center', loc: 'Chongqing', tier: 'Class III Tier-A', note: 'Executive checkups, imaging and specialist interpretation' },
+  { name: 'Mountain City Medical International Desk', loc: 'Chongqing', tier: 'Hospital international department', note: 'Bilingual intake, report coordination and follow-up review' },
+  { name: 'Southwest Preventive Care Partner', loc: 'Chongqing', tier: 'Screened medical partner', note: 'Cardiac, metabolic and oncology screening coordination' },
+  { name: 'Shanghai Medical Liaison Desk', loc: 'Shanghai', tier: 'Referral partner', note: 'Second-opinion support and complex case routing' },
 ];
 
 const wellness = [
-  { name: 'West Lake TCM Sanctuary', loc: 'Hangzhou', tier: 'CNATCM Licensed', note: 'Acupuncture · herbal compounding · meditation' },
-  { name: 'Emei Mountain Retreat', loc: 'Sichuan', tier: 'CNATCM Licensed', note: 'Hot-spring therapy · Buddhist breathwork' },
-  { name: 'Pu-erh Tea Forest Lodge', loc: 'Yunnan', tier: 'CNATCM Licensed', note: 'Herbalist consultation · forest soaking' },
-  { name: 'Wudang Inner Practice House', loc: 'Hubei', tier: 'CNATCM Licensed', note: 'Tai Chi master sessions · Daoist nutrition' },
+  { name: 'Chongqing TCM Heritage Clinic', loc: 'Chongqing', tier: 'Licensed TCM partner', note: 'Meridian care, consultation and herbal guidance' },
+  { name: 'Mountain Hot-Spring Wellness Partner', loc: 'Chongqing', tier: 'Screened wellness venue', note: 'Hot-spring recovery, guided relaxation and private transfer' },
+  { name: 'Heritage Therapy Studio', loc: 'Chongqing', tier: 'Practitioner verified', note: 'Traditional wellness routines, guest education and follow-up plan' },
+  { name: 'Post-trip Online Wellness Desk', loc: 'Remote', tier: 'Concierge follow-up', note: 'Report reading, health archive and continued consultation' },
 ];
 
 const travel = [
-  { name: 'Silk Road Heritage Travel', loc: 'National operator', tier: 'AAAAA · CITS Member', note: 'Small-group cultural escorts · museum access' },
-  { name: 'Eastern Gardens Atelier', loc: 'Suzhou · Hangzhou', tier: 'AAAAA Boutique', note: 'Private garden curators · craft-village circuits' },
-  { name: 'Yunnan Slow Routes Co.', loc: 'Kunming · Dali', tier: 'AAAA Specialist', note: 'Tea Horse Road expeditions · ethnographic guides' },
-  { name: 'North Capital Heritage', loc: 'Beijing', tier: 'AAAAA', note: 'Imperial site access · master craftsperson visits' },
+  { name: 'Chongqing Licensed Travel Operator', loc: 'Chongqing', tier: 'Screened agency', note: 'Airport pickup, city routing and bilingual coordination' },
+  { name: 'Yangtze Riverside Route Partner', loc: 'Chongqing', tier: 'Local operator', note: 'Riverside walks, culture stops and flexible pacing' },
+  { name: 'Mountain-City Food & Culture Desk', loc: 'Chongqing', tier: 'Curated experience partner', note: 'Local dining, heritage blocks and accessible routing' },
+  { name: 'Custom Transfer Partner', loc: 'Chongqing', tier: 'Vehicle partner', note: 'Private cars, family routing and senior-friendly travel' },
 ];
 
 const sections = [
-  { id: 'medical', title: 'Accredited Medical Centres', cn: '权 威 体 检', items: medical },
-  { id: 'wellness', title: 'Professional Wellness Clinics', cn: '专 业 康 养', items: wellness },
-  { id: 'travel', title: 'Top-Rated Travel Partners', cn: '口 碑 旅 行', items: travel },
+  { id: 'medical', title: 'Hospital Credentials', cn: '医 院 资 质', heading: 'Efficient checkups with clear report support.', items: medical },
+  { id: 'wellness', title: 'TCM Clinic Credentials', cn: '中 医 馆 资 质', heading: 'Licensed heritage therapies, explained plainly.', items: wellness },
+  { id: 'travel', title: 'Travel Agency Credentials', cn: '旅 行 社 资 质', heading: 'Operators that make Chongqing easy to move through.', items: travel },
 ];
 ---
 
-<Layout title="Verified Partners — Harmony Retreats" description="Every Harmony Retreats journey is delivered through internationally accredited medical, wellness and travel partners.">
+<Layout title="Verified Partners — Harmony Retreats" description="Hospital, TCM clinic, travel agency and privacy standards for Harmony Retreats packages.">
   <Nav />
 
   <PageHero
     eyebrow="Verified Partners"
-    title="Every route is held to international standards."
-    subtitle="We partner only with institutions that meet international accreditation or top national tier — and we re-verify every relationship annually."
+    title="Every package is backed by visible partner standards."
+    subtitle="We work with screened hospitals, TCM wellness partners and licensed travel operators, with standards shown clearly before booking."
     crumbs={[{ label: 'Home', href: '/' }, { label: 'Verified Partners' }]}
   />
 
   <section class="vp-intro">
     <div class="container vp-intro-grid">
       <div class="vp-stat">
-        <div class="num">12<sup>+</sup></div>
-        <div class="label">JCI-Accredited Hospitals</div>
+        <div class="num">3</div>
+        <div class="label">Service Categories</div>
       </div>
       <div class="vp-stat">
-        <div class="num">18</div>
-        <div class="label">Class III Tier-A Facilities</div>
+        <div class="num">4</div>
+        <div class="label">Credential Entrances</div>
       </div>
       <div class="vp-stat">
-        <div class="num">22</div>
-        <div class="label">CNATCM-Licensed Clinics</div>
+        <div class="num">24h</div>
+        <div class="label">In-trip Support</div>
       </div>
       <div class="vp-stat">
         <div class="num">100%</div>
-        <div class="label">Annually Re-Verified</div>
+        <div class="label">Consent-first Data Flow</div>
       </div>
     </div>
   </section>
@@ -68,15 +68,15 @@ const sections = [
     <section id={s.id} class="vp-section">
       <div class="container">
         <div class="vp-head">
-          <span class="micro">— {s.title}</span>
-          <h2>{s.title.split(' ').slice(-1)[0] === 'Centres' ? 'Diagnostic precision, English-language care.' : s.id === 'wellness' ? 'Practitioners with national licensure.' : 'Operators that respect the slowness of the route.'}</h2>
+          <span class="micro">{s.title}</span>
+          <h2>{s.heading}</h2>
           <div class="cn-sub">{s.cn}</div>
           <div class="underline"></div>
         </div>
         <div class="vp-list">
           {s.items.map((it) => (
             <div class="vp-row">
-              <div class="vp-mark">
+              <div class="vp-mark" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <path d="M12 2L4 5v7c0 5 3.5 9 8 10 4.5-1 8-5 8-10V5l-8-3z" />
                   <path d="M9 12l2 2 4-4" />
@@ -94,10 +94,35 @@ const sections = [
     </section>
   ))}
 
+  <section id="privacy-policy" class="vp-section privacy-section">
+    <div class="container">
+      <div class="vp-head">
+        <span class="micro">Privacy Policy</span>
+        <h2>Clear consent before any medical or travel data is shared.</h2>
+        <div class="cn-sub">隐 私 政 策</div>
+        <div class="underline"></div>
+      </div>
+      <div class="privacy-grid">
+        <div class="privacy-card">
+          <h3>Data minimization</h3>
+          <p>We collect only the information required to coordinate consultation, travel planning and partner appointments.</p>
+        </div>
+        <div class="privacy-card">
+          <h3>Written consent</h3>
+          <p>Medical information is shared with hospitals or clinics only after the guest confirms the service scope.</p>
+        </div>
+        <div class="privacy-card">
+          <h3>Controlled access</h3>
+          <p>Your file is handled by the assigned concierge team and relevant verified partners, not open call-centre staff.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="vp-foot-cta">
     <div class="container">
-      <p>Looking for a specific accreditation document or certification? <a href="/contact">Speak with a concierge →</a></p>
-      <p class="privacy">Detailed privacy & data-handling practices are available in our <a href="/privacy-policy">Privacy Policy</a>.</p>
+      <p>Looking for a specific document or partner standard? <a href="/contact">Speak with a concierge →</a></p>
+      <p class="privacy">Detailed data-handling practices are available in the <a href="#privacy-policy">Privacy Policy</a> section above.</p>
     </div>
   </section>
 
@@ -109,34 +134,32 @@ const sections = [
   .vp-intro { padding: 64px 0; background: var(--mist); border-bottom: 1px solid var(--hairline); }
   .vp-intro-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
   .vp-stat .num {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 56px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: 52px;
     color: var(--ink);
     line-height: 1;
   }
-  .vp-stat .num sup { font-size: 26px; color: var(--seal); vertical-align: super; }
-  .vp-stat .label { margin-top: 10px; font-size: 13px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .vp-stat .label { margin-top: 10px; font-size: 13px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 800; }
 
   .vp-section { padding: 96px 0; border-bottom: 1px solid var(--hairline); }
-  .vp-section:nth-child(even) { background: var(--rice); }
+  .vp-section:nth-of-type(even) { background: var(--rice); }
   .vp-head { margin-bottom: 48px; max-width: 720px; }
-  .vp-head .micro { color: var(--jade-deep); margin-bottom: 14px; display: inline-block; }
+  .vp-head .micro { color: var(--seal); margin-bottom: 14px; display: inline-block; }
   .vp-head h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 38px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: clamp(32px, 3.7vw, 46px);
     color: var(--ink);
-    line-height: 1.1;
+    line-height: 1.14;
   }
   .vp-head .cn-sub {
-    font-family: 'Noto Serif SC', serif;
     font-size: 14px;
     color: var(--muted);
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     margin-top: 10px;
   }
-  .vp-head .underline { width: 40px; height: 1px; background: var(--jade); margin-top: 20px; }
+  .vp-head .underline { width: 40px; height: 2px; background: var(--seal); margin-top: 20px; }
 
   .vp-list { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .vp-row {
@@ -145,40 +168,65 @@ const sections = [
     padding: 24px 28px;
     background: var(--canvas);
     border: 1px solid var(--hairline);
-    border-radius: 12px;
+    border-radius: 10px;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .vp-row:hover { border-color: var(--jade); box-shadow: var(--shadow); }
+  .vp-row:hover { border-color: rgba(241, 90, 36, 0.35); box-shadow: var(--shadow); }
   .vp-mark {
     flex-shrink: 0;
     width: 44px;
     height: 44px;
-    border: 1px solid var(--jade);
+    border: 1px solid var(--seal);
     border-radius: 50%;
-    color: var(--jade-deep);
+    color: var(--seal);
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .vp-content { flex: 1; }
   .vp-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 20px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: 18px;
     color: var(--ink);
     margin-bottom: 4px;
   }
   .vp-meta { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 8px; }
-  .vp-tier { color: var(--seal); font-weight: 500; }
+  .vp-tier { color: var(--seal); font-weight: 800; }
   .vp-note { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
+  .privacy-section { background: var(--canvas); }
+  .privacy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .privacy-card {
+    padding: 26px 28px;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    background: var(--rice);
+  }
+  .privacy-card h3 {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .privacy-card p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.6;
+  }
 
   .vp-foot-cta { padding: 64px 0; background: var(--ink); color: var(--canvas); text-align: center; }
   .vp-foot-cta p { font-size: 17px; margin-bottom: 10px; }
   .vp-foot-cta a { color: #E8C77A; border-bottom: 1px solid #E8C77A; padding-bottom: 1px; }
-  .vp-foot-cta .privacy { font-size: 13px; opacity: 0.6; }
+  .vp-foot-cta .privacy { font-size: 13px; opacity: 0.65; }
 
   @media (max-width: 768px) {
     .vp-intro-grid { grid-template-columns: repeat(2, 1fr); }
-    .vp-list { grid-template-columns: 1fr; }
+    .vp-list,
+    .privacy-grid { grid-template-columns: 1fr; }
   }
 </style>

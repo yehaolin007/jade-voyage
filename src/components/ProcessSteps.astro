@@ -1,20 +1,31 @@
 ---
 const steps = [
-  { dot: 'i', h: 'Share Your Wishes', p: 'A short form or a 30-minute video call — tell us about your health goals, travel rhythm, and dates.' },
-  { dot: 'ii', h: 'Receive Your Plan', p: 'Within 48 hours we send a tailored proposal — itinerary, hospitals, clinicians, accommodations, transparent pricing.' },
-  { dot: 'iii', h: 'Travel Without Worry', p: 'Visa support, English-speaking drivers, in-trip concierge on WhatsApp, 24-hour medical hotline.' },
-  { dot: 'iv', h: 'Continue at Home', p: 'Post-trip follow-up: medical reports translated, TCM prescriptions explained, optional telehealth check-ins.' },
+  {
+    dot: '01',
+    h: 'Online Reservation',
+    p: 'Consult on the official website, order your package, and let a dedicated advisor assist with your China visa preparation.',
+  },
+  {
+    dot: '02',
+    h: 'On-site Experience',
+    p: 'Multilingual airport pickup and check-in support, with full accompaniment for checkups, TCM wellness and cultural experiences.',
+  },
+  {
+    dot: '03',
+    h: 'After-sales Support',
+    p: 'Assisted return, one-on-one medical report interpretation, online archive access and ongoing wellness consultation.',
+  },
 ];
 ---
 
 <section class="process" id="process">
   <div class="container">
     <div class="section-head" style="text-align: center; margin-left: auto; margin-right: auto;">
-      <span class="micro">— How It Works</span>
-      <h2>Four quiet steps. No paperwork stress.</h2>
+      <span class="micro">Service Process</span>
+      <h2>Three clear steps from booking to follow-up.</h2>
     </div>
 
-    <div class="process-timeline">
+    <div class="process-timeline process-three">
       {steps.map((s) => (
         <div class="step">
           <div class="step-dot">{s.dot}</div>
@@ -25,3 +36,22 @@ const steps = [
     </div>
   </div>
 </section>
+
+<style>
+  .process-three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .process-three::before {
+    left: 16.66%;
+    right: 16.66%;
+  }
+
+  @media (max-width: 900px) {
+    .process-three {
+      grid-template-columns: 1fr;
+    }
+    .process-three::before {
+      display: none;
+    }
+  }
+</style>

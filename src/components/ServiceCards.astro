@@ -10,14 +10,20 @@ const rendered = await Promise.all(
     return { ...e, Content };
   })
 );
+
+const serviceQuery = (title: string) => {
+  if (title.toLowerCase().includes('check')) return 'Checkup + Travel';
+  if (title.toLowerCase().includes('wellness')) return 'TCM Heritage + Travel';
+  return 'Custom Travel';
+};
 ---
 
 <section id="services">
   <div class="container">
     <div class="section-head">
-      <span class="micro">— Our Three Pillars</span>
-      <h2>A complete journey, not just a destination.</h2>
-      <p class="deck">Every Harmony Retreats itinerary weaves three threads: medical precision, traditional restoration, and the slow rhythm of Chinese landscape.</p>
+      <span class="micro">Our Three Pillars</span>
+      <h2>Checkup, TCM heritage and travel in one plan.</h2>
+      <p class="deck">Every Harmony Retreats package is built around a practical service flow: efficient health checks, licensed TCM wellness experiences and relaxed Chongqing travel.</p>
       <div class="underline"></div>
     </div>
 
@@ -30,7 +36,7 @@ const rendered = await Promise.all(
           <h3>{s.data.title}</h3>
           <div class="cn-sub">{s.data.cnTitle}</div>
           <div class="service-body"><s.Content /></div>
-          <a href="#" class="arrow-link">{s.data.cta} →</a>
+          <a href={`/contact?service=${encodeURIComponent(serviceQuery(s.data.title))}`} class="arrow-link">{s.data.cta} →</a>
         </div>
       ))}
     </div>
@@ -38,5 +44,10 @@ const rendered = await Promise.all(
 </section>
 
 <style>
-  .service-body :global(p) { color: var(--ink-soft); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+  .service-body :global(p) {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
 </style>

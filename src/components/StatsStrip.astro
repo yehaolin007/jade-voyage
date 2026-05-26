@@ -1,29 +1,28 @@
 ---
 const stats = [
   {
-    num: '50', sup: '+', label: 'Hospital Credentials', sub: 'JCI and Class III Tier A partner network',
-    icon: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01"/>',
+    label: 'One-stop Service',
+    sub: 'Checkup, TCM heritage therapies and culture travel in one standardized journey from inquiry to departure.',
+    icon: '<path d="M4 7h16M4 12h16M4 17h16"/><path d="M8 4v16M16 4v16"/>',
   },
   {
-    num: '100', sup: '%', label: 'Privacy Protection', sub: 'Strict medical data handling and consent flow',
-    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+    label: 'Authoritative Partners',
+    sub: 'Cooperation with Class III hospital international departments, efficient checkups and expert interpretation.',
+    icon: '<path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 10h6M9 14h6M12 7v10"/>',
   },
   {
-    num: '24/7', sup: '', label: 'Insurance-aware Support', sub: 'Pre-trip documentation and claim material guidance',
-    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
-  },
-  {
-    num: '10', sup: '+', label: 'Reputable Travel Partners', sub: 'Screened wellness institutions and licensed agencies',
-    icon: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>',
+    label: 'Low and Transparent Price',
+    sub: 'High value, all-inclusive quotations and no hidden charges during the trip.',
+    icon: '<path d="M20 6 9 17l-5-5"/><path d="M15 6h5v5"/><path d="M4 19h16"/>',
   },
 ];
 ---
 
-<section class="stats-dark" id="trust-safety">
+<section class="stats-dark" id="why-choose-us">
   <div class="container">
     <div class="stats-head">
-      <span class="micro">Trust & Safety</span>
-      <h2>Core Credentials</h2>
+      <span class="micro">Why Choose Us</span>
+      <h2>Why Choose Us</h2>
     </div>
     <div class="stats-dark-grid">
       {stats.map((s) => (
@@ -31,7 +30,6 @@ const stats = [
           <span class="stat-icon-circle">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={s.icon} />
           </span>
-          <div class="num">{s.num}<sup>{s.sup}</sup></div>
           <div class="label">{s.label}</div>
           <div class="sub">{s.sub}</div>
         </div>
@@ -60,7 +58,7 @@ const stats = [
   }
   .stats-dark-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 22px;
   }
   .stat-dark {
@@ -82,22 +80,8 @@ const stats = [
     color: var(--seal);
     margin-bottom: 30px;
   }
-  .stat-dark .num {
-    font-family: 'Inter', -apple-system, sans-serif;
-    font-weight: 900;
-    font-size: 42px;
-    color: var(--ink);
-    line-height: 1;
-    letter-spacing: 0;
-  }
-  .stat-dark .num sup {
-    font-size: 17px;
-    color: var(--seal);
-    vertical-align: super;
-    margin-left: 2px;
-  }
   .stat-dark .label {
-    margin-top: 16px;
+    margin-top: 0;
     font-size: 18px;
     color: var(--ink);
     font-weight: 900;
