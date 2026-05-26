@@ -75,6 +75,14 @@ const searchIndex = [
               )}
             </div>
           ))}
+          <div class="mobile-group">
+            <a class="mobile-main" href="/contact">Contact</a>
+            <div class="mobile-sub">
+              <a href="/contact">Inquiry Form</a>
+              <a href="/contact">Book Consultation</a>
+              <a href="/contact">WhatsApp & Email</a>
+            </div>
+          </div>
         </div>
       </details>
       <div class="lang-wrap" data-lang-toggle>
@@ -144,8 +152,8 @@ const searchIndex = [
 <style>
   :global(nav.top .row) {
     display: grid;
-    grid-template-columns: minmax(390px, auto) minmax(0, 1fr) auto;
-    gap: clamp(24px, 2.2vw, 36px);
+    grid-template-columns: minmax(280px, 0.85fr) minmax(690px, 1.35fr) auto;
+    gap: clamp(18px, 2vw, 34px);
   }
   :global(nav.top .container) {
     max-width: 1760px;
@@ -155,12 +163,15 @@ const searchIndex = [
   .nav-center {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 18px;
+    justify-content: center;
     min-width: 0;
   }
   .nav-links {
-    gap: clamp(12px, 1.35vw, 22px);
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: center;
+    gap: 0;
+    width: min(100%, 900px);
     min-width: 0;
   }
   :global(.brand-text .en) {
@@ -170,17 +181,25 @@ const searchIndex = [
     min-width: 0;
     justify-self: start;
   }
-  .nav-actions { display: flex; align-items: center; gap: 14px; }
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
   .nav-item {
     position: relative;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
     padding: 24px 0;
   }
   .nav-item > a {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 6px;
+    text-align: center;
     white-space: nowrap;
-    font-size: clamp(13px, 0.85vw, 15px);
+    font-size: clamp(13px, 0.78vw, 14px);
     font-weight: 800;
   }
   .nav-item > a.has-sub::after {
@@ -451,14 +470,24 @@ const searchIndex = [
   }
   @media (max-width: 1320px) {
     :global(nav.top .row) {
-      grid-template-columns: minmax(320px, auto) minmax(0, 1fr) auto;
-      gap: 16px;
+      grid-template-columns: minmax(260px, auto) minmax(560px, 1fr) auto;
+      gap: 12px;
     }
     .nav-links {
-      gap: 10px;
+      width: min(100%, 700px);
     }
     .nav-item > a {
-      font-size: 13px;
+      gap: 4px;
+      padding-left: 4px;
+      padding-right: 4px;
+      font-size: 12px;
+    }
+    .nav-chev {
+      width: 12px;
+      height: 12px;
+    }
+    .nav-actions {
+      gap: 8px;
     }
     .nav-cta {
       padding-left: 16px;
