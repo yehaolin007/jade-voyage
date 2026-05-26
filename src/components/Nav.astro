@@ -77,18 +77,35 @@ const searchIndex = [
           ))}
         </div>
       </details>
-      <button class="lang-toggle" data-lang-toggle aria-label="Language">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
-        </svg>
-        <span class="lang-pair">
-          <span data-lang-en class="on">EN</span>
-          <span class="sep">/</span>
-          <span data-lang-cn>CN</span>
-          <span class="sep">/</span>
-          <span data-lang-fr>FR</span>
-        </span>
-      </button>
+      <div class="lang-wrap" data-lang-toggle>
+        <button type="button" class="lang-trigger" data-lang-trigger aria-haspopup="menu" aria-expanded="false" aria-label="Choose language">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+          </svg>
+          <span class="lang-current">
+            <span data-lang-en class="on">EN</span>
+            <span data-lang-cn>中</span>
+            <span data-lang-fr>FR</span>
+          </span>
+          <svg class="lang-chev" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+        <div class="lang-menu" role="menu" aria-label="Language options">
+          <a href="#" role="menuitem" data-lang-en class="lang-opt">
+            <span class="lang-opt-label">English</span>
+            <span class="lang-opt-code">EN</span>
+          </a>
+          <a href="#" role="menuitem" data-lang-cn class="lang-opt">
+            <span class="lang-opt-label">中文</span>
+            <span class="lang-opt-code">CN</span>
+          </a>
+          <a href="#" role="menuitem" data-lang-fr class="lang-opt">
+            <span class="lang-opt-label">Français</span>
+            <span class="lang-opt-code">FR</span>
+          </a>
+        </div>
+      </div>
       <a href="/contact" class="btn btn-primary nav-cta">Book Consultation</a>
     </div>
   </div>
@@ -254,23 +271,109 @@ const searchIndex = [
     border-color: rgba(241, 90, 36, 0.16);
     transform: translateY(-1px);
   }
-  .lang-toggle {
+  .lang-wrap {
+    position: relative;
+  }
+  .lang-trigger {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 9px 14px;
+    gap: 6px;
+    padding: 8px 12px;
+    background: transparent;
     border: 1px solid var(--hairline);
     border-radius: 8px;
     color: var(--ink-soft);
+    font-family: inherit;
     font-size: 12px;
     letter-spacing: 0.08em;
-    transition: border-color 0.2s, color 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
   }
-  .lang-toggle:hover { border-color: var(--seal); color: var(--seal); }
-  .lang-pair { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }
-  .lang-pair .sep { color: var(--hairline); }
-  .lang-pair span:not(.sep) { opacity: 0.45; transition: opacity 0.2s, color 0.2s; }
-  .lang-pair span.on { opacity: 1; color: var(--ink); }
+  .lang-trigger:hover,
+  .lang-wrap.is-open .lang-trigger {
+    border-color: var(--seal);
+    color: var(--seal);
+  }
+  .lang-current {
+    display: inline-flex;
+    align-items: center;
+    min-width: 18px;
+    justify-content: center;
+  }
+  .lang-current > span {
+    display: none;
+    color: var(--ink);
+  }
+  .lang-current > span.on {
+    display: inline-block;
+  }
+  .lang-chev {
+    color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+  .lang-wrap.is-open .lang-chev {
+    transform: rotate(180deg);
+    color: var(--seal);
+  }
+  .lang-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    padding: 8px;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 18px 46px rgba(7, 27, 99, 0.14);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 110;
+  }
+  .lang-wrap.is-open .lang-menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .lang-opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--ink-soft);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .lang-opt:hover {
+    background: #fff2ea;
+    color: var(--seal);
+  }
+  .lang-opt.on {
+    color: var(--ink);
+    background: var(--sky-mist);
+  }
+  .lang-opt.on::after {
+    content: '✓';
+    color: var(--seal);
+    font-weight: 900;
+    margin-left: 4px;
+  }
+  .lang-opt-code {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .lang-opt.on .lang-opt-code {
+    color: var(--navy-soft);
+  }
   .nav-cta {
     padding: 15px 20px;
     font-size: 14px;
@@ -343,7 +446,7 @@ const searchIndex = [
     .nav-center { display: none; }
     .nav-search { display: none; }
     .mobile-menu { display: block; }
-    .lang-toggle { padding: 8px 10px; font-size: 11px; }
+    .lang-trigger { padding: 8px 10px; font-size: 11px; }
     .nav-cta { padding: 10px 12px; font-size: 12px; }
   }
   @media (max-width: 1320px) {
@@ -369,9 +472,12 @@ const searchIndex = [
     .nav-actions {
       gap: 8px;
     }
-    .lang-toggle {
-      min-width: 96px;
-      justify-content: center;
+    .lang-trigger {
+      padding: 7px 10px;
+    }
+    .lang-menu {
+      right: -8px;
+      min-width: 160px;
     }
     .nav-cta {
       display: none;
@@ -571,5 +677,39 @@ const searchIndex = [
       e.preventDefault();
       setOpen(overlay?.hidden ?? true);
     }
+  });
+
+  // Language dropdown open/close (language switching itself is handled by i18n.js)
+  const langWrap = document.querySelector<HTMLElement>('.lang-wrap');
+  const langTrigger = document.querySelector<HTMLButtonElement>('[data-lang-trigger]');
+  const langMenu = langWrap?.querySelector<HTMLElement>('.lang-menu');
+
+  function setLangOpen(open: boolean) {
+    if (!langWrap || !langTrigger) return;
+    langWrap.classList.toggle('is-open', open);
+    langTrigger.setAttribute('aria-expanded', String(open));
+  }
+
+  langTrigger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setLangOpen(!langWrap?.classList.contains('is-open'));
+  });
+
+  // Click outside closes
+  document.addEventListener('click', (e) => {
+    if (langWrap && !langWrap.contains(e.target as Node)) setLangOpen(false);
+  });
+
+  // Clicking a language option: prevent href jump, let i18n.js handle the switch, then close
+  langMenu?.querySelectorAll<HTMLAnchorElement>('.lang-opt').forEach((opt) => {
+    opt.addEventListener('click', (e) => {
+      e.preventDefault();
+      setTimeout(() => setLangOpen(false), 50);
+    });
+  });
+
+  // ESC closes language menu too
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && langWrap?.classList.contains('is-open')) setLangOpen(false);
   });
 </script>
