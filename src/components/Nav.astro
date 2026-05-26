@@ -75,14 +75,6 @@ const searchIndex = [
               )}
             </div>
           ))}
-          <div class="mobile-group">
-            <a class="mobile-main" href="/contact">Contact</a>
-            <div class="mobile-sub">
-              <a href="/contact">Inquiry Form</a>
-              <a href="/contact">Book Consultation</a>
-              <a href="/contact">WhatsApp & Email</a>
-            </div>
-          </div>
         </div>
       </details>
       <div class="lang-wrap" data-lang-toggle>
@@ -152,8 +144,8 @@ const searchIndex = [
 <style>
   :global(nav.top .row) {
     display: grid;
-    grid-template-columns: minmax(280px, 0.85fr) minmax(690px, 1.35fr) auto;
-    gap: clamp(18px, 2vw, 34px);
+    grid-template-columns: minmax(290px, 0.72fr) minmax(760px, 1.48fr) auto;
+    gap: clamp(16px, 1.7vw, 28px);
   }
   :global(nav.top .container) {
     max-width: 1760px;
@@ -168,10 +160,10 @@ const searchIndex = [
   }
   .nav-links {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     align-items: center;
     gap: 0;
-    width: min(100%, 900px);
+    width: min(100%, 1040px);
     min-width: 0;
   }
   :global(.brand-text .en) {
@@ -199,7 +191,7 @@ const searchIndex = [
     padding: 8px 6px;
     text-align: center;
     white-space: nowrap;
-    font-size: clamp(13px, 0.78vw, 14px);
+    font-size: clamp(12px, 0.72vw, 13px);
     font-weight: 800;
   }
   .nav-item > a.has-sub::after {
@@ -470,17 +462,17 @@ const searchIndex = [
   }
   @media (max-width: 1320px) {
     :global(nav.top .row) {
-      grid-template-columns: minmax(260px, auto) minmax(560px, 1fr) auto;
+      grid-template-columns: minmax(240px, auto) minmax(620px, 1fr) auto;
       gap: 12px;
     }
     .nav-links {
-      width: min(100%, 700px);
+      width: min(100%, 760px);
     }
     .nav-item > a {
       gap: 4px;
       padding-left: 4px;
       padding-right: 4px;
-      font-size: 12px;
+      font-size: 11.5px;
     }
     .nav-chev {
       width: 12px;
