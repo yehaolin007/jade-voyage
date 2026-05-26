@@ -84,15 +84,5 @@ export const nav = [
       { label: 'Team Introduction', href: '/about', desc: 'Medical and travel curators' },
       { label: 'Partner Network', href: '/verified-partners', desc: 'Hospitals and agencies' },
     ],
-  },
-  {
-    label: 'Contact',
-    href: '/contact',
-    hasSub: true,
-    children: [
-      { label: 'Inquiry Form', href: '/contact', desc: 'Send travel requirements' },
-      { label: 'Book Consultation', href: '/contact', desc: 'Talk to a concierge' },
-      { label: 'WhatsApp & Email', href: '/contact', desc: 'Fast contact options' },
-    ],
   }
 ];

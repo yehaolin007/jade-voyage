@@ -74,6 +74,11 @@ html[data-lang='CN'] .team-role,
 html[data-lang='CN'] .d-label {
   letter-spacing: 0.08em;
 }
+html[data-lang='FR'] .cn-mini,
+html[data-lang='FR'] .cn-sub {
+  font-family: 'Inter', -apple-system, sans-serif;
+  letter-spacing: 0;
+}
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
