@@ -1,19 +1,22 @@
 ---
 const steps = [
   {
-    dot: '01',
+    num: 'Step 1',
     h: 'Online Reservation',
     p: 'Consult on the official website, order your package, and let a dedicated advisor assist with your China visa preparation.',
+    icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
   },
   {
-    dot: '02',
+    num: 'Step 2',
     h: 'On-site Experience',
     p: 'Multilingual airport pickup and check-in support, with full accompaniment for checkups, TCM wellness and cultural experiences.',
+    icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
   },
   {
-    dot: '03',
+    num: 'Step 3',
     h: 'After-sales Support',
     p: 'Assisted return, one-on-one medical report interpretation, online archive access and ongoing wellness consultation.',
+    icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
   },
 ];
 ---
@@ -25,12 +28,17 @@ const steps = [
       <h2>Three clear steps from booking to follow-up.</h2>
     </div>
 
-    <div class="process-timeline process-three">
+    <div class="process-cards">
       {steps.map((s) => (
-        <div class="step">
-          <div class="step-dot">{s.dot}</div>
-          <h5>{s.h}</h5>
-          <p>{s.p}</p>
+        <div class="step-card">
+          <div class="step-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={s.icon} />
+          </div>
+          <div class="step-text">
+            <span class="step-num">{s.num}</span>
+            <h5>{s.h}</h5>
+            <p>{s.p}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -38,20 +46,61 @@ const steps = [
 </section>
 
 <style>
-  .process-three {
+  .process-cards {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
-  .process-three::before {
-    left: 16.66%;
-    right: 16.66%;
+  .step-card {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: 0 4px 20px rgba(7, 27, 99, 0.04);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .step-card:hover {
+    box-shadow: 0 12px 32px rgba(7, 27, 99, 0.08);
+    transform: translateY(-2px);
+  }
+  .step-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--navy, #071b63);
+    color: #fff;
+  }
+  .step-num {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--orange, #f15a24);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .step-text h5 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+  .step-text p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
   }
 
   @media (max-width: 900px) {
-    .process-three {
+    .process-cards {
       grid-template-columns: 1fr;
-    }
-    .process-three::before {
-      display: none;
     }
   }
 </style>

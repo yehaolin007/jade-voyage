@@ -1,0 +1,71 @@
+---
+const badges = [
+  { label: 'JCI Accredited', sub: 'Hospital partners' },
+  { label: 'Class III Tier A', sub: 'National top hospitals' },
+  { label: 'CNATCM Licensed', sub: 'TCM certification' },
+  { label: 'AAAAA Travel', sub: 'Travel resource rating' },
+];
+---
+
+<div class="cred-strip">
+  <div class="container cred-row">
+    {badges.map((b) => (
+      <div class="cred-item">
+        <span class="cred-label">{b.label}</span>
+        <small class="cred-sub">{b.sub}</small>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .cred-strip {
+    background: #fff;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 18px 0;
+  }
+  .cred-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .cred-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 32px;
+    border-right: 1px solid var(--hairline);
+    text-align: center;
+  }
+  .cred-item:last-child {
+    border-right: none;
+  }
+  .cred-label {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .cred-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .cred-item {
+      padding: 8px 16px;
+      flex: 1 1 50%;
+      border-right: none;
+    }
+    .cred-item:nth-child(1),
+    .cred-item:nth-child(2) {
+      border-bottom: 1px solid var(--hairline);
+    }
+  }
+</style>

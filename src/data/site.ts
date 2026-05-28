@@ -28,12 +28,7 @@ export const nav = [
   {
     label: 'Home',
     href: '/',
-    hasSub: true,
-    children: [
-      { label: 'Overview', href: '/', desc: 'Hero and quick inquiry' },
-      { label: 'Why Choose Us', href: '/#why-choose-us', desc: 'One-stop service and transparent pricing' },
-      { label: 'Featured Packages', href: '/#tours', desc: 'Popular retreat products' },
-    ],
+    hasSub: false,
   },
   {
     label: 'Packages',
