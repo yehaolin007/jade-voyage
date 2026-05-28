@@ -6,18 +6,45 @@ import FloatChat from '../components/FloatChat.astro';
 import PageHero from '../components/PageHero.astro';
 
 const medical = [
-  { name: 'Chongqing International Health Center', loc: 'Chongqing', tier: 'Class III Tier-A', note: 'Executive checkups, imaging and specialist interpretation' },
-  { name: 'Mountain City Medical International Desk', loc: 'Chongqing', tier: 'Hospital international department', note: 'Bilingual intake, report coordination and follow-up review' },
-  { name: 'Southwest Preventive Care Partner', loc: 'Chongqing', tier: 'Screened medical partner', note: 'Cardiac, metabolic and oncology screening coordination' },
-  { name: 'Shanghai Medical Liaison Desk', loc: 'Shanghai', tier: 'Referral partner', note: 'Second-opinion support and complex case routing' },
+  { name: 'The Second Affiliated Hospital of Chongqing Medical University', loc: 'Chongqing', tier: 'Class III Grade-A tertiary hospital', note: 'Tertiary hospital resource for specialist routing, inpatient coordination and medical report review.' },
+  { name: 'Xueping Health · Ciming Aoya Health Management and Examination Center', loc: 'Chongqing', tier: 'Health check-up institution', note: 'Precision screening partner with quality-controlled checkup flow, imaging coordination and report handoff.' },
+  { name: 'Mountain City Medical International Desk', loc: 'Chongqing', tier: 'Hospital international department', note: 'Bilingual intake, report coordination and follow-up review.' },
+  { name: 'Southwest Preventive Care Partner', loc: 'Chongqing', tier: 'Screened medical partner', note: 'Cardiac, metabolic and oncology screening coordination.' },
 ];
 
 const wellness = [
-  { name: 'Chongqing TCM Heritage Clinic', loc: 'Chongqing', tier: 'Licensed TCM partner', note: 'Meridian care, consultation and herbal guidance' },
-  { name: 'Mountain Hot-Spring Wellness Partner', loc: 'Chongqing', tier: 'Screened wellness venue', note: 'Hot-spring recovery, guided relaxation and private transfer' },
-  { name: 'Heritage Therapy Studio', loc: 'Chongqing', tier: 'Practitioner verified', note: 'Traditional wellness routines, guest education and follow-up plan' },
-  { name: 'Post-trip Online Wellness Desk', loc: 'Remote', tier: 'Concierge follow-up', note: 'Report reading, health archive and continued consultation' },
+  { name: 'Chongqing Mingyitang Hospital', loc: 'Chongqing', tier: 'Licensed TCM clinic partner', note: 'TCM consultation, meridian care, rehabilitation support and herbal guidance for practical recovery plans.' },
+  { name: 'Mountain Hot-Spring Wellness Partner', loc: 'Chongqing', tier: 'Screened wellness venue', note: 'Hot-spring recovery, guided relaxation and private transfer.' },
+  { name: 'Heritage Therapy Studio', loc: 'Chongqing', tier: 'Practitioner verified', note: 'Traditional wellness routines, guest education and follow-up plan.' },
+  { name: 'Post-trip Online Wellness Desk', loc: 'Remote', tier: 'Concierge follow-up', note: 'Report reading, health archive and continued consultation.' },
 ];
+
+const medicalMedia = [
+  { src: '/assets/credentials/cqmu-second-hospital-profile.jpg', alt: 'The Second Affiliated Hospital of Chongqing Medical University profile', eyebrow: 'CQMU Second Affiliated Hospital', title: 'Class III Grade-A hospital profile', desc: 'Hospital overview, honors and address information are presented as part of the visible credential file.' },
+  { src: '/assets/credentials/cqmu-second-hospital-credentials.jpg', alt: 'Hospital honors and department credentials', eyebrow: 'Credential archive', title: 'Hospital honors and departments', desc: 'Public-facing hospital introduction, honors received and department capabilities in one reviewable set.' },
+  { src: '/assets/credentials/ciming-aoya-overview.jpg', alt: 'Xueping Health Ciming Aoya overview', eyebrow: 'Health check-up center', title: 'Xueping Health · Ciming Aoya', desc: 'A focused check-up partner for precision screening, inspection flow and post-exam report coordination.' },
+  { src: '/assets/credentials/ciming-aoya-certificates.jpg', alt: 'Ciming Aoya quality control certificates', eyebrow: 'Check-up quality file', title: 'Quality control certificates', desc: 'Selected certificates and quality-control materials support the medical screening workflow.' },
+];
+
+const wellnessMedia = [
+  { src: '/assets/credentials/mingyitang-care-cover.jpg', alt: 'Mingyitang TCM heritage clinic cover', eyebrow: 'Licensed TCM partner', title: 'Mingyitang TCM Heritage Clinic', desc: 'Branded TCM clinic materials show the partner positioning and recovery service scope.' },
+  { src: '/assets/credentials/mingyitang-branches.jpg', alt: 'Mingyitang Chongqing clinic storefront network', eyebrow: 'Clinic storefronts', title: 'Chongqing clinic network', desc: 'Branch and storefront materials help guests understand where care is delivered before booking.' },
+  { src: '/assets/credentials/mingyitang-expert-team.jpg', alt: 'Mingyitang practitioner team archive', eyebrow: 'Expert archive', title: 'Practitioner team', desc: 'Doctor and practitioner profiles are reviewed before a guest itinerary is confirmed.' },
+  { src: '/assets/credentials/mingyitang-treatment-scenes.jpg', alt: 'Mingyitang treatment and consultation scenes', eyebrow: 'Service evidence', title: 'Therapy scenes', desc: 'Treatment and consultation scenes are used to explain what the in-person experience looks like.' },
+];
+
+const travelMedia = [
+  { src: '/bb5cdf49de2554685d1675558d7aba31.jpg', alt: 'Travel Agency Operating License', eyebrow: 'Licensed travel operator', title: 'Travel Agency Operating License', desc: 'Issued by the Ministry of Culture and Tourism, covering domestic and inbound tourism operations.' },
+  { src: '/6e293c8bb2abb7b165e983f7c2fc4463.jpg', alt: 'Business registration license', eyebrow: 'Business registration', title: 'Business License', desc: 'Registered travel company with verified capital and legally approved scope of tourism services.' },
+];
+
+const mediaBySection = {
+  medical: medicalMedia,
+  wellness: wellnessMedia,
+  travel: travelMedia,
+};
+
+const sectionMedia = (id: string) => mediaBySection[id as keyof typeof mediaBySection] ?? [];
 
 const travel = [
   { name: 'Chongqing Licensed Travel Operator', loc: 'Chongqing', tier: 'Screened agency', note: 'Airport pickup, city routing and bilingual coordination' },
@@ -73,6 +100,22 @@ const sections = [
           <div class="cn-sub">{s.cn}</div>
           <div class="underline"></div>
         </div>
+        {sectionMedia(s.id).length > 0 && (
+          <div class={`credential-gallery ${sectionMedia(s.id).length <= 2 ? 'credential-gallery--compact' : ''}`} aria-label={`${s.title} visual credential file`}>
+            {sectionMedia(s.id).map((media, index) => (
+              <article class={`credential-card ${index === 0 && sectionMedia(s.id).length > 2 ? 'credential-card-featured' : ''}`}>
+                <div class="credential-image">
+                  <img src={media.src} alt={media.alt} loading="lazy" />
+                </div>
+                <div class="credential-copy">
+                  <span>{media.eyebrow}</span>
+                  <h3>{media.title}</h3>
+                  <p>{media.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
         <div class="vp-list">
           {s.items.map((it) => (
             <div class="vp-row">
@@ -161,6 +204,62 @@ const sections = [
   }
   .vp-head .underline { width: 40px; height: 2px; background: var(--seal); margin-top: 20px; }
 
+  .credential-gallery {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) minmax(0, 0.85fr);
+    gap: 18px;
+    margin: -16px 0 32px;
+  }
+  .credential-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    background: var(--canvas);
+    box-shadow: 0 12px 30px rgba(7, 27, 99, 0.06);
+  }
+  .credential-card-featured { grid-row: span 2; }
+  .credential-gallery--compact { grid-template-columns: 1fr 1fr; }
+  .credential-gallery--compact .credential-image { aspect-ratio: 4 / 3; }
+  .credential-image {
+    aspect-ratio: 16 / 10;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #fff 0%, #fff8f4 100%);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .credential-card-featured .credential-image { aspect-ratio: 4 / 3; }
+  .credential-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+  }
+  .credential-copy {
+    padding: 18px 20px 20px;
+  }
+  .credential-copy span {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: var(--seal);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  .credential-copy h3 {
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .credential-copy p {
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
   .vp-list { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .vp-row {
     display: flex;
@@ -219,13 +318,15 @@ const sections = [
     line-height: 1.6;
   }
 
-  .vp-foot-cta { padding: 64px 0; background: var(--ink); color: var(--canvas); text-align: center; }
+  .vp-foot-cta { padding: 64px 0; background: var(--orange); color: var(--canvas); text-align: center; }
   .vp-foot-cta p { font-size: 17px; margin-bottom: 10px; }
   .vp-foot-cta a { color: #E8C77A; border-bottom: 1px solid #E8C77A; padding-bottom: 1px; }
   .vp-foot-cta .privacy { font-size: 13px; opacity: 0.65; }
 
   @media (max-width: 768px) {
     .vp-intro-grid { grid-template-columns: repeat(2, 1fr); }
+    .credential-gallery { grid-template-columns: 1fr; margin-top: -8px; }
+    .credential-card-featured { grid-row: auto; }
     .vp-list,
     .privacy-grid { grid-template-columns: 1fr; }
   }
