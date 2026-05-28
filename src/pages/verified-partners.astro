@@ -22,8 +22,10 @@ const wellness = [
 const medicalMedia = [
   { src: '/assets/credentials/cqmu-second-hospital-profile.jpg', alt: 'The Second Affiliated Hospital of Chongqing Medical University profile', eyebrow: 'CQMU Second Affiliated Hospital', title: 'Class III Grade-A hospital profile', desc: 'Hospital overview, honors and address information are presented as part of the visible credential file.' },
   { src: '/assets/credentials/cqmu-second-hospital-credentials.jpg', alt: 'Hospital honors and department credentials', eyebrow: 'Credential archive', title: 'Hospital honors and departments', desc: 'Public-facing hospital introduction, honors received and department capabilities in one reviewable set.' },
+  { src: '/assets/credentials/cqmu-hospital-departments.png', alt: 'Hospital honors received and campus address', eyebrow: 'Honors & address', title: 'National honors and campus', desc: 'Sixth National Civilized Unit, national demonstration departments, Yuzhong campus address.' },
   { src: '/assets/credentials/ciming-aoya-overview.jpg', alt: 'Xueping Health Ciming Aoya overview', eyebrow: 'Health check-up center', title: 'Xueping Health · Ciming Aoya', desc: 'A focused check-up partner for precision screening, inspection flow and post-exam report coordination.' },
   { src: '/assets/credentials/ciming-aoya-certificates.jpg', alt: 'Ciming Aoya quality control certificates', eyebrow: 'Check-up quality file', title: 'Quality control certificates', desc: 'Selected certificates and quality-control materials support the medical screening workflow.' },
+  { src: '/assets/credentials/ciming-aoya-environment.png', alt: 'Ciming Aoya center environment and equipment', eyebrow: 'Facility environment', title: 'Center environment', desc: 'Modern examination rooms, advanced imaging and laboratory equipment in a comfortable setting.' },
 ];
 
 const wellnessMedia = [
@@ -31,6 +33,8 @@ const wellnessMedia = [
   { src: '/assets/credentials/mingyitang-branches.jpg', alt: 'Mingyitang Chongqing clinic storefront network', eyebrow: 'Clinic storefronts', title: 'Chongqing clinic network', desc: 'Branch and storefront materials help guests understand where care is delivered before booking.' },
   { src: '/assets/credentials/mingyitang-expert-team.jpg', alt: 'Mingyitang practitioner team archive', eyebrow: 'Expert archive', title: 'Practitioner team', desc: 'Doctor and practitioner profiles are reviewed before a guest itinerary is confirmed.' },
   { src: '/assets/credentials/mingyitang-treatment-scenes.jpg', alt: 'Mingyitang treatment and consultation scenes', eyebrow: 'Service evidence', title: 'Therapy scenes', desc: 'Treatment and consultation scenes are used to explain what the in-person experience looks like.' },
+  { src: '/assets/credentials/mingyitang-credentials.png', alt: 'Mingyitang 15 chain stores across Chongqing', eyebrow: 'Chain coverage', title: '15 branches in Chongqing', desc: '15 chain clinics covering major districts, ensuring convenient access for guests throughout the city.' },
+  { src: '/assets/credentials/mingyitang-services.png', alt: 'Mingyitang service items and scope', eyebrow: 'Service scope', title: 'Treatment categories', desc: 'Full range of TCM services including acupuncture, herbal therapy, meridian care and rehabilitation.' },
 ];
 
 const travelMedia = [
@@ -103,7 +107,7 @@ const sections = [
         {sectionMedia(s.id).length > 0 && (
           <div class={`credential-gallery ${sectionMedia(s.id).length <= 2 ? 'credential-gallery--compact' : ''}`} aria-label={`${s.title} visual credential file`}>
             {sectionMedia(s.id).map((media, index) => (
-              <article class={`credential-card ${index === 0 && sectionMedia(s.id).length > 2 ? 'credential-card-featured' : ''}`}>
+              <article class="credential-card">
                 <div class="credential-image">
                   <img src={media.src} alt={media.alt} loading="lazy" />
                 </div>
@@ -206,7 +210,8 @@ const sections = [
 
   .credential-gallery {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) minmax(0, 0.85fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
     gap: 18px;
     margin: -16px 0 32px;
   }
@@ -218,9 +223,7 @@ const sections = [
     background: var(--canvas);
     box-shadow: 0 12px 30px rgba(7, 27, 99, 0.06);
   }
-  .credential-card-featured { grid-row: span 2; }
   .credential-gallery--compact { grid-template-columns: 1fr 1fr; }
-  .credential-gallery--compact .credential-image { aspect-ratio: 4 / 3; }
   .credential-image {
     aspect-ratio: 16 / 10;
     display: grid;
@@ -228,7 +231,6 @@ const sections = [
     background: linear-gradient(135deg, #fff 0%, #fff8f4 100%);
     border-bottom: 1px solid var(--hairline);
   }
-  .credential-card-featured .credential-image { aspect-ratio: 4 / 3; }
   .credential-image img {
     width: 100%;
     height: 100%;
