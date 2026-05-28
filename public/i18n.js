@@ -797,7 +797,27 @@
     'Chongqing TCM heritage wellness package': '重庆中医非遗康养套餐',
     'Chongqing hot spring wellness reset': '重庆温泉康养重启',
     'Chongqing mountain city culture package': '重庆山城文化套餐',
-    'Custom Chongqing wellness travel package': '重庆康养定制旅行套餐'
+    'Custom Chongqing wellness travel package': '重庆康养定制旅行套餐',
+
+    'Day 1': '第 1 天',
+    'Day 2': '第 2 天',
+    'Day 3': '第 3 天',
+    'Day 4': '第 4 天',
+    'Day 5': '第 5 天',
+    'Day 6': '第 6 天',
+    'Day 7': '第 7 天',
+    'Wellness tour': '康养行程',
+    'This itinerary is designed for international guests who want a clear product-style tour while keeping the high-touch Harmony Retreats service layer. Timings can be adjusted, but the rhythm below shows how your days may unfold.': '本行程专为希望获得清晰套餐式旅程、同时保留 Harmony Retreats 高品质服务的国际客人设计。时间可灵活调整，下方节奏展示日程大致安排。',
+    'Step into a curated 4-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.': '开启 4 晚精心策划的重庆之旅。每日兼顾深度体验、专业照护与静心恢复，由双语顾问从抵达到离境全程把控细节。',
+    'Step into a curated 5-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.': '开启 5 晚精心策划的重庆之旅。每日兼顾深度体验、专业照护与静心恢复，由双语顾问从抵达到离境全程把控细节。',
+    'Step into a curated 6-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.': '开启 6 晚精心策划的重庆之旅。每日兼顾深度体验、专业照护与静心恢复，由双语顾问从抵达到离境全程把控细节。',
+    'Step into a curated 7-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.': '开启 7 晚精心策划的重庆之旅。每日兼顾深度体验、专业照护与静心恢复，由双语顾问从抵达到离境全程把控细节。',
+    'You are reserving the Chongqing Wellness Starter — Checkup + TCM + Mountain City itinerary (5 nights · Chongqing · Featured). Choose a deposit tier on the right.': '你正在预订"重庆康养入门 — 体检+中医+山城"行程（5晚 · 重庆 · 精选）。请在右侧选择今日支付档位。',
+    'You are reserving the Executive Checkup Journey — Hospital Screening + Report Review itinerary (4 nights · Chongqing · Medical). Choose a deposit tier on the right.': '你正在预订"高端体检旅程 — 医院筛查+报告解读"行程（4晚 · 重庆 · 医疗）。请在右侧选择今日支付档位。',
+    'You are reserving the TCM Heritage Wellness — Meridian Care + Hot Spring Recovery itinerary (6 nights · Chongqing · Wellness). Choose a deposit tier on the right.': '你正在预订"中医非遗康养 — 经络调理+温泉恢复"行程（6晚 · 重庆 · 康养）。请在右侧选择今日支付档位。',
+    'You are reserving the Mountain Hot-Spring Reset — Relaxation + Concierge Recovery itinerary (5 nights · Chongqing · Hot Springs). Choose a deposit tier on the right.': '你正在预订"山城温泉重启 — 放松+顾问式恢复"行程（5晚 · 重庆 · 温泉）。请在右侧选择今日支付档位。',
+    'You are reserving the Mountain City Culture — Riversides + Local Life itinerary (4 nights · Chongqing · Culture). Choose a deposit tier on the right.': '你正在预订"山城文化之旅 — 江岸+在地生活"行程（4晚 · 重庆 · 文化）。请在右侧选择今日支付档位。',
+    'You are reserving the Fully Custom Chongqing — Checkup, TCM or Travel Your Way itinerary (7 nights · Chongqing · Bespoke). Choose a deposit tier on the right.': '你正在预订"重庆全定制 — 体检、中医或旅行随你安排"行程（7晚 · 重庆 · 定制）。请在右侧选择今日支付档位。'
   };
 
   const html = {
@@ -1638,7 +1658,27 @@
     "Chongqing TCM heritage wellness package": "Formule patrimoine MTC Chongqing",
     "Chongqing hot spring wellness reset": "Rééquilibrage thermal Chongqing",
     "Chongqing mountain city culture package": "Formule culture ville-montagne Chongqing",
-    "Custom Chongqing wellness travel package": "Formule voyage bien-être Chongqing sur mesure"
+    "Custom Chongqing wellness travel package": "Formule voyage bien-être Chongqing sur mesure",
+
+    "Day 1": "Jour 1",
+    "Day 2": "Jour 2",
+    "Day 3": "Jour 3",
+    "Day 4": "Jour 4",
+    "Day 5": "Jour 5",
+    "Day 6": "Jour 6",
+    "Day 7": "Jour 7",
+    "Wellness tour": "Séjour bien-être",
+    "This itinerary is designed for international guests who want a clear product-style tour while keeping the high-touch Harmony Retreats service layer. Timings can be adjusted, but the rhythm below shows how your days may unfold.": "Cet itinéraire est pensé pour des voyageurs internationaux qui veulent une offre claire, tout en conservant l'accompagnement très attentif de Harmony Retreats. Les horaires peuvent être ajustés, mais le rythme ci-dessous montre comment les journées peuvent se dérouler.",
+    "Step into a curated 4-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.": "Embarquez pour un voyage de 4 nuits soigneusement composé à Chongqing. Chaque journée équilibre expériences significatives, soins qualifiés et récupération paisible, avec un concierge bilingue qui tient les détails de l'arrivée au départ.",
+    "Step into a curated 5-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.": "Embarquez pour un voyage de 5 nuits soigneusement composé à Chongqing. Chaque journée équilibre expériences significatives, soins qualifiés et récupération paisible, avec un concierge bilingue qui tient les détails de l'arrivée au départ.",
+    "Step into a curated 6-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.": "Embarquez pour un voyage de 6 nuits soigneusement composé à Chongqing. Chaque journée équilibre expériences significatives, soins qualifiés et récupération paisible, avec un concierge bilingue qui tient les détails de l'arrivée au départ.",
+    "Step into a curated 7-night journey in Chongqing. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.": "Embarquez pour un voyage de 7 nuits soigneusement composé à Chongqing. Chaque journée équilibre expériences significatives, soins qualifiés et récupération paisible, avec un concierge bilingue qui tient les détails de l'arrivée au départ.",
+    "You are reserving the Chongqing Wellness Starter — Checkup + TCM + Mountain City itinerary (5 nights · Chongqing · Featured). Choose a deposit tier on the right.": "Vous réservez l'itinéraire Bien-être Chongqing — Découverte — Bilan + MTC + Ville-montagne (5 nuits · Chongqing · En vedette). Choisissez le niveau d'acompte à droite.",
+    "You are reserving the Executive Checkup Journey — Hospital Screening + Report Review itinerary (4 nights · Chongqing · Medical). Choose a deposit tier on the right.": "Vous réservez l'itinéraire Parcours bilan exécutif — Dépistage hospitalier + revue du rapport (4 nuits · Chongqing · Médical). Choisissez le niveau d'acompte à droite.",
+    "You are reserving the TCM Heritage Wellness — Meridian Care + Hot Spring Recovery itinerary (6 nights · Chongqing · Wellness). Choose a deposit tier on the right.": "Vous réservez l'itinéraire Bien-être patrimoine MTC — Soins des méridiens + récupération thermale (6 nuits · Chongqing · Bien-être). Choisissez le niveau d'acompte à droite.",
+    "You are reserving the Mountain Hot-Spring Reset — Relaxation + Concierge Recovery itinerary (5 nights · Chongqing · Hot Springs). Choose a deposit tier on the right.": "Vous réservez l'itinéraire Rééquilibrage thermal en montagne — Relaxation + récupération concierge (5 nuits · Chongqing · Sources chaudes). Choisissez le niveau d'acompte à droite.",
+    "You are reserving the Mountain City Culture — Riversides + Local Life itinerary (4 nights · Chongqing · Culture). Choose a deposit tier on the right.": "Vous réservez l'itinéraire Culture de la ville-montagne — Rives + vie locale (4 nuits · Chongqing · Culture). Choisissez le niveau d'acompte à droite.",
+    "You are reserving the Fully Custom Chongqing — Checkup, TCM or Travel Your Way itinerary (7 nights · Chongqing · Bespoke). Choose a deposit tier on the right.": "Vous réservez l'itinéraire Chongqing entièrement sur mesure — Bilan, MTC ou voyage à votre rythme (7 nuits · Chongqing · Sur mesure). Choisissez le niveau d'acompte à droite."
   };
 
   const frHtml = {
