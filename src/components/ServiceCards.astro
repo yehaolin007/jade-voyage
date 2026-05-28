@@ -24,6 +24,7 @@ const serviceQuery = (title: string) => {
       <span class="micro">Our Three Pillars</span>
       <h2>Checkup, TCM heritage and travel in one plan.</h2>
       <p class="deck">Every Harmony Retreats package is built around a practical service flow: efficient health checks, licensed TCM wellness experiences and relaxed Chongqing travel.</p>
+      <p class="lead-in">From a thorough health checkup, through licensed TCM heritage care, to slow Chongqing mountain-city travel — three pillars sequenced into one continuous wellness journey.</p>
       <div class="underline"></div>
     </div>
 
@@ -34,7 +35,6 @@ const serviceQuery = (title: string) => {
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" set:html={s.data.iconSvg} />
           </div>
           <h3>{s.data.title}</h3>
-          <div class="cn-sub">{s.data.cnTitle}</div>
           <div class="service-body"><s.Content /></div>
           <a href={`/contact?service=${encodeURIComponent(serviceQuery(s.data.title))}`} class="arrow-link">{s.data.cta} →</a>
         </div>
@@ -49,5 +49,16 @@ const serviceQuery = (title: string) => {
     font-size: 15px;
     line-height: 1.6;
     margin-bottom: 24px;
+  }
+  #services .lead-in {
+    max-width: 760px;
+    margin: 14px auto 0;
+    color: var(--navy);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 500;
+    text-align: center;
+    border-top: 1px solid rgba(7, 27, 99, 0.08);
+    padding-top: 14px;
   }
 </style>

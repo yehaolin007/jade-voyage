@@ -7,8 +7,9 @@ export const site = {
   whatsapp: '+86 138-0000-0000',
   offices: ['Chongqing', 'Shanghai', 'Hangzhou'],
   paypal: {
-    clientId: 'sb',
+    me: 'harmonyretreats',
     currency: 'USD',
+    clientId: 'sb',
     intent: 'capture' as const,
   },
   countries: 32,
@@ -86,8 +87,6 @@ export const nav = [
     hasSub: true,
     children: [
       { label: 'Inquiry Form', href: '/contact', desc: 'Send travel requirements' },
-      { label: 'Book Consultation', href: '/contact', desc: 'Talk to a concierge' },
-      { label: 'WhatsApp & Email', href: '/contact', desc: 'Fast contact options' },
     ],
   }
 ];

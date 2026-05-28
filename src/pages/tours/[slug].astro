@@ -4,6 +4,7 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import FloatChat from '../../components/FloatChat.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { site } from '../../data/site';
 
 type TourData = CollectionEntry<'tours'>['data'] & { slug: string };
 
@@ -21,6 +22,11 @@ const { tour } = Astro.props;
 const city = tour.region.split(/[·路]/)[0].trim();
 const title = `${tour.title}${tour.subtitle ? ' - ' + tour.subtitle : ''} | Harmony Retreats`;
 const priceStr = tour.priceFrom.toLocaleString('en-US');
+const adultPrice = tour.priceFrom;
+const seniorPrice = Math.round(tour.priceFrom * 1.1);
+const familyPrice = Math.round(tour.priceFrom * 2.8);
+const payBase = `https://www.paypal.me/${site.paypal.me}/`;
+const payCurrency = site.paypal.currency;
 
 const galleryPool = [
   tour.image,
@@ -187,27 +193,27 @@ const imageRows = galleryPool.slice(0, 4);
 
           <div class="booking-section">
             <h3>Ticket type</h3>
-            <div class="ticket-row">
+            <div class="ticket-row" data-ticket-row data-unit-price={adultPrice}>
               <span class="ticket-name">Adult package</span>
-              <span class="ticket-price">${priceStr}</span>
+              <span class="ticket-price">${adultPrice.toLocaleString('en-US')}</span>
               <div class="quantity-stepper" data-qty>
                 <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
                 <span data-qty-value>1</span>
                 <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
               </div>
             </div>
-            <div class="ticket-row">
+            <div class="ticket-row" data-ticket-row data-unit-price={seniorPrice}>
               <span class="ticket-name">Senior package</span>
-              <span class="ticket-price">${(tour.priceFrom * 1.1).toLocaleString('en-US', {maximumFractionDigits: 0})}</span>
+              <span class="ticket-price">${seniorPrice.toLocaleString('en-US')}</span>
               <div class="quantity-stepper" data-qty>
                 <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
                 <span data-qty-value>0</span>
                 <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
               </div>
             </div>
-            <div class="ticket-row">
+            <div class="ticket-row" data-ticket-row data-unit-price={familyPrice}>
               <span class="ticket-name">Family package</span>
-              <span class="ticket-price">${(tour.priceFrom * 2.8).toLocaleString('en-US', {maximumFractionDigits: 0})}</span>
+              <span class="ticket-price">${familyPrice.toLocaleString('en-US')}</span>
               <div class="quantity-stepper" data-qty>
                 <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
                 <span data-qty-value>0</span>
@@ -218,17 +224,17 @@ const imageRows = galleryPool.slice(0, 4);
 
           <div class="booking-section">
             <h3>Add-on services</h3>
-            <label class="addon-row">
+            <label class="addon-row" data-addon-row data-addon-price="320">
               <input type="checkbox" />
               <span class="addon-name">All in-trip transfers in private vehicles</span>
               <span class="addon-price">+$320</span>
             </label>
-            <label class="addon-row">
+            <label class="addon-row" data-addon-row data-addon-price="80">
               <input type="checkbox" />
               <span class="addon-name">24-hour medical hotline during your stay</span>
               <span class="addon-price">+$80</span>
             </label>
-            <label class="addon-row">
+            <label class="addon-row" data-addon-row data-addon-price="150">
               <input type="checkbox" />
               <span class="addon-name">Daily breakfast + curated regional dining experiences</span>
               <span class="addon-price">+$150</span>
@@ -237,9 +243,9 @@ const imageRows = galleryPool.slice(0, 4);
 
           <div class="booking-total">
             <span>Total estimate</span>
-            <strong>${priceStr}</strong>
+            <strong data-total-display>${priceStr}</strong>
           </div>
-          <a class="book-btn" href="/contact">Book Now</a>
+          <a class="book-btn" href={`${payBase}${adultPrice}${payCurrency}`} data-pay-link data-pay-base={payBase} data-pay-currency={payCurrency} target="_blank" rel="noopener">Book Now</a>
           <p class="booking-note">No deposit required to enquire. Custom adjustments welcome.</p>
         </aside>
       </div>
@@ -776,6 +782,35 @@ const imageRows = galleryPool.slice(0, 4);
     });
   });
 
+  const totalDisplay = document.querySelector<HTMLElement>('[data-total-display]');
+  const payLink = document.querySelector<HTMLAnchorElement>('[data-pay-link]');
+  const ticketRows = document.querySelectorAll<HTMLElement>('[data-ticket-row]');
+  const addonRows = document.querySelectorAll<HTMLElement>('[data-addon-row]');
+
+  function recomputeTotal() {
+    let total = 0;
+    ticketRows.forEach((row) => {
+      const unit = parseFloat(row.dataset.unitPrice || '0');
+      const qtyValue = row.querySelector<HTMLElement>('[data-qty-value]');
+      const qty = parseInt(qtyValue?.textContent || '0', 10);
+      total += unit * qty;
+    });
+    addonRows.forEach((row) => {
+      const checkbox = row.querySelector<HTMLInputElement>('input[type="checkbox"]');
+      if (checkbox?.checked) {
+        total += parseFloat(row.dataset.addonPrice || '0');
+      }
+    });
+    if (totalDisplay) {
+      totalDisplay.textContent = '$' + total.toLocaleString('en-US');
+    }
+    if (payLink) {
+      const base = payLink.dataset.payBase || '';
+      const currency = payLink.dataset.payCurrency || 'USD';
+      payLink.href = `${base}${total}${currency}`;
+    }
+  }
+
   document.querySelectorAll<HTMLElement>('[data-qty]').forEach((root) => {
     const display = root.querySelector<HTMLElement>('[data-qty-value]');
     if (!display) return;
@@ -783,10 +818,17 @@ const imageRows = galleryPool.slice(0, 4);
     root.querySelector('[data-qty-minus]')?.addEventListener('click', () => {
       qty = Math.max(0, qty - 1);
       display.textContent = String(qty);
+      recomputeTotal();
     });
     root.querySelector('[data-qty-plus]')?.addEventListener('click', () => {
       qty += 1;
       display.textContent = String(qty);
+      recomputeTotal();
     });
+  });
+
+  addonRows.forEach((row) => {
+    const checkbox = row.querySelector<HTMLInputElement>('input[type="checkbox"]');
+    checkbox?.addEventListener('change', recomputeTotal);
   });
 </script>
