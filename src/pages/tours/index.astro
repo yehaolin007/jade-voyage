@@ -7,8 +7,8 @@ import PageHero from '../../components/PageHero.astro';
 import TourCard from '../../components/TourCard.astro';
 import { getCollection } from 'astro:content';
 
-const tours = (await getCollection('tours')).sort((a, b) => a.data.order - b.data.order);
-const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
+const tours = (await getCollection('tours', ({ data }) => data.featured)).sort((a, b) => a.data.order - b.data.order);
+const categories = ['All', ...Array.from(new Set(tours.map((tour) => tour.data.category)))];
 ---
 
 <Layout title="All Packages — Harmony Retreats" description="Browse Chongqing checkup, TCM heritage and travel packages with clear concierge support.">
@@ -18,7 +18,7 @@ const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
     eyebrow="All Packages"
     title="Chongqing wellness packages with clear scope."
     subtitle="Filter by package category, or speak with us about a fully custom Chongqing plan."
-    bgImage="/assets/hangzhou-westlake-retreat.png"
+    bgImage="/assets/products/chongqing-skyline.png"
     crumbs={[{ label: 'Home', href: '/' }, { label: 'Packages' }]}
   />
 
@@ -34,7 +34,7 @@ const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
           </div>
         </div>
         <div class="result-count">
-          <span class="count-num">{tours.length}</span> packages · sorted by guest rating
+          <span class="count-num">{tours.length}</span> packages · updated from latest product brief
         </div>
       </div>
 
@@ -44,7 +44,7 @@ const categories = ['All', 'Wellness', 'Medical', 'Culture', 'Bespoke'];
 
       <div class="bespoke-cta">
         <div>
-          <span class="micro">— Can't find your package?</span>
+          <span class="micro">— Need a different pace?</span>
           <h3>We build custom Chongqing plans for each guest.</h3>
           <p>Tell us your dates, checkup needs, TCM interests and travel rhythm — we'll send a private proposal within 48 hours.</p>
         </div>

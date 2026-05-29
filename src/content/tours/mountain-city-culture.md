@@ -1,23 +1,24 @@
 ---
-title: Mountain City Culture
-subtitle: Riversides + Local Life
-region: Chongqing · Culture
-category: Culture
-nights: 4
-groupSize: Small group
+title: Chongqing Wellness Flash
+subtitle: Mountain City Wellness · 2 Days
+region: Chongqing · City
+category: Medical
+nights: 1
+duration: 2 days · no hotel included
+groupSize: Private / short stay
 season: Year-round
-priceFrom: 2860
+priceFrom: 299
 currency: USD
-rating: 4.84
+rating: 4.86
 reviews: 69
-image: /assets/huangshan-cultural-trek.png
-alt: Chongqing mountain city culture package
+image: /assets/products/hongyadong-night.png
+alt: Chongqing wellness flash two-day package
 highlights:
-  - Riverside city walks
-  - Local food experience
-  - Bilingual cultural routing
-order: 5
+  - Xueping Package 1 checkup
+  - Head massage + cupping or gua sha
+  - One-day Chongqing city route
+order: 4
 featured: true
 ---
 
-A slower cultural package around Chongqing riversides, heritage blocks and local food, planned with comfortable pacing for guests combining travel with wellness goals.
+A fast two-day Chongqing wellness sampler without accommodation, including a basic checkup, quick TCM therapy and a one-day city route for guests with limited time.

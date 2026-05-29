@@ -1,26 +1,28 @@
 ---
-title: Chongqing Wellness Starter
-subtitle: Checkup + TCM + Mountain City
-region: Chongqing · Featured
+title: Chongqing Wellness Taster
+subtitle: Mountain City Renewal · 6 Days
+region: Chongqing · Selected
 category: Wellness
 nights: 5
-groupSize: Max 8 guests
+duration: 6 days · 5 nights
+groupSize: Private / small group
 season: Year-round
-priceFrom: 3280
+priceFrom: 1999
+pairPrice: 3599
 currency: USD
 rating: 4.93
 reviews: 118
 badge:
-  label: Most Loved
+  label: Entry
   type: seal
-image: /assets/jade-hero-wellness.png
-alt: Chongqing wellness starter package
+image: /assets/products/chongqing-skyline.png
+alt: Chongqing skyline wellness taster package
 highlights:
-  - One-stop concierge plan
-  - TCM heritage wellness
-  - Mountain-city travel
+  - Xueping Package 1 checkup
+  - Cupping or gua sha with head massage
+  - Handmade herbal sachet workshop
 order: 1
 featured: true
 ---
 
-A compact Chongqing wellness route combining checkup coordination, TCM heritage therapy and relaxed mountain-city experiences. Designed for first-time guests who want one clear package and one concierge from inquiry to follow-up.
+A first-time friendly Chongqing route combining a Xueping Package 1 checkup, gentle TCM therapy and a handmade herbal sachet workshop, paced for guests who want a light wellness introduction.
