@@ -19,12 +19,24 @@ export async function getStaticPaths() {
 interface Props { tour: TourData }
 const { tour } = Astro.props;
 
-const city = tour.region.split(/[·+]/)[0].trim();
+const city = tour.region.split(/[·路]/)[0].trim();
 const title = `${tour.title}${tour.subtitle ? ' - ' + tour.subtitle : ''} | Harmony Retreats`;
 const priceStr = tour.priceFrom.toLocaleString('en-US');
 const adultPrice = tour.priceFrom;
+const seniorPrice = Math.round(tour.priceFrom * 1.1);
+const familyPrice = Math.round(tour.priceFrom * 2.8);
 const payBase = `https://www.paypal.me/${site.paypal.me}/`;
 const payCurrency = site.paypal.currency;
+
+const galleryPool = [
+  tour.image,
+  '/assets/jade-hero-wellness.png',
+  '/assets/story-concierge-lounge.png',
+  '/assets/huangshan-cultural-trek.png',
+  '/assets/sichuan-hot-spring.png',
+  '/assets/suzhou-silk-garden.png',
+].filter((src, index, arr) => arr.indexOf(src) === index);
+
 
 const dayTemplates: Record<TourData['category'], string[]> = {
   Wellness: [
@@ -61,90 +73,8 @@ const dayTemplates: Record<TourData['category'], string[]> = {
   ],
 };
 
-const renewalDetail = {
-  summary: 'A 9-day deep wellness journey beginning with a Xueping Package 3 checkup in Chongqing, followed by advanced TCM therapy, heritage workshops, pure-play Sichuan-Chongqing travel, five-diamond hotels and oxygen-supported highland routing.',
-  facts: [
-    ['Duration', '9 days / 8 nights'],
-    ['Route', 'Chongqing -> Chengdu -> Jiuzhaigou -> Huanglong -> Chengdu'],
-    ['Hotels', 'Ctrip five-diamond hotels throughout'],
-    ['Vehicle', 'Private 9-seat MPV'],
-    ['Best for', 'Visa-free professionals, higher-income guests and deep wellness travelers'],
-    ['Promise', 'No shopping · foreigner-friendly · altitude support · first-day checkup'],
-  ],
-  gallery: [
-    '/assets/products/jiuzhaigou-valley.png',
-    '/assets/products/chongqing-skyline.png',
-    '/assets/products/tcm-massage.png',
-    '/assets/products/herbal-bath.png',
-    '/assets/products/hongyadong-night.png',
-    '/assets/products/wulong-three-bridges.png',
-    '/assets/products/huanglong-pools.png',
-    '/assets/products/chengdu-taikooli.png',
-  ],
-  days: [
-    { title: 'Arrival in Chongqing · deep checkup and wellness day', body: 'VIP airport or station pickup, Xueping Package 3 deep checkup covering thyroid, tumor markers and cardiac ultrasound, followed by advanced shoulder-neck therapy, herbal bath, moxibustion, wellness tea DIY and herbal sachet workshop.', meta: 'Meals: none · Stay: Chongqing five-diamond hotel', images: ['/assets/products/chongqing-skyline.png', '/assets/products/tcm-massage.png', '/assets/products/herbal-bath.png', '/assets/products/herbal-sachet.webp'] },
-    { title: 'Chongqing city panorama · relaxed mountain-city day', body: 'Ciqikou, Liziba, Raffles City and Jiefangbei by day, then Bayi Food Street, Hongyadong and a Liangjiang night cruise in the evening.', meta: 'Meals: dinner · Stay: Chongqing five-diamond hotel', images: ['/assets/products/liziba-light-rail.png', '/assets/products/hongyadong-night.png', '/assets/products/liangjiang-cruise.png', '/assets/products/chongqing-skyline.png'] },
-    { title: 'Chongqing to Wulong · natural wellness landscape day', body: 'Visit the Three Natural Bridges and Fairy Mountain with the scenic train, enjoy steamed-basket banquet and farmhouse cuisine, then return to Chongqing.', meta: 'Meals: breakfast / lunch / dinner · Stay: Chongqing five-diamond hotel', images: ['/assets/products/wulong-three-bridges.png', '/assets/products/wulong-fairy-mountain.png', '/assets/products/heritage-craft.png', '/assets/products/chongqing-skyline.png'] },
-    { title: 'Chongqing to Chengdu · city transition day', body: 'Morning half-mountain walk at Eling Park, lunch, then a two-hour high-speed train to Chengdu. Check in to a five-diamond hotel and enjoy free time.', meta: 'Meals: breakfast / lunch · Stay: Chengdu five-diamond hotel', images: ['/assets/products/chongqing-skyline.png', '/assets/products/chengdu-taikooli.png', '/assets/products/kuanzhai-alley.png', '/assets/products/chengdu-airport.png'] },
-    { title: 'Chengdu to Huanglong and Jiuzhaigou · altitude adaptation day', body: 'Travel from Chengdu to Huanglong with cableway access, continue to Jiuzhaigou, and receive altitude-adaptation guidance with oxygen support throughout.', meta: 'Meals: breakfast / lunch / dinner · Stay: Jiuzhaigou five-diamond hotel', images: ['/assets/products/huanglong-pools.png', '/assets/products/jiuzhaigou-valley.png', '/assets/products/jiuzhaigou-lake.png', '/assets/products/jiuzhaigou-autumn.png'] },
-    { title: 'Jiuzhaigou · full-day nature therapy', body: 'Explore Shuzheng Valley, Rize Valley and Zechawa Valley with sightseeing vehicle access. End the day with Tibetan hotpot.', meta: 'Meals: breakfast / dinner · Stay: Jiuzhaigou five-diamond hotel', images: ['/assets/products/jiuzhaigou-autumn.png', '/assets/products/jiuzhaigou-valley.png', '/assets/products/jiuzhaigou-lake.png', '/assets/products/huanglong-pools.png'] },
-    { title: 'Jiuzhaigou to Chengdu · culture night return', body: 'Return to Chengdu, visit Jinli, Taikoo Li, IFS and Kuanzhai Alley, then explore Fuqin Night Market and Chengdu snacks.', meta: 'Meals: breakfast / lunch / dinner · Stay: Chengdu five-diamond hotel', images: ['/assets/products/chengdu-taikooli.png', '/assets/products/kuanzhai-alley.png', '/assets/products/heritage-craft.png', '/assets/products/chengdu-airport.png'] },
-    { title: 'Chengdu city · free wellness day', body: 'Morning hotel wellness recovery, afternoon creative-city walk and health recap, then a featured Sichuan dinner.', meta: 'Meals: breakfast / dinner · Stay: Chengdu five-diamond hotel', images: ['/assets/products/herbal-tea.jpeg', '/assets/products/neck-therapy.png', '/assets/products/chengdu-taikooli.png', '/assets/products/kuanzhai-alley.png'] },
-    { title: 'Chengdu departure · trip completion', body: 'Breakfast, free time, then private transfer to Chengdu Shuangliu Airport for departure.', meta: 'Meals: breakfast · Stay: home', images: ['/assets/products/chengdu-airport.png', '/assets/products/chengdu-taikooli.png', '/assets/products/jiuzhaigou-valley.png', '/assets/products/chongqing-skyline.png'] },
-  ],
-  coreServices: [
-    '8 nights in five-diamond hotels with daily breakfast',
-    'Private 9-seat MPV throughout the land itinerary',
-    'Chongqing-Chengdu high-speed rail, scheduled tickets and scenic transfers',
-    'Dedicated English-speaking guide throughout',
-    'Oxygen support and emergency handling for highland sections',
-  ],
-  included: [
-    '8 nights in five-diamond hotels + daily breakfast',
-    '12 featured meals including Jianghu cuisine, hotpot and Tibetan hotpot',
-    '9-seat MPV, English-speaking guide and driver-guide gratuities',
-    'High-speed rail tickets, all scheduled entrance tickets and scenic shuttles',
-    'Travel accident insurance, altitude support and 24-hour service desk',
-  ],
-  notIncluded: [
-    'Round-trip international flights, visa fees and personal travel insurance',
-    'Personal expenses, alcohol, shopping and optional purchases',
-    'Single-room supplement and personal hotel expenses',
-    'Optional entertainment items inside Fairy Mountain scenic area',
-  ],
-  safeguards: [
-    'Pure-play guarantee: no shopping stops and no forced consumption',
-    'Medical guarantee: tertiary checkup coordination and licensed therapists',
-    'Altitude guarantee: oxygen support and emergency handling',
-    'Language guarantee: English-speaking guide and bilingual report support',
-    'Privacy guarantee: encrypted handling of health data',
-  ],
-  notes: [
-    'Guests with hypertension or heart conditions should inform us before booking so the highland section can be assessed.',
-    'Cancellation: full refund 20 days before departure, 50% refund 10-19 days before departure, non-refundable within 10 days.',
-    'Passport information is required for checkup appointments, hotels and attraction tickets.',
-  ],
-};
-
-const detail = tour.slug === 'executive-checkup-journey' ? renewalDetail : null;
-const galleryPool = (detail?.gallery || [
-  tour.image,
-  '/assets/products/chongqing-skyline.png',
-  '/assets/products/tcm-massage.png',
-  '/assets/products/hongyadong-night.png',
-  '/assets/products/herbal-sachet.webp',
-]).filter((src, index, arr) => arr.indexOf(src) === index);
-const genericDays = dayTemplates[tour.category]
-  .slice(0, Math.min(tour.nights, dayTemplates[tour.category].length))
-  .map((body, index) => ({
-    title: index === 0 ? `${city} arrival` : tour.category,
-    body,
-    meta: '',
-    images: galleryPool.slice(0, 4),
-  }));
-const days = detail?.days || genericDays;
-const dayLabels = days.map((_, index) => `Day ${index + 1}`);
-const inclusions = detail?.included || [
+const days = dayTemplates[tour.category].slice(0, Math.min(tour.nights, dayTemplates[tour.category].length));
+const inclusions = [
   'Bilingual concierge accompaniment throughout the journey',
   'Boutique accommodation and daily breakfast',
   'Private in-trip transfers',
@@ -152,23 +82,6 @@ const inclusions = detail?.included || [
   'Medical or wellness consultations as listed',
   '24-hour support during your stay',
 ];
-const notIncluded = detail?.notIncluded || [
-  'International flights (we can arrange on request)',
-  'Personal travel insurance (mandatory; partner referral available)',
-  'Visa application fees (we provide invitation letters)',
-  'Gratuities and personal shopping',
-  'Optional add-on experiences priced separately',
-];
-const ticketOptions = tour.pairPrice
-  ? [
-      { name: 'Single traveler package', price: adultPrice, initial: 1 },
-      { name: 'Two travelers package', price: tour.pairPrice, initial: 0 },
-    ]
-  : [
-      { name: 'Adult package', price: adultPrice, initial: 1 },
-      { name: 'Senior package', price: Math.round(tour.priceFrom * 1.1), initial: 0 },
-      { name: 'Family package', price: Math.round(tour.priceFrom * 2.8), initial: 0 },
-    ];
 const imageRows = galleryPool.slice(0, 4);
 ---
 
@@ -187,18 +100,10 @@ const imageRows = galleryPool.slice(0, 4);
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v7h-7"/><path d="M3 10V3h7"/><path d="M3 21l7-7"/></svg>
               </a>
             </div>
-            <p class="summary">{detail?.summary || `Step into a curated ${tour.duration || `${tour.nights}-night`} journey in ${city}. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.`}</p>
-            <div class="days-line">Trip length: <strong>{tour.duration || `${tour.nights} nights`}</strong></div>
-            {detail?.facts && (
-              <div class="fact-grid">
-                {detail.facts.map(([label, value]) => (
-                  <div class="fact-item">
-                    <span>{label}</span>
-                    <strong>{value}</strong>
-                  </div>
-                ))}
-              </div>
-            )}
+            <p class="summary">
+              Step into a curated {tour.nights}-night journey in {city}. Every day balances meaningful experiences, credentialed care, and quiet recovery, with a bilingual concierge holding the details from arrival to departure.
+            </p>
+            <div class="days-line">Number of travel days: <strong>{Math.max(1, Math.ceil(tour.nights / 3))}-{tour.nights} days</strong></div>
           </div>
 
           <div class="product-gallery">
@@ -217,28 +122,24 @@ const imageRows = galleryPool.slice(0, 4);
           <section class="product-content">
             <nav class="detail-tabs" aria-label="Tour detail sections">
               <a href="#detail" class="active">Detail</a>
-              {detail?.coreServices && <a href="#services">Core services</a>}
               <a href="#included">What's included</a>
               <a href="#not-included">Not included</a>
-              {detail?.safeguards && <a href="#safeguards">Safeguards</a>}
-              {detail?.notes && <a href="#notes">Booking notes</a>}
               <a href="#review">Review</a>
             </nav>
 
             <div id="detail" class="detail-copy">
               <h2>{tour.title} itinerary</h2>
               <p>
-                {detail ? 'The full nine-day route is paced around first-day checkup and wellness care, then pure-play Chongqing, Chengdu, Huanglong and Jiuzhaigou travel with altitude support.' : 'This itinerary is designed for international guests who want a clear product-style tour while keeping the high-touch Harmony Retreats service layer. Timings can be adjusted, but the rhythm below shows how your days may unfold.'}
+                This itinerary is designed for international guests who want a clear product-style tour while keeping the high-touch Harmony Retreats service layer. Timings can be adjusted, but the rhythm below shows how your days may unfold.
               </p>
 
               {days.map((day, index) => (
                 <article class="day-section">
-                  <h3><span>{dayLabels[index]}</span>: <span>{day.title}</span></h3>
-                  <p>{day.body}</p>
-                  {day.meta && <div class="day-meta">{day.meta}</div>}
+                  <h3><span>Day {index + 1}</span>: <span>{index === 0 ? city : tour.category}</span></h3>
+                  <p>{day}</p>
                   <div class="image-table">
-                    <div class="table-label">{day.title}</div>
-                    {(day.images || imageRows).map((src) => (
+                    <div class="table-label">{index === 0 ? tour.title : tour.subtitle || tour.category}</div>
+                    {imageRows.map((src) => (
                       <div class="table-img">
                         <img src={src} alt="" loading="lazy" />
                       </div>
@@ -247,15 +148,6 @@ const imageRows = galleryPool.slice(0, 4);
                 </article>
               ))}
             </div>
-
-            {detail?.coreServices && (
-              <div id="services" class="included-panel">
-                <h2>Core services included</h2>
-                <div class="included-grid">
-                  {detail.coreServices.map((item) => <div class="included-item">{item}</div>)}
-                </div>
-              </div>
-            )}
 
             <div id="included" class="included-panel">
               <h2>What's included</h2>
@@ -267,27 +159,13 @@ const imageRows = galleryPool.slice(0, 4);
             <div id="not-included" class="included-panel">
               <h2>Not included</h2>
               <div class="included-grid">
-                {notIncluded.map((item) => <div class="included-item">{item}</div>)}
+                <div class="included-item">International flights (we can arrange on request)</div>
+                <div class="included-item">Personal travel insurance (mandatory; partner referral available)</div>
+                <div class="included-item">Visa application fees (we provide invitation letters)</div>
+                <div class="included-item">Gratuities and personal shopping</div>
+                <div class="included-item">Optional add-on experiences priced separately</div>
               </div>
             </div>
-
-            {detail?.safeguards && (
-              <div id="safeguards" class="included-panel">
-                <h2>Service safeguards</h2>
-                <div class="included-grid">
-                  {detail.safeguards.map((item) => <div class="included-item">{item}</div>)}
-                </div>
-              </div>
-            )}
-
-            {detail?.notes && (
-              <div id="notes" class="included-panel">
-                <h2>Booking notes and cancellation</h2>
-                <div class="included-grid">
-                  {detail.notes.map((item) => <div class="included-item">{item}</div>)}
-                </div>
-              </div>
-            )}
 
             <div id="review" class="review-panel">
               <h2>Guest review</h2>
@@ -315,17 +193,33 @@ const imageRows = galleryPool.slice(0, 4);
 
           <div class="booking-section">
             <h3>Ticket type</h3>
-            {ticketOptions.map((ticket) => (
-              <div class="ticket-row" data-ticket-row data-unit-price={ticket.price}>
-                <span class="ticket-name">{ticket.name}</span>
-                <span class="ticket-price">${ticket.price.toLocaleString('en-US')}</span>
-                <div class="quantity-stepper" data-qty>
-                  <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
-                  <span data-qty-value>{ticket.initial}</span>
-                  <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
-                </div>
+            <div class="ticket-row" data-ticket-row data-unit-price={adultPrice}>
+              <span class="ticket-name">Adult package</span>
+              <span class="ticket-price">${adultPrice.toLocaleString('en-US')}</span>
+              <div class="quantity-stepper" data-qty>
+                <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
+                <span data-qty-value>1</span>
+                <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
               </div>
-            ))}
+            </div>
+            <div class="ticket-row" data-ticket-row data-unit-price={seniorPrice}>
+              <span class="ticket-name">Senior package</span>
+              <span class="ticket-price">${seniorPrice.toLocaleString('en-US')}</span>
+              <div class="quantity-stepper" data-qty>
+                <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
+                <span data-qty-value>0</span>
+                <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+            <div class="ticket-row" data-ticket-row data-unit-price={familyPrice}>
+              <span class="ticket-name">Family package</span>
+              <span class="ticket-price">${familyPrice.toLocaleString('en-US')}</span>
+              <div class="quantity-stepper" data-qty>
+                <button type="button" data-qty-minus aria-label="Decrease quantity">-</button>
+                <span data-qty-value>0</span>
+                <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+              </div>
+            </div>
           </div>
 
           <div class="booking-section">
@@ -351,7 +245,16 @@ const imageRows = galleryPool.slice(0, 4);
             <span>Total estimate</span>
             <strong data-total-display>${priceStr}</strong>
           </div>
-          <a class="book-btn" href={`${payBase}${adultPrice}${payCurrency}`} data-pay-link data-pay-base={payBase} data-pay-currency={payCurrency} target="_blank" rel="noopener">Book Now</a>
+          <div class="payment-buttons">
+            <a class="book-btn btn-paypal" href={`${payBase}${adultPrice}${payCurrency}`} data-pay-link data-pay-base={payBase} data-pay-currency={payCurrency} target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+              PayPal
+            </a>
+            <button class="book-btn btn-alipay" data-alipay-trigger>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              支付宝
+            </button>
+          </div>
           <p class="booking-note">No deposit required to enquire. Custom adjustments welcome.</p>
         </aside>
       </div>
@@ -360,6 +263,18 @@ const imageRows = galleryPool.slice(0, 4);
 
   <Footer />
   <FloatChat />
+
+  <div class="alipay-modal" data-alipay-modal>
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-content">
+      <button class="modal-close" data-modal-close aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <h3>支付宝扫码支付</h3>
+      <img src="/64f39581a5a6708b3fe2db23de90a43a.png" alt="Alipay QR code" />
+      <p class="modal-note">请使用支付宝扫描二维码完成支付</p>
+    </div>
+  </div>
 </Layout>
 
 <style>
@@ -665,34 +580,6 @@ const imageRows = galleryPool.slice(0, 4);
   .days-line strong {
     font-weight: 500;
   }
-  .fact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 18px;
-    max-width: 900px;
-  }
-  .fact-item {
-    padding: 15px 16px;
-    border: 1px solid var(--hairline);
-    border-radius: 8px;
-    background: #fff;
-  }
-  .fact-item span {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .fact-item strong {
-    display: block;
-    color: var(--ink);
-    font-size: 13px;
-    line-height: 1.35;
-  }
   .quantity-stepper {
     display: grid;
     grid-template-columns: 70px 1fr 70px;
@@ -717,6 +604,12 @@ const imageRows = galleryPool.slice(0, 4);
     color: var(--navy);
     background: var(--sky-mist);
   }
+  .payment-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
   .book-btn {
     width: 100%;
     min-width: 0;
@@ -725,16 +618,98 @@ const imageRows = galleryPool.slice(0, 4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     border-radius: 10px;
     background: var(--orange);
-    color: var(--ink);
+    color: #fff;
     font-weight: 800;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .book-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 28px rgba(241, 90, 36, 0.24);
+  }
+  .btn-alipay {
+    background: #1677FF;
+  }
+  .btn-alipay:hover {
+    box-shadow: 0 14px 28px rgba(22, 119, 255, 0.24);
+  }
+
+  .alipay-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .alipay-modal.is-open {
+    display: flex;
+    opacity: 1;
+  }
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 27, 99, 0.75);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+  }
+  .modal-content {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 24px 64px rgba(7, 27, 99, 0.28);
+    text-align: center;
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--sky-mist);
+    color: var(--navy-soft);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .modal-close:hover {
+    background: var(--navy);
+    color: #fff;
+  }
+  .modal-content h3 {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0 0 24px;
+  }
+  .modal-content img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--hairline);
+    margin: 0 auto 16px;
+  }
+  .modal-note {
+    color: var(--navy-soft);
+    font-size: 14px;
+    margin: 0;
   }
 
   .product-content {
@@ -745,7 +720,6 @@ const imageRows = galleryPool.slice(0, 4);
     top: 88px;
     z-index: 10;
     display: flex;
-    overflow-x: auto;
     gap: 0;
     background: #fff;
     border: 1px solid var(--hairline);
@@ -753,8 +727,8 @@ const imageRows = galleryPool.slice(0, 4);
     box-shadow: 0 12px 30px rgba(7, 27, 99, 0.05);
   }
   .detail-tabs a {
-    min-width: 150px;
-    padding: 16px 18px;
+    min-width: 180px;
+    padding: 18px 24px;
     text-align: center;
     color: var(--ink-soft);
     text-decoration: none;
@@ -786,16 +760,6 @@ const imageRows = galleryPool.slice(0, 4);
     color: var(--navy);
     font-size: 24px;
     margin: 0 0 22px;
-  }
-  .day-meta {
-    margin-top: 14px;
-    padding: 12px 14px;
-    border-left: 3px solid var(--seal);
-    background: #fff7f1;
-    color: var(--ink-soft);
-    font-size: 14px;
-    font-weight: 800;
-    line-height: 1.45;
   }
   .image-table {
     display: grid;
@@ -875,9 +839,6 @@ const imageRows = galleryPool.slice(0, 4);
     .included-grid {
       grid-template-columns: 1fr;
     }
-    .fact-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   @media (max-width: 640px) {
@@ -902,9 +863,6 @@ const imageRows = galleryPool.slice(0, 4);
     }
     .detail-tabs a {
       min-width: 150px;
-    }
-    .fact-grid {
-      grid-template-columns: 1fr;
     }
     .image-table {
       grid-template-columns: 1fr;
@@ -981,5 +939,21 @@ const imageRows = galleryPool.slice(0, 4);
   addonRows.forEach((row) => {
     const checkbox = row.querySelector<HTMLInputElement>('input[type="checkbox"]');
     checkbox?.addEventListener('change', recomputeTotal);
+  });
+
+  const alipayModal = document.querySelector<HTMLElement>('[data-alipay-modal]');
+  const alipayTrigger = document.querySelector<HTMLElement>('[data-alipay-trigger]');
+  const modalClosers = document.querySelectorAll<HTMLElement>('[data-modal-close]');
+
+  alipayTrigger?.addEventListener('click', () => {
+    alipayModal?.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  modalClosers.forEach((closer) => {
+    closer.addEventListener('click', () => {
+      alipayModal?.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
   });
 </script>
